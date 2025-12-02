@@ -29,7 +29,7 @@ import TabItem from '@theme/TabItem';
   **File > Xcode 메뉴의 File → Add Packages...** 메뉴에서 아래 URL을 입력하여 패키지를 추가합니다.
 
   ```html
-  https://github.com/id8-io/adcore-ios-sdk
+  https://github.com/Infinit-C/adcore-ios-sdk
   ```
 
   사용할 AdCore SDK 버전 혹은 **Up to Next Major Version**을 선택하는 것을 권장합니다.<br/>
@@ -44,7 +44,7 @@ import TabItem from '@theme/TabItem';
 
   ```ruby
   # Podfile
-  pod 'AdCore-SDK', git: "https://github.com/id8-io/adcore-ios-sdk.git", :branch => 'stable'
+  pod 'AdCore-SDK', git: "https://github.com/Infinit-C/adcore-ios-sdk.git", :branch => 'stable'
   ```
 
   터미널에서 업데이트 명령어를 실행합니다.

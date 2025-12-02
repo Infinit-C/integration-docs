@@ -30,7 +30,7 @@ AdCore Android SDK는 **GitHub Packages**를 통해 제공됩니다.
 repositories {
    ...
    maven {  
-      url = uri("https://maven.pkg.github.com/id8-io/adcore-aos-sdk")  
+      url = uri("https://maven.pkg.github.com/Infinit-C/adcore-aos-sdk")  
    }
    ...
 }
