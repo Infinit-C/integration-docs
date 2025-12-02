@@ -8,12 +8,14 @@ const config: Config = {
   favicon: 'img/logo.ico',
 
   // 배포할 실제 URL로 변경하세요
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
+  url: 'https://Infinit-C.github.io',
+  baseUrl: '/integration-docs',
 
   // GitHub Pages 배포 설정 (필요 없으면 무시해도 됨)
-  organizationName: 'facebook',
-  projectName: 'docusaurus',
+  organizationName: 'Infinit-C',
+  projectName: 'integration-docs',
+
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -55,8 +57,8 @@ const config: Config = {
   ],
 
   themeConfig: {
-  
-    
+
+
     // ▼▼▼ [네비게이션 바 설정 (여기가 중요)] ▼▼▼
     navbar: {
       title: 'AdCore', // 좌측 상단 로고 옆 텍스트
@@ -116,7 +118,7 @@ const config: Config = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Infinit-C Co.,Ltd. All rights reserved.`,
     },
-    
+
     // ▼▼▼ [코드 하이라이팅 언어 추가] ▼▼▼
     // ... 위쪽 코드 생략 ...
 
