@@ -28,12 +28,12 @@ function RtbInfoSection() {
         <div className="col col--8 col--offset-2">
           <Heading as="h2">RTB 프로토콜 지원 범위</Heading>
           <p>
-            AdCore는 <strong>IAB OpenRTB API 2.6</strong> 규격에 기반한 AdCore RTB 프로토콜을 통해 RTB 입찰 요청과 응답을 처리하고 있으며, 
+            adsynapse는 <strong>IAB OpenRTB API 2.6</strong> 규격에 기반한 adsynapse RTB 프로토콜을 통해 RTB 입찰 요청과 응답을 처리하고 있으며, 
             다른 버전도 일부 지원하고 있습니다. 
           </p>
           <p>
-            AdCore RTB API는 OpenRTB API 프로토콜 전체 범위를 지원하지는 않기에 이 문서에 포함되지 않은 내용은 지원이 보장되지 않으며, 
-            OpenRTB API 와 AdCore RTB API에서 차이가 있을 시 <strong>AdCore RTB API를 우선합니다.</strong> </p>
+            adsynapse RTB API는 OpenRTB API 프로토콜 전체 범위를 지원하지는 않기에 이 문서에 포함되지 않은 내용은 지원이 보장되지 않으며, 
+            OpenRTB API 와 adsynapse RTB API에서 차이가 있을 시 <strong>adsynapse RTB API를 우선합니다.</strong> </p>
            <p> 
             지원 프로토콜의 범위는 다양한 상황에 따라 변경될 수 있습니다.
           </p>

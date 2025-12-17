@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'adsynapse SSP SDK 가이드 ',
   tagline: '개발자를 위한 연동 문서입니다',
-  favicon: 'img/logo.ico',
+  favicon: 'img/adsynapse-colorful-favicon-16.ico',
 
   // 배포할 실제 URL로 변경하세요
   url: 'https://Infinit-C.github.io',
@@ -61,10 +61,9 @@ const config: Config = {
 
     // ▼▼▼ [네비게이션 바 설정 (여기가 중요)] ▼▼▼
     navbar: {
-      title: 'adsynapse', // 좌측 상단 로고 옆 텍스트
       logo: {
         alt: 'Site Logo',
-        src: 'img/logo.png', // 로고 파일 경로
+        src: 'img/adsynapse-colorful-small.png', // 로고 파일 경로
       },
       items: [
         // 1. Web 메뉴
