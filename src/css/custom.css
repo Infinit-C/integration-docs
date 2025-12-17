@@ -28,3 +28,14 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* 로고 크기 키우기 */
+.navbar__logo {
+  height: 60px; /* 원하는 높이(px)를 입력하세요. 기본값은 약 32px입니다. */
+  max-width: unset; /* 가로 너비 제한 해제 */
+}
+
+/* (선택사항) 로고가 커진 만큼 네비게이션 바 높이도 자동으로 늘어나게 하려면 */
+.navbar {
+  min-height: 80px; /* 로고보다 조금 더 크게 설정 */
+}
