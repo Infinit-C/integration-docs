@@ -63,7 +63,7 @@ const config: Config = {
     navbar: {
       logo: {
         alt: 'Site Logo',
-        src: 'img/adsynapse-colorful-medium.png', // 로고 파일 경로
+        src: 'img/adsynapse-colorful-large.png', // 로고 파일 경로
       },
       items: [
         // 1. Web 메뉴
