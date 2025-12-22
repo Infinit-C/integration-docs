@@ -8,8 +8,8 @@ const config: Config = {
   favicon: 'img/adsynapse-colorful-favicon-16.ico',
 
   // 배포할 실제 URL로 변경하세요
-  url: 'https://Infinit-C.github.io',
-  baseUrl: '/integration-docs',
+  url: 'https://adsynapse.infinit-c.com',
+  baseUrl: '/',
 
   // GitHub Pages 배포 설정 (필요 없으면 무시해도 됨)
   organizationName: 'Infinit-C',
