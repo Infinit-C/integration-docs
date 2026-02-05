@@ -66,28 +66,12 @@ const config: Config = {
         src: 'img/adsynapse-colorful-large.png', // 로고 파일 경로
       },
       items: [
-        // 1. Web 메뉴
         {
-          type: 'docSidebar',
-          sidebarId: 'webSidebar', // sidebars.ts에 정의된 ID
-          position: 'left',
-          label: 'Web',
+          type: "docSidebar",
+          sidebarId: "integrationSidebar",
+          position: "left",
+          label: "Integration"
         },
-        // 2. Android 메뉴
-        {
-          type: 'docSidebar',
-          sidebarId: 'androidSidebar', // sidebars.ts에 정의된 ID
-          position: 'left',
-          label: 'Android',
-        },
-        // 3. iOS 메뉴
-        {
-          type: 'docSidebar',
-          sidebarId: 'iosSidebar', // sidebars.ts에 정의된 ID
-          position: 'left',
-          label: 'iOS',
-        },
-        // 4. API 명세서 (Redoc)
         {
           to: '/api/',
           label: 'API Reference',
@@ -109,9 +93,9 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            { label: 'Web Guide', to: '/docs/web/script' },
-            { label: 'Android Guide', to: '/docs/android/intro' },
-            { label: 'iOS Guide', to: '/docs/ios/intro' },
+            { label: 'Web Guide', to: '/docs/integration/Web/web-script' },
+            { label: 'Android Guide', to: '/docs/integration/Android/getting-started' },
+            { label: 'iOS Guide', to: '/docs/integration/iOS/getting-started' },
           ],
         },
       ],
@@ -134,6 +118,7 @@ const config: Config = {
         'groovy',     // Gradle
         'ruby',       // CocoaPods
         'bash',       // 터미널 명령어
+        'dart',
       ],
     },
   } satisfies Preset.ThemeConfig,
