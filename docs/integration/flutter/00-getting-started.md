@@ -3,57 +3,66 @@ sidebar_position: 1
 title: Flutter 플러그인 시작하기
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 ## 사전 확인 사항
 
-adsynapse Flutter SDK는 아래 사항이 충족해야됩니다.
-
 - Flutter 3.25.0 이상
-- **연동 키 발급:** adsynapse 콘솔 또는 관리자에게 발급받은 키가 필요합니다.
-- Android: **최신 버전**의 Android 스튜디오
-- iOS: **Xcode 14.1** 버전 이상이 필요합니다.
+- Android Studio / Xcode 설치
+- 플랫폼별 adsynapse 키 발급
 
----
+## 플러그인 설치
 
-## SDK 설치 (Installation)
+배포 방식에 맞춰 `pubspec.yaml`에 추가합니다.
 
-- Flutter 프로젝트에 [Adsynapse Flutter Plugin](https://mvn.infinit-c.com/repository/flutter/)을 포함합니다.
+Git 의존성 예시:
 
-## 플랫폼별 설정
-
-<Tabs groupId="install-method">
-<TabItem value="android" label="Android" default>
-    ```xml
-    <manifest>
-        <application>
-            <meta-data
-                    android:name="com.infinit-c.adsynapse.app_key"
-                    android:value="adsynapse-ac-xxxxxxxxxxxx-xxxxxxxxxxx"/>
-            <meta-data
-                    android:name="com.infinit-c.adsynapse.pub_code"
-                    android:value="adsynapse-pc-xxxxxxxxxxxx-xxxxxxxxxxx"/>
-        </application>
-    </manifest>
-    ```
-</TabItem>
-<TabItem value="ios" label="iOS">
-    **Info.plist** 변경
-    
-    앱의 ios/Runner/Info.plist 파일에 아래와 같이 adsynapse 연동 키를 추가합니다.
-    ```xml
-    <key>IADPubIdentifier</key>
-    <string>adsynapse-pc-xxxxxxxxxxxx-xxxxxxxxxxx</string>
-    
-    <key>IADApplicationIdentifier</key>
-    <string>adsynapse-ac-xxxxxxxxxxxx-xxxxxxxxxxx</string>
-    ```
-</TabItem>
-</Tabs>
-
-## 플러그인 초기화
-광고를 로드하기 전에 앱에서 `SynapseSdk.instance.initialize()`를 호출하여 플러그인을 초기화해야합니다.
-```dart
-SynapseSdk.instance.initialize()
+```yaml
+dependencies:
+  adsynapse_flutter_sdk:
+    git:
+      url: https://github.com/Infinit-C/adsynapse_flutter_sdk.git
+      ref: main
 ```
+
+로컬 경로 예시:
+
+```yaml
+dependencies:
+  adsynapse_flutter_sdk:
+    path: ../adsynapse_flutter_sdk
+```
+
+## 플랫폼 설정
+
+### Android (`android/app/src/main/AndroidManifest.xml`)
+
+```xml
+<meta-data
+    android:name="com.infinitc.adsynapse.app_key"
+    android:value="adsynapse-ac-xxxxxxxxxxxx-xxxxxxxxxxx" />
+
+<meta-data
+    android:name="com.infinitc.adsynapse.debug_mode"
+    android:value="false" />
+```
+
+### iOS (`ios/Runner/Info.plist`)
+
+```xml
+<key>IADApplicationIdentifier</key>
+<string>adsynapse-ac-xxxxxxxxxxxx-xxxxxxxxxxx</string>
+
+<key>ISSApplicationKey</key>
+<string>adsynapse-ss-xxxxxxxxxxxx-xxxxxxxxxxx</string>
+```
+
+## 초기화 / 상태 확인 / 해제
+
+```dart
+await AdsynapseFlutterSdkPlugin.initialize('YOUR_API_KEY');
+
+final initialized = await AdsynapseFlutterSdkPlugin.isInitialized();
+
+await AdsynapseFlutterSdkPlugin.deinitialize();
+```
+
+초기화 전에 `loadBanner`/`loadNative`를 호출하면 에러가 발생합니다.
