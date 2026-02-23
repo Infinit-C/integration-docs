@@ -19,7 +19,7 @@ Git 의존성 예시:
 dependencies:
   adsynapse_flutter_sdk:
     git:
-      url: https://github.com/Infinit-C/adsynapse_flutter_sdk.git
+      url: https://github.com/Infinit-C/adsynapse-flutter-sdk.git
       ref: main
 ```
 
