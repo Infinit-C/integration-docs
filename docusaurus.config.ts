@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'adsynapse SSP SDK 가이드 ',
   tagline: '개발자를 위한 연동 문서입니다',
-  favicon: 'img/adsynapse-colorful-favicon-16.ico',
+  favicon: 'img/favicon.svg',
 
   // 배포할 실제 URL로 변경하세요
   url: 'https://adsynapse.infinit-c.com',
@@ -63,7 +63,7 @@ const config: Config = {
     navbar: {
       logo: {
         alt: 'Site Logo',
-        src: 'img/adsynapse-colorful-large.png', // 로고 파일 경로
+        src: 'img/adsynapse-black-logo.svg', // 로고 파일 경로
       },
       items: [
         {
@@ -93,7 +93,7 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            { label: 'Web Guide', to: '/docs/integration/Web/web-script' },
+            { label: 'Flutter Guide', to: '/docs/integration/flutter/getting-started' },
             { label: 'Android Guide', to: '/docs/integration/Android/getting-started' },
             { label: 'iOS Guide', to: '/docs/integration/iOS/getting-started' },
           ],

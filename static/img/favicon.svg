@@ -1,0 +1,23 @@
+<svg width="80" height="80" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg"
+     data-fg-bvw40="44.11:58.24082:/src/app/components/AdsyNapseLogo.tsx:92:5:2188:4343:e:svg:x:1"
+     data-fgid-bvw40=":r1j:" data-fg-callsite-ds6t5="">
+    <g transform="translate(35, 35)">
+        <defs>
+            <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.7"/>
+                <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.9"/>
+            </linearGradient>
+        </defs>
+        <line x1="-12" y1="0" x2="12" y2="0" stroke="url(#iconGrad)" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="-12" y1="0" x2="0" y2="-12" stroke="#ff0082" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+        <line x1="-12" y1="0" x2="0" y2="12" stroke="#009b50" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+        <line x1="12" y1="0" x2="0" y2="-12" stroke="#ff0082" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+        <line x1="12" y1="0" x2="0" y2="12" stroke="#009b50" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="-12" cy="0" r="7" fill="#3b82f6" opacity="0.15"/>
+        <circle cx="-12" cy="0" r="5.5" fill="#3b82f6"/>
+        <circle cx="12" cy="0" r="7" fill="#0ea5e9" opacity="0.15"/>
+        <circle cx="12" cy="0" r="5.5" fill="#0ea5e9"/>
+        <circle cx="0" cy="-12" r="4" fill="#ff0082" opacity="0.85"/>
+        <circle cx="0" cy="12" r="4" fill="#009b50" opacity="0.85"/>
+    </g>
+</svg>
