@@ -1,23 +1,9 @@
-<svg width="80" height="80" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg"
-     data-fg-bvw40="44.11:58.24082:/src/app/components/AdsyNapseLogo.tsx:92:5:2188:4343:e:svg:x:1"
-     data-fgid-bvw40=":r1j:" data-fg-callsite-ds6t5="">
-    <g transform="translate(35, 35)">
-        <defs>
-            <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.7"/>
-                <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.9"/>
-            </linearGradient>
-        </defs>
-        <line x1="-12" y1="0" x2="12" y2="0" stroke="url(#iconGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="-12" y1="0" x2="0" y2="-12" stroke="#ff0082" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-        <line x1="-12" y1="0" x2="0" y2="12" stroke="#009b50" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-        <line x1="12" y1="0" x2="0" y2="-12" stroke="#ff0082" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-        <line x1="12" y1="0" x2="0" y2="12" stroke="#009b50" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-        <circle cx="-12" cy="0" r="7" fill="#3b82f6" opacity="0.15"/>
-        <circle cx="-12" cy="0" r="5.5" fill="#3b82f6"/>
-        <circle cx="12" cy="0" r="7" fill="#0ea5e9" opacity="0.15"/>
-        <circle cx="12" cy="0" r="5.5" fill="#0ea5e9"/>
-        <circle cx="0" cy="-12" r="4" fill="#ff0082" opacity="0.85"/>
-        <circle cx="0" cy="12" r="4" fill="#009b50" opacity="0.85"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 106 106" width="106" height="106">
+  <rect x="0" y="0" width="106" height="106" rx="26" fill="#0D1B2A" />
+  <rect x="22.2" y="44.0" width="6.5" height="34" rx="3.2" fill="#29B6D8" />
+  <rect x="33.2" y="32.0" width="6.5" height="46" rx="3.2" fill="#29B6D8" />
+  <rect x="44.2" y="38.0" width="6.5" height="40" rx="3.2" fill="#29B6D8" />
+  <rect x="55.2" y="22.0" width="6.5" height="56" rx="3.2" fill="#E6187F" />
+  <rect x="66.2" y="32.0" width="6.5" height="46" rx="3.2" fill="#29B6D8" />
+  <rect x="77.2" y="46.0" width="6.5" height="32" rx="3.2" fill="#29B6D8" />
 </svg>

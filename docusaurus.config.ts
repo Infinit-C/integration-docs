@@ -72,6 +72,10 @@ const config: Config = {
   themeConfig: {
     navbar: {
       title: 'INFINIT-C Docs',
+      logo: {
+        alt: 'INFINIT-C',
+        src: 'img/infinit-logo.png',
+      },
       items: [
         {
           type: 'docSidebar',
