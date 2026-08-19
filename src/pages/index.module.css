@@ -16,8 +16,11 @@
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
+.productRow {
   justify-content: center;
+  gap: 1.5rem 0;
+}
+
+.productCard {
+  height: 100%;
 }

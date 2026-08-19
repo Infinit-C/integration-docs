@@ -3,15 +3,13 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'adsynapse SSP SDK 가이드 ',
-  tagline: '개발자를 위한 연동 문서입니다',
+  title: 'INFINIT-C Docs',
+  tagline: 'INFINIT-C 제품 가이드 & 연동 문서',
   favicon: 'img/favicon.svg',
 
-  // 배포할 실제 URL로 변경하세요
-  url: 'https://adsynapse.infinit-c.com',
+  url: 'https://docs.infinit-c.com',
   baseUrl: '/',
 
-  // GitHub Pages 배포 설정 (필요 없으면 무시해도 됨)
   organizationName: 'Infinit-C',
   projectName: 'integration-docs',
 
@@ -29,10 +27,12 @@ const config: Config = {
     [
       'classic',
       {
+        // adsynapse SSP SDK 문서 (기본 인스턴스, docs/ 폴더)
         docs: {
-          sidebarPath: './sidebars.ts', // sidebars.ts 파일을 참조합니다
+          routeBasePath: 'adsynapse',
+          sidebarPath: './sidebars.ts',
         },
-        blog: false, // 블로그 기능이 필요 없으면 false, 필요하면 설정 유지
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -56,28 +56,41 @@ const config: Config = {
     // ▲▲▲
   ],
 
-  themeConfig: {
-
-
-    // ▼▼▼ [네비게이션 바 설정 (여기가 중요)] ▼▼▼
-    navbar: {
-      logo: {
-        alt: 'Site Logo',
-        src: 'img/adsynapse-black-logo.svg', // 로고 파일 경로
+  plugins: [
+    // Claire 사용 가이드 (두 번째 문서 인스턴스, docs-claire/ 폴더)
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'claire',
+        path: 'docs-claire',
+        routeBasePath: 'claire',
+        sidebarPath: './sidebars-claire.ts',
       },
+    ],
+  ],
+
+  themeConfig: {
+    navbar: {
+      title: 'INFINIT-C Docs',
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "integrationSidebar",
-          position: "left",
-          label: "Integration"
+          type: 'docSidebar',
+          sidebarId: 'claireSidebar',
+          docsPluginId: 'claire',
+          position: 'left',
+          label: 'Claire 가이드',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'integrationSidebar',
+          position: 'left',
+          label: 'adsynapse SDK',
         },
         {
           to: '/api/',
-          label: 'API Reference',
+          label: 'adsynapse API',
           position: 'left',
         },
-        // 5. 우측 GitHub 아이콘 (선택 사항)
         {
           href: 'https://github.com/Infinit-C/adsynapse',
           label: 'GitHub',
@@ -85,33 +98,34 @@ const config: Config = {
         },
       ],
     },
-    // ▲▲▲
 
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Claire',
           items: [
-            { label: 'Flutter Guide', to: '/docs/integration/flutter/getting-started' },
-            { label: 'Android Guide', to: '/docs/integration/Android/getting-started' },
-            { label: 'iOS Guide', to: '/docs/integration/iOS/getting-started' },
+            { label: '사용 가이드', to: '/claire/intro' },
+          ],
+        },
+        {
+          title: 'adsynapse SDK',
+          items: [
+            { label: 'Flutter Guide', to: '/adsynapse/integration/flutter/getting-started' },
+            { label: 'Android Guide', to: '/adsynapse/integration/Android/getting-started' },
+            { label: 'iOS Guide', to: '/adsynapse/integration/iOS/getting-started' },
           ],
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Infinit-C Co.,Ltd. All rights reserved.`,
     },
 
-    // ▼▼▼ [코드 하이라이팅 언어 추가] ▼▼▼
-    // ... 위쪽 코드 생략 ...
-
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      // ▼▼▼ [여기 수정] 에러 해결을 위해 java와 scala를 꼭 넣어주세요 ▼▼▼
       additionalLanguages: [
         'java',       // Scala가 작동하려면 Java가 필수입니다.
-        'scala',      // 에러가 나는 범인이므로 명시적으로 추가해줍니다.
+        'scala',
         'swift',      // iOS
         'objectivec', // iOS
         'kotlin',     // Android
