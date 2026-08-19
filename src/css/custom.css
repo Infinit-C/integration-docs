@@ -1,30 +1,54 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * INFINIT-C Docs 전역 스타일.
+ * 팔레트는 스튜디오(studio.infinit-c.com, creative-gen web/index.html)의
+ * 다크/라이트 변수를 Infima 변수로 옮긴 것 — 스튜디오와 톤을 맞춘다.
  */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* 스튜디오 라이트: accent #e60075 / bg #f6f6f8 / panel #fff */
+  --ifm-color-primary: #e60075;
+  --ifm-color-primary-dark: #cf0069;
+  --ifm-color-primary-darker: #c40063;
+  --ifm-color-primary-darkest: #a10052;
+  --ifm-color-primary-light: #ff0082;
+  --ifm-color-primary-lighter: #ff148d;
+  --ifm-color-primary-lightest: #ff47a4;
+
+  --ifm-background-color: #f6f6f8;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-card-background-color: #ffffff;
+  --ifm-footer-background-color: #17171a;
+  --ifm-menu-color-background-active: #e6007512;
+
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
+
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  /* 스튜디오 다크: accent #ff0082 / bg #131316 / panel #1a1a1f / card #202027 */
+  --ifm-color-primary: #ff0082;
+  --ifm-color-primary-dark: #e60075;
+  --ifm-color-primary-darker: #d9006e;
+  --ifm-color-primary-darkest: #b3005b;
+  --ifm-color-primary-light: #ff2e97;
+  --ifm-color-primary-lighter: #ff47a4;
+  --ifm-color-primary-lightest: #ff70b8;
+
+  --ifm-background-color: #131316;
+  --ifm-background-surface-color: #1a1a1f;
+  --ifm-navbar-background-color: #1a1a1f;
+  --ifm-card-background-color: #202027;
+  --ifm-footer-background-color: #1a1a1f;
+  --ifm-menu-color-background-active: #ff008218;
+
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* 히어로: 마젠타 위 흰 글자 (양 모드 공통) */
+.hero--primary {
+  --ifm-hero-text-color: #ffffff;
 }

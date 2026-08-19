@@ -70,6 +70,9 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      respectPrefersColorScheme: true, // 첫 방문 시 OS 다크/라이트 설정을 따른다
+    },
     navbar: {
       title: 'INFINIT-C Docs',
       logo: {
