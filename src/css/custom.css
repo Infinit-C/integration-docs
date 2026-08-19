@@ -1,11 +1,12 @@
 /**
  * INFINIT-C Docs 전역 스타일.
- * 팔레트는 스튜디오(studio.infinit-c.com, creative-gen web/index.html)의
- * 다크/라이트 변수를 Infima 변수로 옮긴 것 — 스튜디오와 톤을 맞춘다.
+ * 브랜드 듀오 컬러 = Claire 마크의 시안(#29b6d8) × 마젠타(#ff0082).
+ * 마젠타는 인터랙션 액센트로만 아껴 쓰고, 바탕은 잉크/화이트로 차분하게.
  */
 
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
 :root {
-  /* 스튜디오 라이트: accent #e60075 / bg #f6f6f8 / panel #fff */
   --ifm-color-primary: #e60075;
   --ifm-color-primary-dark: #cf0069;
   --ifm-color-primary-darker: #c40063;
@@ -14,41 +15,76 @@
   --ifm-color-primary-lighter: #ff148d;
   --ifm-color-primary-lightest: #ff47a4;
 
-  --ifm-background-color: #f6f6f8;
-  --ifm-background-surface-color: #ffffff;
-  --ifm-navbar-background-color: #ffffff;
-  --ifm-card-background-color: #ffffff;
-  --ifm-footer-background-color: #17171a;
-  --ifm-menu-color-background-active: #e6007512;
+  --brand-cyan: #29b6d8;
+  --brand-ink: #0b0b10;
 
-  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Pretendard",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", Roboto, sans-serif;
-
+  --ifm-font-family-base: 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Segoe UI',
+    Roboto, sans-serif;
+  --ifm-heading-font-weight: 700;
+  --ifm-global-radius: 0.5rem;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-card-background-color: #ffffff;
+  --ifm-toc-border-color: #ececf1;
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.78);
+  --ifm-navbar-shadow: none;
+  --ifm-menu-color-background-active: rgba(230, 0, 117, 0.07);
+  --ifm-footer-background-color: var(--brand-ink);
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme='dark'] {
-  /* 스튜디오 다크: accent #ff0082 / bg #131316 / panel #1a1a1f / card #202027 */
-  --ifm-color-primary: #ff0082;
-  --ifm-color-primary-dark: #e60075;
-  --ifm-color-primary-darker: #d9006e;
-  --ifm-color-primary-darkest: #b3005b;
-  --ifm-color-primary-light: #ff2e97;
-  --ifm-color-primary-lighter: #ff47a4;
-  --ifm-color-primary-lightest: #ff70b8;
+  --ifm-color-primary: #ff2e97;
+  --ifm-color-primary-dark: #ff148d;
+  --ifm-color-primary-darker: #ff0082;
+  --ifm-color-primary-darkest: #d9006e;
+  --ifm-color-primary-light: #ff47a4;
+  --ifm-color-primary-lighter: #ff5cae;
+  --ifm-color-primary-lightest: #ff85c4;
 
-  --ifm-background-color: #131316;
-  --ifm-background-surface-color: #1a1a1f;
-  --ifm-navbar-background-color: #1a1a1f;
-  --ifm-card-background-color: #202027;
-  --ifm-footer-background-color: #1a1a1f;
-  --ifm-menu-color-background-active: #ff008218;
+  --ifm-background-color: #0e0e12;
+  --ifm-background-surface-color: #16161c;
+  --ifm-card-background-color: #16161c;
+  --ifm-toc-border-color: #26262e;
+  --ifm-navbar-background-color: rgba(14, 14, 18, 0.75);
+  --ifm-menu-color-background-active: rgba(255, 46, 151, 0.1);
+  --ifm-footer-background-color: var(--brand-ink);
 
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-/* 히어로: 마젠타 위 흰 글자 (양 모드 공통) */
-.hero--primary {
-  --ifm-hero-text-color: #ffffff;
+/* ── 네비바: 글래스 ── */
+.navbar {
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+.navbar__title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ── 타이포 ── */
+h1, h2, h3, .hero__title {
+  letter-spacing: -0.02em;
+}
+
+/* ── 문서 사이드바 ── */
+.menu__link {
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+.menu__link--active {
+  font-weight: 700;
+}
+
+/* ── 푸터 ── */
+.footer--dark {
+  --ifm-footer-color: #8b8b96;
+  --ifm-footer-link-color: #b9b9c4;
+  --ifm-footer-title-color: #e8e8ee;
 }
