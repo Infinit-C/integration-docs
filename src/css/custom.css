@@ -95,6 +95,12 @@ article .theme-doc-footer-edit-meta-row {
   right: 0;
   margin: 0 !important;
 }
+/* 데스크톱: 본문과 우측 목차 사이 여백으로 밀어, 목차 구분선과 일정 간격 유지 */
+@media (min-width: 997px) {
+  article .theme-doc-footer-edit-meta-row {
+    right: -4rem;
+  }
+}
 article .theme-edit-this-page {
   display: inline-flex;
   align-items: center;
