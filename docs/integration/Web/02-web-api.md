@@ -74,14 +74,14 @@ curl \
 | 필드             | 유형      | 필수 | 설명                               |
 |----------------|---------|:--:|----------------------------------|
 | `version`      | string  | Y  | 1 ; 광고 버전                        |
-| `errorCode`    | string  | Y  | [에러 코드](#error_code) 정의를 확인해주세요. |
+| `errorCode`    | string  | Y  | [에러 코드](#에러-코드) 정의를 확인해주세요. |
 | `rotateTime`   | string  | Y  | 광고 재요청 시간(초)                     |
 | `requestId`    | string  | Y  | 요청 고유 코드. 요청 시 전달한 requestId     |
 | `adType`       | string  | Y  | 광고 유형                            |
 | `productType`  | string  | Y  | 광고 상품 구분                         |
 | `productAttrs` | string  | Y  | 광고 상품 타입                         |
 | `count`        | integer | Y  | 전달한 광고 갯수                        |
-| `ads`          | object  | Y  | [광고](#ad). array 형태              |
+| `ads`          | object  | Y  | [광고](#광고). array 형태              |
 
 #### 광고
 
