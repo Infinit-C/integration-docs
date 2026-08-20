@@ -112,7 +112,7 @@ const config: Config = {
         {
           title: 'INFINIT-C',
           items: [
-            { label: '회사 홈페이지', href: 'https://www.infinit-c.com' },
+            { label: 'Website', href: 'https://www.infinit-c.com' },
             { label: 'Claire', href: 'https://claire.infinit-c.com' },
             { label: 'adsynapse', href: 'https://console.infinit-c.com' },
           ],
@@ -120,7 +120,7 @@ const config: Config = {
         {
           title: 'Claire',
           items: [
-            { label: '사용 가이드', to: '/claire/intro' },
+            { label: 'User Guide', to: '/claire/intro' },
           ],
         },
         {
