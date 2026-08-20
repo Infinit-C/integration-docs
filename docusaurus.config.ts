@@ -31,6 +31,7 @@ const config: Config = {
         docs: {
           routeBasePath: 'adsynapse',
           sidebarPath: './sidebars.ts',
+          editUrl: 'https://github.com/Infinit-C/integration-docs/edit/main/',
         },
         blog: false,
         theme: {
@@ -65,6 +66,7 @@ const config: Config = {
         path: 'docs-claire',
         routeBasePath: 'claire',
         sidebarPath: './sidebars-claire.ts',
+        editUrl: 'https://github.com/Infinit-C/integration-docs/edit/main/',
       },
     ],
   ],

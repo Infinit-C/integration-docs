@@ -1,0 +1,36 @@
+# Decap CMS 설정 — docs.infinit-c.com/admin
+# 로그인 = GitHub 계정 (리포 쓰기 권한 필요). OAuth 중계는 studio VM의 decap-oauth.
+backend:
+  name: github
+  repo: Infinit-C/integration-docs
+  branch: main
+  base_url: https://studio.infinit-c.com
+  auth_endpoint: decap-oauth/auth
+  commit_messages:
+    update: "docs: {{path}} 수정 (CMS)"
+    create: "docs: {{path}} 생성 (CMS)"
+    delete: "docs: {{path}} 삭제 (CMS)"
+    uploadMedia: "docs: 이미지 업로드 {{path}} (CMS)"
+    deleteMedia: "docs: 이미지 삭제 {{path}} (CMS)"
+
+site_url: https://docs.infinit-c.com
+publish_mode: simple
+locale: ko
+
+media_folder: static/img/claire/uploads
+public_folder: /img/claire/uploads
+
+collections:
+  - name: claire
+    label: Claire 가이드
+    label_singular: 문서
+    folder: docs-claire
+    format: frontmatter
+    extension: md
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [title]
+    fields:
+      - {label: 제목, name: title, widget: string}
+      - {label: 사이드바 순서, name: sidebar_position, widget: number, value_type: int, min: 1}
+      - {label: 본문, name: body, widget: markdown}

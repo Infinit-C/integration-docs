@@ -1,0 +1,15 @@
+[Unit]
+Description=Decap CMS GitHub OAuth proxy (docs.infinit-c.com/admin)
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+EnvironmentFile=/etc/decap-oauth.env
+WorkingDirectory=/opt/decap-oauth
+ExecStart=/opt/decap-oauth/.venv/bin/uvicorn app:app --host 127.0.0.1 --port 8110
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
