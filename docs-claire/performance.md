@@ -29,4 +29,4 @@ title: 성과 확인
 ![캠페인 KPI 탭](/img/claire/campaign-kpi.png)
 
 사용할 수 있는 KPI 규칙 목록과 커스텀 규칙은 [지표와 KPI 규칙](/claire/targets)을 참고하세요.
-KPI를 이탈했을 때 알림을 받는 기능은 준비 중입니다.
+KPI 이탈 시 알림을 받으려면 [알림 규칙](/claire/settings#alerts--알림-규칙)을 설정하세요.

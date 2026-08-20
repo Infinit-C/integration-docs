@@ -24,8 +24,8 @@ Google 계정으로 로그인합니다. 계정은 조직(Organization) 단위로
 | **Operations → Campaign Groups / Campaigns** | 광고주 그룹·캠페인 연결과 관리 |
 | **Operations → Chats** | 조직 전체의 대화 목록 |
 | **Targets → Metric Categories / Formulas / KPI Rules** | 지표·공식·KPI 규칙 |
-| **Monitor → Alerts / Alert History** | 알림 규칙과 발생 이력 *(개선 작업 중)* |
-| **Settings** | 조직 설정, 알림 채널(Communication Groups) |
+| **Monitor → Alerts / Alert History** | 알림 규칙과 발생 이력 |
+| **Settings** | 조직 설정, 매체 연동(Platform Integrations), 알림 채널(Communication Groups) |
 | **Security** | 사용자·권한·API 키 관리 (관리자용) |
 
 우측 상단에는 검색, 알림, **다크/라이트 모드 전환**, 계정 메뉴가 있습니다.

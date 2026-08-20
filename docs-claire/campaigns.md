@@ -28,6 +28,9 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 구
 
 ![캠페인 목록과 매체 연결](/img/claire/campaign-group-campaigns.png)
 
+조직에 어떤 매체 계정이 연동돼 있는지는 **Settings → Platform Integrations**에서
+한눈에 보고 관리(연결·해제)할 수 있습니다. → [조직 설정](/claire/settings)
+
 연결된 캠페인마다 **Code**(Claire 내부 코드), 매체 **Platform**,
 **Metric aggregation**(수집 단위), **Status**가 표시됩니다.
 

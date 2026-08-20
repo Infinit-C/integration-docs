@@ -81,7 +81,9 @@ SHOTS = [
     ("metric-categories", "/metric-categories", None),
     ("metric-formulas", "/metric-formulas", None),
     ("kpi-rules", "/kpis", None),
+    ("alerts", "/alerts", None),
     ("organization-settings", "/organization-settings", None),
+    ("platform-integrations", "/platform-integrations", None),
     ("communication-groups", "/communication-groups", None),
 ]
 

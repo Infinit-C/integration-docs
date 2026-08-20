@@ -12,20 +12,30 @@ title: 조직 설정
 ![Organization Settings](/img/claire/organization-settings.png)
 
 - **My Organization** — 조직 이름·설명
-- **Platform Connections** — 매체 플랫폼 연동 관리
 - **Chat Config** — Claire 대화 관련 설정
+
+## Platform Integrations — 매체 연동
+
+조직에 연동된 매체 플랫폼 계정을 한곳에서 관리합니다. [Connect]로 새 매체를
+연동하고, 연동된 계정은 [Manage]·[Disconnect]로 관리합니다. 여기서 연동된
+계정이 [캠페인 연결](/claire/campaigns)에서 캠페인을 불러오는 원천이 됩니다.
+
+![Platform Integrations](/img/claire/platform-integrations.png)
+
+## Alerts — 알림 규칙
+
+**Monitor → Alerts**에서 알림 규칙을 만듭니다. 대상(Target)·지표(Source)·
+심각도(Severity)를 지정해 조건 이탈 시 통지를 받는 구조이며, 발생 이력은
+**Alert History**에서 확인합니다.
+
+![Alerts](/img/claire/alerts.png)
 
 ## Communication Groups — 알림 채널
 
-알림을 받을 수신 그룹을 관리합니다. 알림 규칙(Monitor → Alerts)과 연결되어
-KPI 이탈 등 이벤트 발생 시 이 그룹으로 통지됩니다.
+알림을 받을 수신 그룹을 관리합니다. 알림 규칙(Alerts)과 연결되어
+이벤트 발생 시 이 그룹으로 통지됩니다.
 
 ![Communication Groups](/img/claire/communication-groups.png)
-
-:::info 준비 중
-알림(Alerts) 기능은 현재 개선 작업 중입니다. 정식 오픈 시 이 문서에 설정
-방법이 추가됩니다.
-:::
 
 ## 사용자·권한 (관리자)
 
