@@ -82,6 +82,40 @@ h1, h2, h3, .hero__title {
   font-weight: 700;
 }
 
+/* ── 문서 편집 링크: 하단 "Edit this page" 문구 대신 우상단 연필 아이콘 ── */
+article {
+  position: relative;
+}
+article .theme-doc-footer {
+  margin-top: 0 !important;
+}
+article .theme-doc-footer-edit-meta-row {
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+  margin: 0 !important;
+}
+article .theme-edit-this-page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0; /* 텍스트 숨김 — 아이콘만 남긴다 */
+}
+article .theme-edit-this-page svg {
+  width: 1rem;
+  height: 1rem;
+}
+article .theme-edit-this-page:hover {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
 /* ── 푸터 ── */
 .footer--dark {
   --ifm-footer-color: #8b8b96;
