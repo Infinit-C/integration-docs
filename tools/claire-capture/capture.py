@@ -77,6 +77,7 @@ SHOTS = [
     ("campaign-trends", "/campaigns/24053310", lambda p: _click_tab(p, "Trends")),
     ("campaign-kpi", "/campaigns/24053310", lambda p: _click_tab(p, "KPI")),
     ("chat-panel", "/campaigns/24053310", _open_chat),
+    ("campaigns-list", "/campaigns", None),
     ("my-chats", "/my-chats", None),
     ("metric-categories", "/metric-categories", None),
     ("metric-formulas", "/metric-formulas", None),
@@ -86,6 +87,8 @@ SHOTS = [
     ("platform-integrations", "/platform-integrations", None),
     ("platform-accounts", "/platform-integrations/meta/accounts", None),
     ("communication-groups", "/communication-groups", None),
+    ("security-users", "/org/users", None),
+    ("api-keys", "/api-keys", None),
 ]
 
 

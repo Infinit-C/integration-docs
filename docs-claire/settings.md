@@ -40,5 +40,5 @@ title: 조직 설정
 
 ## 사용자·권한 (관리자)
 
-사이드바 **Security** 섹션에서 조직 사용자(Users), 사용자 그룹(User Groups),
-권한 정책(Policies), API 키(API Keys)를 관리합니다. 조직 관리자 권한이 필요합니다.
+조직 사용자·그룹·권한 정책·API 키는 사이드바 **Security** 섹션에서 관리합니다.
+→ [사용자·권한 관리](/claire/admin)
