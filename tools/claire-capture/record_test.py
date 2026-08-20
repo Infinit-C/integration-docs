@@ -21,7 +21,8 @@ OUT = HERE / "out"
 AUTO_BLUR_JS = """
 (words) => {
   const blurEl = (el) => { el.style.filter = 'blur(7px)'; };
-  const hit = (t) => words.some((w) => t.includes(w));
+  // 명시 목록 + 12자리 이상 숫자열(매체 계정·캠페인 ID) 전부 블러
+  const hit = (t) => words.some((w) => t.includes(w)) || /\\d{12,}/.test(t);
   const scan = (root) => {
     if (root.nodeType === 3) {
       if (hit(root.textContent || '') && root.parentElement) blurEl(root.parentElement);
@@ -113,11 +114,11 @@ class Recorder:
         self.pos = (60.0, 60.0)
 
     def prep(self, wait=1800):
-        """화면 전환 직후: 블러 + 커서 + 자막 레이어 재주입."""
+        """화면 전환 직후: 블러 + 커서 레이어 재주입.
+        자막은 숨기지 않는다 — 다음 caption()이 올 때까지 유지 (짧아서 놓치는 문제)."""
         self.page.wait_for_timeout(wait)
         self.page.evaluate(AUTO_BLUR_JS, SENSITIVE)
         self.page.evaluate(CURSOR_JS)
-        self.page.evaluate(CAPTION_JS, None)
 
     def caption(self, text, hold=1200):
         self.page.evaluate(CAPTION_JS, text)
@@ -186,8 +187,10 @@ def main():
         page.wait_for_timeout(1400)
 
         # 4. 캠페인 상세 → Trends 탭
+        # 대화 이력 없는 캠페인(지점1)으로 — 이력이 있으면 채팅 패널에
+        # 과거 대화(테스트 에러 응답 포함)가 그대로 보인다 (실사고)
         r.caption("캠페인 상세로 들어가 성과를 확인합니다", 900)
-        r.click(page.get_by_role("link", name="View details").first)
+        r.click(page.locator("tr", has_text="지점1").get_by_role("link", name="View details"))
         r.prep(1500)
         r.click(page.get_by_role("tab", name="Trends"))
         r.prep(1000)

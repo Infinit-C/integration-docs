@@ -35,11 +35,14 @@ SENSITIVE = [
 BLUR_JS = """
 (words) => {
   const hits = new Set();
+  // 12자리 이상 숫자열 = 매체 계정·캠페인 ID로 간주해 무조건 블러
+  // (개별 문자열 나열은 새 캠페인이 생기면 누락된다 — 실사고)
+  const hit = (t) => words.some((w) => t.includes(w)) || /\\d{12,}/.test(t);
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = walker.nextNode())) {
     const t = n.textContent || '';
-    if (words.some((w) => t.includes(w))) {
+    if (hit(t)) {
       if (n.parentElement) hits.add(n.parentElement);
     }
   }
