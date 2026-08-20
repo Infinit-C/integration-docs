@@ -25,16 +25,16 @@ title: 조직 설정
 
 ## Alerts — 알림 규칙
 
-**Monitor → Alerts**에서 알림 규칙을 만듭니다. 대상(Target)·지표(Source)·
-심각도(Severity)를 지정해 조건 이탈 시 통지를 받는 구조이며, 발생 이력은
-**Alert History**에서 확인합니다.
+**Monitor → Alerts**에서 알림 규칙을 만듭니다. 감시할 대상(Target)과
+지표(Source), 심각도(Severity)를 정해 두면 조건을 벗어났을 때 알림을 받고,
+발생 이력은 **Alert History**에 쌓입니다.
 
 ![Alerts](/img/claire/alerts.png)
 
 ## Communication Groups — 알림 채널
 
-알림을 받을 수신 그룹을 관리합니다. 알림 규칙(Alerts)과 연결되어
-이벤트 발생 시 이 그룹으로 통지됩니다.
+알림을 받을 수신 그룹을 관리합니다. 알림 규칙(Alerts)에 연결해 두면
+이벤트가 발생했을 때 이 그룹으로 알림이 갑니다.
 
 ![Communication Groups](/img/claire/communication-groups.png)
 

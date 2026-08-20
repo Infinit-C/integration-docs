@@ -22,9 +22,9 @@ title: 성과 확인
 
 ## KPI 목표 설정
 
-캠페인 상세의 **KPI 탭**에서 이 캠페인의 KPI 목표(Target)를 설정합니다.
-[Edit]를 눌러 KPI 규칙(예: Minimum CTR, Maximum CPC)에 목표값을 입력하면,
-수집된 성과가 목표 대비 어떤 상태인지 추적됩니다.
+캠페인 상세의 **KPI 탭**에서 이 캠페인의 KPI 목표를 설정합니다.
+[Edit]를 눌러 KPI 규칙(예: Minimum CTR, Maximum CPC)에 목표값을 넣으면,
+이후 수집되는 성과가 목표 대비 어떤 상태인지 추적할 수 있습니다.
 
 ![캠페인 KPI 탭](/img/claire/campaign-kpi.png)
 
