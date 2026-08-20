@@ -20,16 +20,24 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 구
 * **Campaigns** — 연결된 캠페인 목록과 매체 연결
 * **History** — 변경 이력
 
-## 매체 계정 연결과 캠페인 불러오기
+## 매체 연동과 캠페인 불러오기
 
-그룹 상세의 **Campaigns 탭**에서 매체를 연결합니다. \[Connect DV360] ·
-\[Connect Google Ads] · \[Connect SA360] 버튼으로 계정을 연동하면 해당 계정의
-캠페인을 불러와 연결할 수 있습니다.
+캠페인은 **Settings → Platform Integrations**를 거쳐 세 단계로 불러옵니다.
 
-![캠페인 목록과 매체 연결](/img/claire/campaign-group-campaigns.png)
+1. **플랫폼 연동** — Platform Integrations에서 [Connect]로 매체 플랫폼(Meta ·
+   DV360 · Google Ads · SA360)을 조직에 연동합니다.
+2. **광고 계정 불러오기** — 연동된 플랫폼의 [Manage]로 들어가 [Import accounts]로
+   그 플랫폼의 광고 계정을 불러와 저장합니다.
 
-조직에 어떤 매체 계정이 연동돼 있는지는 **Settings → Platform Integrations**에서
-한눈에 보고 관리(연결·해제)할 수 있습니다. → [조직 설정](/claire/settings)
+   ![플랫폼 계정 관리](/img/claire/platform-accounts.png)
+
+3. **캠페인 저장** — 계정의 [Manage]에서 Available campaigns 중 가져올 캠페인을
+   선택하고 [Save selected]를 누르면 Claire에 캠페인이 저장됩니다.
+
+저장된 캠페인은 캠페인 그룹 상세의 **Campaigns 탭**에서 확인하고 관리합니다
+(상단 Import campaigns 링크가 이 흐름으로 안내합니다).
+
+![캠페인 목록](/img/claire/campaign-group-campaigns.png)
 
 연결된 캠페인마다 **Code**(Claire 내부 코드), 매체 **Platform**,
 **Metric aggregation**(수집 단위), **Status**가 표시됩니다.

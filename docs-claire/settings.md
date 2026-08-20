@@ -16,9 +16,10 @@ title: 조직 설정
 
 ## Platform Integrations — 매체 연동
 
-조직에 연동된 매체 플랫폼 계정을 한곳에서 관리합니다. [Connect]로 새 매체를
-연동하고, 연동된 계정은 [Manage]·[Disconnect]로 관리합니다. 여기서 연동된
-계정이 [캠페인 연결](/claire/campaigns)에서 캠페인을 불러오는 원천이 됩니다.
+조직에 연동된 매체 플랫폼을 한곳에서 관리합니다. [Connect]로 새 플랫폼을
+연동하고, 연동된 플랫폼은 [Manage]에서 광고 계정·캠페인 불러오기를,
+[Disconnect]로 연동 해제를 처리합니다. 플랫폼 연동부터 캠페인 저장까지의
+전체 절차는 [캠페인 연결](/claire/campaigns) 문서를 보세요.
 
 ![Platform Integrations](/img/claire/platform-integrations.png)
 

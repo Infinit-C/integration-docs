@@ -84,6 +84,7 @@ SHOTS = [
     ("alerts", "/alerts", None),
     ("organization-settings", "/organization-settings", None),
     ("platform-integrations", "/platform-integrations", None),
+    ("platform-accounts", "/platform-integrations/meta/accounts", None),
     ("communication-groups", "/communication-groups", None),
 ]
 

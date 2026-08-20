@@ -181,7 +181,7 @@ def main():
         # 3. 그룹 상세 → Campaigns 탭
         r.click(page.get_by_role("link", name="View details").first)
         r.prep(1500)
-        r.caption("그룹 상세 — Campaigns 탭에서 매체와 캠페인을 연결합니다", 900)
+        r.caption("그룹 상세 — Campaigns 탭에 연동 계정에서 불러온 캠페인이 모입니다", 900)
         r.click(page.get_by_role("tab", name="Campaigns"))
         r.prep(1200)
         page.wait_for_timeout(1400)
