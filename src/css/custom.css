@@ -89,7 +89,10 @@ h1, h2, h3, .hero__title {
   --ifm-footer-title-color: #e8e8ee;
 }
 
-/* 컬럼이 화면 절반씩 벌어지지 않게 — 콘텐츠 폭 + 고정 간격 */
+/* 컬럼이 화면 절반씩 벌어지지 않게 — 콘텐츠 폭 + 고정 간격, 본문처럼 가운데 배치 */
+.footer__links {
+  justify-content: center;
+}
 .footer__links .footer__col {
   flex: 0 0 auto;
   width: auto;
