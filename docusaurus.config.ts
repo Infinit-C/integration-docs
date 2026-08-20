@@ -113,19 +113,19 @@ const config: Config = {
           title: 'INFINIT-C',
           items: [
             { label: 'Website', href: 'https://www.infinit-c.com' },
-            { label: 'Claire', href: 'https://claire.infinit-c.com' },
-            { label: 'adsynapse', href: 'https://console.infinit-c.com' },
           ],
         },
         {
           title: 'Claire',
           items: [
+            { label: 'Website', href: 'https://claire.infinit-c.com' },
             { label: 'User Guide', to: '/claire/intro' },
           ],
         },
         {
-          title: 'adsynapse SDK',
+          title: 'adsynapse',
           items: [
+            { label: 'Console', href: 'https://console.infinit-c.com' },
             { label: 'Flutter Guide', to: '/adsynapse/integration/flutter/getting-started' },
             { label: 'Android Guide', to: '/adsynapse/integration/Android/getting-started' },
             { label: 'iOS Guide', to: '/adsynapse/integration/iOS/getting-started' },
