@@ -172,9 +172,20 @@ def main():
         r.prep()
         r.caption("Claire에 로그인하면 Overview가 열립니다", 2000)
 
-        # 2. Campaign Groups
-        r.caption("캠페인 그룹 목록으로 이동합니다", 800)
-        r.click(page.get_by_role("link", name="Browse campaignGroups"))
+        # 2. Platform Integrations — 매체 연동 (개편 후 첫 설정 단계)
+        r.caption("먼저 Settings → Platform Integrations에서 매체를 연동합니다", 900)
+        r.click(page.get_by_role("link", name="Platform Integrations"))
+        r.prep(1500)
+        page.wait_for_timeout(600)
+        r.click(page.get_by_text("Manage").first)
+        r.prep(1500)
+        r.caption("연동한 플랫폼에서 광고 계정과 캠페인을 불러옵니다", 2200)
+
+        # 3. Campaign Groups — 사이드바로 이동
+        r.caption("불러온 캠페인은 캠페인 그룹으로 묶어 관리합니다", 800)
+        r.click(page.get_by_role("button", name="Campaigns"))
+        page.wait_for_timeout(500)
+        r.click(page.get_by_role("link", name="Campaign Groups"))
         r.prep(1500)
         r.caption("연결된 광고주(캠페인 그룹) 목록입니다", 2000)
 
