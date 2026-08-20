@@ -10,7 +10,11 @@ Claire는 **캠페인 성과 모니터링 + 대화형 분석** 서비스입니�
 KPI 목표 대비 현황을 추적하며 — 무엇보다, **캠페인 데이터를 아는 AI에게
 바로 질문**할 수 있습니다.
 
-![Claire 대시보드](/img/claire/overview.png)
+1분이 안 되는 아래 영상으로 전체 흐름을 먼저 보세요 — 캠페인 연결부터 Claire에게
+질문하기까지.
+
+<video controls muted playsInline width="100%" src="/video/claire/claire-flow.mp4" />
+
 
 ## 이런 일을 합니다
 
