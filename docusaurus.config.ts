@@ -100,11 +100,6 @@ const config: Config = {
           label: 'adsynapse API',
           position: 'left',
         },
-        {
-          href: 'https://github.com/Infinit-C/adsynapse',
-          label: 'GitHub',
-          position: 'right',
-        },
       ],
     },
 
