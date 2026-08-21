@@ -18,47 +18,55 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 캠
 그룹 상세에는 탭이 네 개 있습니다.
 
 - **KPI** — 이 그룹의 KPI 목표 현황
-- **Trends** — 그룹 단위 성과 추이
+- **Trends** — 그룹 캠페인들의 성과 추이 (캠페인별 시리즈로 비교)
 - **Campaigns** — 이 그룹에 연결된 캠페인 목록
 - **History** — 변경 이력
 
-## 매체 연동과 캠페인 불러오기
+## 매체 연동 — Connect 위저드
 
-캠페인은 **Settings → Platform Integrations**를 거쳐 세 단계로 불러옵니다.
+**Settings → Platform Integrations**에서 [Connect]를 누르면 4단계 안내
+위저드가 열립니다. DV360, Google Ads, Meta, SA360을 지원합니다.
 
-1. **플랫폼 연동** — Platform Integrations에서 [Connect]를 눌러 매체 플랫폼
-   (Meta, DV360, Google Ads, SA360)을 조직에 연동합니다.
-2. **광고 계정 불러오기** — 연동한 플랫폼의 [Manage]로 들어가 [Import accounts]를
-   누르면 그 플랫폼의 광고 계정을 불러와 저장할 수 있습니다.
+![플랫폼 연동 위저드](/img/claire/platform-connect.png)
 
-   ![플랫폼 계정 관리](/img/claire/platform-accounts.png)
+1. **Select platform** — 연동할 매체를 고릅니다. 이미 연동된 매체는 목록에서 숨겨집니다.
+2. **Authentication** — [Authorize]를 누르면 해당 매체의 로그인 화면으로 이동합니다.
+   연동은 OAuth 방식이라 비밀번호나 토큰을 Claire에 직접 입력하지 않으며,
+   인증이 끝나면 자동으로 다음 단계로 돌아옵니다.
+3. **Select accounts** — 그 매체의 광고 계정 목록에서 가져올 계정을 골라 [Import accounts].
+4. **Select campaigns** — 계정의 캠페인 중 등록할 것을 골라 [Finish setup].
+   예전에 삭제했던 캠페인을 다시 고르면 복원 여부를 확인합니다.
 
-3. **캠페인 저장** — 계정의 [Manage]에서 가져올 캠페인을 선택하고
-   [Save selected]를 누르면 Claire에 캠페인이 저장됩니다.
+연동을 마친 뒤에도 플랫폼의 [Manage]에서 언제든 계정을 더 가져오거나
+캠페인을 추가로 등록할 수 있습니다.
 
-저장된 캠페인은 캠페인 그룹 상세의 **Campaigns 탭**에서 확인하고 관리합니다.
-탭 상단의 [Import campaigns]를 눌러도 같은 불러오기 화면으로 이동합니다.
+![플랫폼 계정 관리](/img/claire/platform-accounts.png)
 
-![캠페인 목록](/img/claire/campaign-group-campaigns.png)
+:::caution 연동 해제 시 주의
+플랫폼을 [Disconnect]하면 그 계정으로 등록된 캠페인이 모두 비활성화되고
+`Disconnected` 상태가 됩니다. 다시 쓰려면 재연동이 필요합니다.
+:::
 
-목록에는 캠페인마다 Claire 내부 코드(Code), 매체(Platform), 수집 단위(Metric
-aggregation), 상태(Status)가 표시됩니다.
+## 캠페인 관리
 
-## 캠페인 상세
+등록된 캠페인은 캠페인 그룹 상세의 **Campaigns 탭**과 **Operations →
+Campaigns**(전체 목록)에서 관리합니다. 전체 목록에서는 코드·이름 검색과
+상태·캠페인 그룹 필터를 쓸 수 있습니다.
 
-캠페인의 [View details]로 들어가면 매체 연결 정보(URN, 연결 계정, 플랫폼
-캠페인 ID, 예산)와 함께 KPI, Trends, Alerts, History 탭이 있습니다.
+![전체 캠페인 목록](/img/claire/campaigns-list.png)
+
+캠페인 상세로 들어가면 매체 연결 정보(URN, 연결 계정, 플랫폼 캠페인 ID,
+예산, 수집 주기)와 함께 KPI, Trends, Alerts, History 탭이 있습니다.
+URN 옆 복사 버튼으로 식별자를 복사할 수 있고, 열려 있는 탭은 주소(URL)에
+저장되므로 특정 탭을 바로 가리키는 링크를 동료에게 공유할 수 있습니다.
 
 ![캠페인 상세](/img/claire/campaign-detail.png)
+
+캠페인과 캠페인 그룹은 **비활성화(Disable) → 삭제(Delete)** 순서로만 지울
+수 있습니다. 활성 상태에서는 삭제 버튼이 노출되지 않으니, 정리할 때는
+먼저 비활성화하세요.
 
 :::tip
 캠페인 상세 우하단의 채팅 버튼을 누르면, 이 캠페인의 데이터를 기준으로
 Claire에게 바로 질문할 수 있습니다. → [Claire와 대화하기](/claire/chat)
 :::
-
-## 전체 캠페인 목록
-
-그룹과 상관없이 조직의 모든 캠페인을 보려면 **Operations → Campaigns**를
-여세요. 검색창과 상태·캠페인 그룹 필터로 원하는 캠페인을 빠르게 찾을 수 있습니다.
-
-![전체 캠페인 목록](/img/claire/campaigns-list.png)
