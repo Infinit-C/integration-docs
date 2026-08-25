@@ -22,3 +22,4 @@ yarn-error.log*
 tools/claire-capture/.profile/
 __pycache__/
 tools/claire-capture/out/
+tools/claire-capture/bgm/*.mp3

@@ -176,10 +176,21 @@ def main():
         r.caption("먼저 Settings → Platform Integrations에서 매체를 연동합니다", 900)
         r.click(page.get_by_role("link", name="Platform Integrations"))
         r.prep(1500)
-        page.wait_for_timeout(600)
+        page.wait_for_timeout(700)
+
+        # 2-1. Connect 위저드 — 코드 리뷰로 확인된 4단계 연동 흐름
+        r.caption("새 매체는 [Connect] 버튼으로 연동합니다", 900)
+        r.click(page.get_by_role("link", name="Connect").first)
+        r.prep(1800)
+        r.caption("플랫폼 선택 → 인증 → 광고 계정 선택 → 캠페인 선택, 4단계 안내", 2600)
+        r.click(page.get_by_role("link", name="Cancel").first)
+        r.prep(1500)
+
+        # 2-2. 이미 연동된 플랫폼의 계정 관리
+        r.caption("연동한 플랫폼에서 광고 계정과 캠페인을 불러옵니다", 900)
         r.click(page.get_by_text("Manage").first)
         r.prep(1500)
-        r.caption("연동한 플랫폼에서 광고 계정과 캠페인을 불러옵니다", 2200)
+        page.wait_for_timeout(1600)
 
         # 3. Campaign Groups — 사이드바로 이동
         r.caption("불러온 캠페인은 캠페인 그룹으로 묶어 관리합니다", 800)
