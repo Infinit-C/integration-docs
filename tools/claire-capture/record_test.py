@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """영상 테스트 v2: 부드러운 마우스 이동 + 한글 자막 오버레이.
 
-시나리오: Overview → Campaign Groups → 그룹 상세(Campaigns 탭) → 캠페인 상세
+시나리오: Dashboard(홈) → Platform Integrations → Campaign Groups → 그룹 상세(Campaigns 탭) → 캠페인 상세
 → Trends 탭 → Claire Chat 열고 질문 입력(전송 안 함).
 출력: out/claire-flow.webm
 """
@@ -138,11 +138,10 @@ class Recorder:
         self.pos = (x, y)
 
     def click(self, locator, settle=500):
+        # 사이드바가 길어져 화면 밖(y>900)에 있는 항목은 좌표 클릭이 빗나간다 — 항상 스크롤
+        locator.scroll_into_view_if_needed()
+        self.page.wait_for_timeout(400)
         box = locator.bounding_box()
-        if not box:
-            locator.scroll_into_view_if_needed()
-            self.page.wait_for_timeout(400)
-            box = locator.bounding_box()
         cx, cy = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
         self.move_to(cx, cy)
         self.page.wait_for_timeout(250)
@@ -167,10 +166,10 @@ def main():
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         r = Recorder(page)
 
-        # 1. Overview
+        # 1. Dashboard (홈 = 기본 대시보드)
         page.goto(BASE + "/", wait_until="networkidle")
         r.prep()
-        r.caption("Claire에 로그인하면 Overview가 열립니다", 2000)
+        r.caption("Claire에 로그인하면 대시보드가 열립니다", 2000)
 
         # 2. Platform Integrations — 매체 연동 (개편 후 첫 설정 단계)
         r.caption("먼저 Settings → Platform Integrations에서 매체를 연동합니다", 900)
@@ -222,6 +221,11 @@ def main():
         r.caption("우하단 버튼으로 Claire에게 바로 질문할 수 있습니다", 900)
         r.click(page.get_by_role("button", name="Open chat"))
         page.wait_for_timeout(1800)
+        # 이전 대화가 있으면 선택 화면 — 새로운 채팅으로
+        new_chat = page.get_by_role("button", name="새로운 채팅")
+        if new_chat.count():
+            r.click(new_chat)
+            page.wait_for_timeout(1500)
         page.evaluate(AUTO_BLUR_JS, SENSITIVE)
         box = page.get_by_placeholder("메시지를 입력하세요")
         bb = box.bounding_box()

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 10
 title: 조직 설정과 알림
 ---
 
@@ -17,8 +17,8 @@ title: 조직 설정과 알림
 ## Platform Integrations — 매체 연동
 
 조직에 연동된 매체 플랫폼을 한곳에서 관리합니다. [Connect]로 새 플랫폼을
-연동하고, 연동된 플랫폼은 [Manage]에서 광고 계정·캠페인 불러오기를,
-[Disconnect]로 연동 해제를 처리합니다. 연동 절차는
+연동합니다(DV360 · Google Ads · Meta · SA360 · Kakao Moment). 연동된 플랫폼은
+[Manage]에서 광고 계정·캠페인을 불러오고, [Disconnect]로 연동을 해제합니다. 연동 절차는
 [캠페인 연결](/claire/campaigns#매체-연동--connect-위저드) 문서를 보세요.
 
 ![Platform Integrations](/img/claire/platform-integrations.png)
@@ -54,8 +54,8 @@ title: 조직 설정과 알림
 
 ## Communication Groups — 알림 채널
 
-알림을 받을 수신 그룹을 관리합니다. 알림 규칙에 연결해 두면 이벤트가
-발생했을 때 이 그룹으로 알림이 갑니다. 채널은 두 종류입니다.
+알림을 받을 수신 그룹을 관리합니다. 알림 규칙이나 [정기 요약](/claire/custom-summaries)에
+연결해 두면 이 그룹의 채널로 발송됩니다. 채널은 두 종류입니다.
 
 - **이메일** — 그룹을 만들면서 수신 주소를 등록합니다.
 - **Slack** — [Add to Slack] 버튼으로 워크스페이스에 봇을 설치해서

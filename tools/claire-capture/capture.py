@@ -64,11 +64,28 @@ def _click_tab(page, name):
 def _open_chat(page):
     page.get_by_role("button", name="Open chat").click()
     page.wait_for_timeout(2500)
+    # 이전 대화가 있으면 '기존 채팅 이어가기 / 새로운 채팅' 선택 화면이 먼저 뜬다
+    new_chat = page.get_by_role("button", name="새로운 채팅")
+    if new_chat.count():
+        new_chat.click()
+        page.wait_for_timeout(2000)
+
+
+def _first_detail(page):
+    link = page.get_by_role("link", name="View details").first
+    if not link.count():
+        print("  (목록이 비어 있어 상세 캡처 생략)")
+        return False
+    link.click()
+    page.wait_for_timeout(2500)
 
 
 # (이름, 경로, 페이지 로드 후 액션)
 SHOTS = [
-    ("overview", "/", None),
+    ("dashboard", "/", None),  # 홈은 기본 대시보드로 리다이렉트
+    ("dashboards-list", "/dashboards", None),
+    ("visualizations", "/visualizations", None),
+    ("visualization-editor", "/visualizations/78949445", None),  # 데모 시각화 편집기
     ("campaign-groups", "/campaign-groups", None),
     ("campaign-group-detail", "/campaign-groups/50103304", None),
     ("campaign-group-campaigns", "/campaign-groups/50103304",
@@ -83,9 +100,14 @@ SHOTS = [
     ("metric-formulas", "/metric-formulas", None),
     ("kpi-rules", "/kpis", None),
     ("alerts", "/alerts", None),
+    ("custom-summaries", "/custom-summaries", None),
+    ("custom-summary-new", "/custom-summaries/new", None),
+    ("custom-summary-detail", "/custom-summaries", _first_detail),
+    ("reports", "/reports", None),
     ("organization-settings", "/organization-settings", None),
     ("platform-integrations", "/platform-integrations", None),
     ("platform-accounts", "/platform-integrations/meta/accounts", None),
+    ("platform-connect", "/platform-integrations/new", None),
     ("communication-groups", "/communication-groups", None),
     ("security-users", "/org/users", None),
     ("api-keys", "/api-keys", None),
@@ -129,8 +151,8 @@ def shoot(only=None):
             if "로그인" in page.content() and "Sign in" in page.content():
                 print("!! 세션 만료 — `python capture.py login` 먼저 실행")
                 sys.exit(1)
-            if action:
-                action(page)
+            if action and action(page) is False:
+                continue
             blurred = page.evaluate(BLUR_JS, SENSITIVE)
             out = OUT / f"{name}.png"
             page.screenshot(path=str(out))

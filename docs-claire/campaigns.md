@@ -25,17 +25,22 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 캠
 ## 매체 연동 — Connect 위저드
 
 **Settings → Platform Integrations**에서 [Connect]를 누르면 4단계 안내
-위저드가 열립니다. DV360, Google Ads, Meta, SA360을 지원합니다.
+위저드가 열립니다. DV360, Google Ads, Meta, SA360, Kakao Moment를 지원합니다.
+Naver GFA는 목록에 보이지만 아직 `Not available`로 표시되어 선택할 수 없습니다.
 
 ![플랫폼 연동 위저드](/img/claire/platform-connect.png)
 
-1. **Select platform** — 연동할 매체를 고릅니다. 이미 연동된 매체는 목록에서 숨겨집니다.
+1. **Select platform** — 연동할 매체를 고릅니다. 이미 연동된 매체는 목록에서 숨겨지고, 연동 미지원 매체는 흐리게 표시됩니다.
 2. **Authentication** — [Authorize]를 누르면 해당 매체의 로그인 화면으로 이동합니다.
    연동은 OAuth 방식이라 비밀번호나 토큰을 Claire에 직접 입력하지 않으며,
    인증이 끝나면 자동으로 다음 단계로 돌아옵니다.
 3. **Select accounts** — 그 매체의 광고 계정 목록에서 가져올 계정을 골라 [Import accounts].
 4. **Select campaigns** — 계정의 캠페인 중 등록할 것을 골라 [Finish setup].
    예전에 삭제했던 캠페인을 다시 고르면 복원 여부를 확인합니다.
+
+Kakao Moment는 카카오 비즈니스 계정으로 인증하며, 광고 계정과 캠페인은 불러오지만
+예산·기간 정보는 매체에서 제공하지 않아 비어 있습니다. 예산은 캠페인 편집에서
+직접 입력할 수 있습니다.
 
 연동을 마친 뒤에도 플랫폼의 [Manage]에서 언제든 계정을 더 가져오거나
 캠페인을 추가로 등록할 수 있습니다.
@@ -50,8 +55,21 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 캠
 ## 캠페인 관리
 
 등록된 캠페인은 캠페인 그룹 상세의 **Campaigns 탭**과 **Operations →
-Campaigns**(전체 목록)에서 관리합니다. 전체 목록에서는 코드·이름 검색과
-상태·캠페인 그룹 필터를 쓸 수 있습니다.
+Campaigns**(전체 목록)에서 관리합니다. 전체 목록 상단의 필터 칸에 조건식을
+쓰고 [Apply]를 누르면 목록이 좁혀집니다. 입력 중에 필드와 값이 자동 완성되고,
+표의 캠페인 그룹·플랫폼·상태 칸에 마우스를 올리면 그 값을 필터로 바로 추가할
+수 있습니다. 필터는 주소(URL)에 담기므로 링크를 복사해 공유할 수 있습니다.
+
+```
+campaign.status: enabled AND platform: meta
+campaign_group.name: "브랜드A" AND NOT campaign.name: *테스트*
+campaign.budget.daily >= 100000
+```
+
+값은 정확히 일치해야 하며, 부분 일치는 `*브랜드*`처럼 별표를 씁니다. 쓸 수 있는
+필드는 `campaign.name` / `.code` / `.status`(enabled · disabled · disconnected), `campaign_group.name` / `.code`(`none`이면 그룹 없음), `platform`,
+`campaign.budget.daily` / `.total`, `campaign.period.start` / `.end`이며,
+`AND` `OR` `NOT`과 괄호로 조합합니다. 캠페인 그룹 목록에도 같은 필터 칸이 있습니다.
 
 ![전체 캠페인 목록](/img/claire/campaigns-list.png)
 
