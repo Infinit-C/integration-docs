@@ -57,21 +57,118 @@ Metric 유형에서는 [Add comparison]으로 **직전 같은 길이 구간과�
 
 ### 필터 조건식
 
-Filter 칸에는 검색어 형태의 조건식을 씁니다. 입력 중에 필드와 값이 자동
-완성됩니다.
+Filter 검색창에 **검색할 항목과 조건**을 입력하면 원하는 데이터만 볼 수 있습니다. 입력 중에는 사용 가능한 필드와 값이 자동 완성됩니다.
 
-```
-platform: meta AND campaign.status: enabled
-campaign_group.name: "브랜드A" AND NOT campaign.code: C-001
-campaign.budget.daily >= 100000
+```text
+campaign.name: "가을 프로모션"
 ```
 
-쓸 수 있는 필드는 `platform`, `campaign_group.code` / `.name`,
-`campaign.code` / `.name` / `.status`, `campaign.budget.daily` / `.total`,
-`campaign.period.start` / `.end`이고, 연산자는 `:`(같음), `: *`(값 있음),
-`>` `>=` `<` `<=`, `AND` `OR` `NOT`, 괄호입니다.
+- `campaign.name`: 검색할 항목
+- `:`: 일치 조건
+- `"가을 프로모션"`: 찾을 값
+
+#### 검색할 수 있는 항목
+
+| 필드 | 설명 |
+|---|---|
+| `platform` | 플랫폼 |
+| `campaign.code` | 캠페인 코드 |
+| `campaign.name` | 캠페인 이름 |
+| `campaign.status` | 캠페인 상태 |
+| `campaign_group.code` | 캠페인 그룹 코드 |
+| `campaign_group.name` | 캠페인 그룹 이름 |
+| `campaign.budget.daily` | 캠페인 일일 예산 상한 |
+| `campaign.budget.total` | 캠페인 총예산 |
+| `campaign.period.start` | 캠페인 시작 시각 |
+| `campaign.period.end` | 캠페인 종료 시각 |
+
+#### 값 일치: `:`
+
+입력한 값과 일치하는 항목을 찾습니다. 영문 대소문자는 구분하지 않으며, 값에 공백이 있으면 큰따옴표로 감싸주세요.
+
+```text
+campaign.code: 18597463
+campaign.name: "가을 프로모션"
+```
+
+#### 일부 일치와 값 존재 여부: `*`
+
+`*`는 임의의 문자열을 뜻합니다. 단독으로 사용하면 값이 존재하는 항목을 찾습니다.
+
+| 조건 | 의미 |
+|---|---|
+| `campaign.name: 가을*` | 이름이 “가을”로 시작 |
+| `campaign.name: *프로모션` | 이름이 “프로모션”으로 끝남 |
+| `campaign.name: *할인*` | 이름에 “할인”이 포함됨 |
+| `campaign_group.code: *` | 캠페인 그룹 코드가 존재함 |
+
+#### 조건 조합: `AND`, `OR`, `NOT`
+
+| 연산자 | 의미 |
+|---|---|
+| `AND` | 모든 조건을 만족 |
+| `OR` | 하나 이상의 조건을 만족 |
+| `NOT` | 해당 조건을 제외 |
+
+다음은 Google Ads 캠페인 중 일일 예산 상한이 100,000 이상인 항목을 찾습니다.
+
+```text
+platform: google_ads AND campaign.budget.daily >= 100000
+```
+
+같은 필드의 여러 값은 괄호 안에서 `OR`로 연결할 수 있습니다. 아래 두 표현은 같은 의미입니다.
+
+```text
+campaign.name: "가을 행사" OR campaign.name: "겨울 행사"
+campaign.name: ("가을 행사" OR "겨울 행사")
+```
+
+다음은 이름에 “테스트”가 들어간 캠페인을 제외합니다.
+
+```text
+NOT campaign.name: *테스트*
+```
+
+#### 조건 묶기: 괄호
+
+괄호 안의 조건을 먼저 판단합니다. 괄호가 없으면 **NOT → AND → OR** 순서로 처리합니다.
+
+다음은 이름에 “가을” 또는 “겨울”이 포함된 Google Ads 캠페인을 찾습니다.
+
+```text
+(campaign.name: *가을* OR campaign.name: *겨울*) AND platform: google_ads
+```
+
+#### 숫자와 날짜 비교
+
+| 연산자 | 숫자 비교 | 날짜 비교 |
+|---|---|---|
+| `>` | 기준값보다 큼 | 기준 시각 이후, 기준 제외 |
+| `>=` | 기준값 이상 | 기준 시각 이후, 기준 포함 |
+| `<` | 기준값보다 작음 | 기준 시각 이전, 기준 제외 |
+| `<=` | 기준값 이하 | 기준 시각 이전, 기준 포함 |
+
+숫자에는 쉼표나 통화 기호를 넣지 않습니다.
+
+```text
+campaign.budget.total >= 1000000 AND campaign.budget.total < 5000000
+```
+
+날짜와 시간은 큰따옴표로 감싸고 시간대를 지정합니다. 다음은 한국 시간 기준 2026년 9월 1일 0시부터 시작하는 캠페인을 찾습니다.
+
+```text
+campaign.period.start >= "2026-09-01T00:00:00+09:00"
+```
+
+#### 입력 시 주의사항
+
+- 여러 값은 쉼표가 아닌 `OR`로 연결합니다. `IN`은 지원하지 않습니다.
+- 일치 조건은 `=` 대신 `:`, 제외 조건은 `!=` 대신 `NOT`을 사용합니다.
+- `AND`, `OR`, `NOT`은 소문자로 입력해도 됩니다.
+- 검색창을 비우면 추가 필터 조건이 해제됩니다.
+
+### 시각화 수정 권한
 
 :::tip
-시각화는 만든 사람 또는 조직 관리자만 수정할 수 있습니다. 목록의 톱니 아이콘으로
-제목과 설정을 고칩니다. 화면에서 삭제하는 기능은 아직 없습니다.
+시각화는 만든 사람 또는 조직 관리자만 수정할 수 있습니다. 목록의 톱니 아이콘에서 제목과 설정을 변경할 수 있으며, 화면에서 삭제하는 기능은 아직 제공하지 않습니다.
 :::
