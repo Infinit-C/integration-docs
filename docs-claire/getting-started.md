@@ -8,10 +8,26 @@ title: 시작하기
 ## 로그인
 
 [claire.infinit-c.com](https://claire.infinit-c.com)에 접속해 이메일/비밀번호 또는
-Google 계정으로 로그인합니다. 계정은 조직 단위로 발급되니, 아직 없다면
-조직 관리자나 INFINIT-C 담당자에게 요청하세요.
+Google 계정으로 로그인합니다. 계정은 조직 단위로 발급되니, 이미 조직이 있다면
+조직 관리자에게 초대를 요청하세요.
 
 ![로그인 화면](/img/claire/login.png)
+
+### 조직 새로 만들기
+
+아직 조직이 없다면 로그인 화면의 **Create an organization**에서 직접 만들 수
+있습니다.
+
+1. **회사 이메일 입력** — Google Workspace 등 회사 도메인 이메일을 넣고
+   [Continue with email]을 누릅니다. gmail.com · naver.com · daum.net 같은
+   개인 메일 도메인으로는 만들 수 없고, 한 도메인당 조직은 하나만 만들 수
+   있습니다.
+2. **이메일 인증** — 받은 메일의 [Verify work email] 링크를 **24시간 안에**
+   누릅니다.
+3. **조직 설정 위저드** — 조직 이름, 관리자 이름, 비밀번호(8자 이상)를 정하고
+   [Create organization]을 누르면 조직과 관리자(root) 계정이 함께 만들어지고
+   바로 로그인됩니다. 이어지는 Slack 연동과 매체 연동 단계는 [Skip for now]로
+   건너뛰고 나중에 해도 됩니다.
 
 ## 화면 구성
 
@@ -27,7 +43,7 @@ Google 계정으로 로그인합니다. 계정은 조직 단위로 발급되니,
 | **Monitor → Alerts / Alert History** | 알림 규칙과 발생 이력 |
 | **Monitor → Custom Summaries / Reports** | 정기 성과 요약 발송, 엑셀·CSV 리포트 |
 | **Settings** | 조직 설정, 매체 연동(Platform Integrations), 알림 채널(Communication Groups) |
-| **Security** | 사용자·권한·API 키 관리 (관리자용) |
+| **Security** | 사용자·권한 관리 (관리자용) |
 
 사이드바 메뉴는 계정 권한에 따라 구성되므로 사람마다 보이는 항목이 다를 수
 있습니다. 우측 상단에는 다크/라이트 모드 전환과 계정 메뉴(프로필·로그아웃)가
@@ -42,6 +58,6 @@ Google 계정으로 로그인합니다. 계정은 조직 단위로 발급되니,
 
 1. **캠페인 그룹 만들기** — 광고주나 브랜드 단위 묶음을 먼저 만듭니다. → [캠페인 연결](/claire/campaigns)
 2. **매체 연동** — Settings → Platform Integrations에서 매체 플랫폼을 연동하고, 광고 계정과 캠페인을 불러옵니다.
-3. **성과 수집** — 캠페인 상세에서 [Collect now]를 눌러 성과 데이터를 수집합니다. → [성과 확인](/claire/performance)
+3. **성과 수집** — 캠페인 상세 우상단 메뉴(⋮)의 [Collect now]로 성과 데이터를 수집합니다. → [성과 확인](/claire/performance)
 4. **Claire에게 질문** — 우하단 채팅 버튼을 눌러 성과에 대해 물어봅니다. → [Claire와 대화하기](/claire/chat)
 5. **대시보드 구성** — 자주 보는 지표를 차트로 만들어 홈 화면에 배치합니다. → [대시보드와 시각화](/claire/dashboards)

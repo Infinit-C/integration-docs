@@ -15,12 +15,19 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 캠
 
 ![캠페인 그룹 목록](/img/claire/campaign-groups.png)
 
-그룹 상세에는 탭이 네 개 있습니다.
+그룹 상세에는 탭이 세 개 있습니다.
 
-- **KPI** — 이 그룹의 KPI 목표 현황
-- **Trends** — 그룹 캠페인들의 성과 추이 (캠페인별 시리즈로 비교)
-- **Campaigns** — 이 그룹에 연결된 캠페인 목록
+- **Dashboard** — 그룹 캠페인들의 KPI 카드와 캠페인별 성과 추이 차트.
+  [Customize]로 위젯을 직접 구성할 수 있습니다 (→ [캠페인·그룹 대시보드](/claire/dashboards#캠페인캠페인-그룹-대시보드))
+- **Campaigns** — 이 그룹에 속한 캠페인 목록 (기간 · 수집 단위 · 상태).
+  [Import campaigns]로 매체 연동 화면으로 이동해 캠페인을 더 불러옵니다.
 - **History** — 변경 이력
+
+그룹에 어떤 캠페인을 넣을지는 그룹 [Edit] 화면에서 정합니다. **Campaigns**
+칸의 [Add campaigns]를 누르면 아직 그룹이 없는 캠페인 목록이 열리고 [Add]로
+담을 수 있습니다. 이미 속한 캠페인은 각 행의 [Remove]로 뺍니다. 추가·제거는
+[Save]를 눌러야 반영되며, 캠페인 편집 화면의 **Campaign group** 선택으로 다른
+그룹에 옮길 수도 있습니다.
 
 ## 매체 연동 — Connect 위저드
 
@@ -73,10 +80,17 @@ campaign.budget.daily >= 100000
 
 ![전체 캠페인 목록](/img/claire/campaigns-list.png)
 
-캠페인 상세로 들어가면 매체 연결 정보(URN, 연결 계정, 플랫폼 캠페인 ID,
-예산, 수집 주기)와 함께 KPI, Trends, Alerts, History 탭이 있습니다.
-URN 옆 복사 버튼으로 식별자를 복사할 수 있고, 열려 있는 탭은 주소(URL)에
-저장되므로 특정 탭을 바로 가리키는 링크를 동료에게 공유할 수 있습니다.
+캠페인 상세에는 **Dashboard · Details · Alerts · History** 탭이 있습니다
+(DV360은 **Insertion orders** 탭 추가). Dashboard 탭은 KPI 카드와 성과 추이
+차트를 보여주고([성과 확인](/claire/performance)), Details 탭은 매체 연결
+정보(URN, 연결 계정, 플랫폼 캠페인 ID, 예산, 기간, 수집 주기와 다음 수집
+시각)를 보여줍니다. 캠페인 기간(시작일·종료일)은 매체에서 가져온 값이라
+Claire에서 고칠 수 없습니다. URN 옆 복사 버튼으로 식별자를 복사할 수 있고,
+열려 있는 탭은 주소(URL)에 저장되므로 특정 탭을 바로 가리키는 링크를 동료에게
+공유할 수 있습니다.
+
+우상단 메뉴(⋮)에 **Edit · Disable/Enable · Delete · KPI Target Settings ·
+Collect now**가 모여 있습니다.
 
 ![캠페인 상세](/img/claire/campaign-detail.png)
 

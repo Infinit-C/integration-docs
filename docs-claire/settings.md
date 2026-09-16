@@ -23,6 +23,14 @@ title: 조직 설정과 알림
 
 ![Platform Integrations](/img/claire/platform-integrations.png)
 
+:::caution Reauthorization required
+매체 쪽에서 인증이 만료되거나 취소되면(현재 Meta 토큰 만료 시) 상태가
+`Connected` 대신 **Reauthorization required**로 바뀌고, 그동안 이 매체의
+캠페인은 수집과 불러오기가 멈춥니다. [Reauthorize]를 눌러 Connect 위저드에서
+다시 인증하면 기존 계정·캠페인 그대로 수집이 재개됩니다. [Manage]는 재인증
+전까지 숨겨집니다.
+:::
+
 ## Alerts — 알림 규칙
 
 **Monitor → Alerts**에서 알림 규칙을 만듭니다. 조건을 벗어나면 지정한
@@ -40,14 +48,42 @@ title: 조직 설정과 알림
 - **트리거/복구 횟수** — 연속 N회 위반 시 발생, 연속 M회 정상이면 복구
   알림. 일시적 튐에 반응하지 않게 하려면 횟수를 올리세요
 - **쿨다운·반복** — 위반이 지속될 때 재알림 간격(기본 1시간)
+- **평가 기간(Evaluation window)** — 어느 구간의 데이터로 값을 계산할지 (아래 참고)
+
+### 평가 기간과 데이터 없음
+
+규칙의 **3. Set the evaluation window** 단계에서 평가값을 계산할 구간을 정합니다.
+규칙 안의 모든 감시 값이 같은 구간을 씁니다.
+
+| 항목 | 선택지 | 설명 |
+|---|---|---|
+| **Evaluation period** | Rolling window · Today so far · Month to date · All collected data | 평가 시점에서 N시간 거슬러 보기 / 오늘 0시부터 / 이달 1일부터 / 수집된 전체 |
+| **Rolling window (hours)** | 1~2160시간 | Rolling window일 때만 입력 (기본 24시간) |
+| **Aggregation** | Sum · Average · Minimum · Maximum | Sum은 구간의 원지표를 합친 뒤 공식을 계산(CTR은 총 클릭/총 노출), 나머지는 수집 시점별 값의 평균·최소·최대 |
+| **Evaluate every (minutes)** | 30~1440분 | 최소 평가 간격 (기본 30분). 수집 주기를 바꾸지는 않습니다 |
+| **Evaluation delay (minutes)** | 0~10080분 | 매체 데이터 반영 지연을 감안해 구간 끝을 뒤로 미룸 (기본 60분) |
+| **Timezone** | IANA 이름 | Today so far · Month to date의 날짜 경계 기준 |
+| **When data is missing** | Keep state without notification · Keep state and notify No data | 구간에 데이터가 없을 때의 동작 (기본은 알림 없음) |
+
+- **새로 만드는 규칙의 기본값은 "최근 24시간 합계, 60분 지연"**입니다. 예를 들어
+  13:00 평가는 어제 12:00부터 오늘 12:00 직전까지의 데이터로 계산합니다.
+- 이 기능이 생기기 **전에 만든 규칙은 All collected data(캠페인 누적 합계)**로
+  유지됩니다. 지출·노출처럼 계속 커지는 지표에 상한을 건 규칙은 캠페인이
+  오래될수록 언젠가 걸리게 되니, Rolling window로 바꾸거나 **일예산 대비 지출
+  비율(budget ratio)** 소스를 쓰세요.
+- 구간에 데이터가 없으면 0으로 보지 않고 **No data**로 기록합니다. 상태는 그대로
+  유지되고 위반·복구 연속 횟수만 초기화되며, 복구로 치지도 않습니다. 목록의
+  State에 주황색 **No data** 배지가 뜹니다. "Keep state and notify No data"를
+  고르면 채널로 No data 알림도 갑니다. 측정값이 0인 것은 정상 데이터입니다.
+- 규칙 편집 화면의 [Run evaluation preview]로 지금 설정이 실제로 어떤 구간과
+  값으로 계산되는지 저장 전에 확인할 수 있습니다.
+- 목록의 [Evaluations]를 누르면 **Evaluation history**가 열려 평가 시각, 구간,
+  결과(normal · triggered · No data), 값별 수치를 확인할 수 있습니다.
 
 알아두면 좋은 동작:
 
-- 평가는 몇 분 간격으로 자동 실행되고, 성과 수집 직후에도 즉시 평가됩니다.
-- **평가값은 캠페인의 누적 합계 기준**입니다("최근 24시간" 같은 기간 창이
-  아닙니다). 지출·노출처럼 계속 커지는 지표에 상한을 걸면 캠페인이 오래될수록
-  언젠가 걸리게 되니, 소진 감시에는 원지표 상한보다 **일예산 대비 지출
-  비율(budget ratio)** 소스가 적합합니다.
+- 평가는 자동 성과 수집이 끝난 뒤에 Evaluate every 간격에 맞춰 실행됩니다.
+  [Collect now]로 수동 수집한 데이터는 알림 평가를 일으키지 않습니다.
 - 규칙을 **수정하면 위반·복구 카운트가 초기화**되어 처음부터 다시 셉니다.
 - 규칙 삭제는 비활성화한 뒤에만 가능합니다.
 - 예산 비율 알림은 캠페인에 일예산(Daily budget max)이 설정돼 있어야 만들 수 있습니다.
@@ -66,5 +102,5 @@ title: 조직 설정과 알림
 
 ## 사용자·권한 (관리자)
 
-조직 사용자·그룹·권한 정책·API 키는 사이드바 **Security** 섹션에서 관리합니다.
+조직 사용자·그룹·권한 정책은 사이드바 **Security** 섹션에서 관리합니다.
 → [사용자·권한 관리](/claire/admin)

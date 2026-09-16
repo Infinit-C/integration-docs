@@ -40,11 +40,16 @@ title: 대시보드와 시각화
 
 | 항목 | 설명 |
 |---|---|
-| **Visualization type** | Date histogram(시계열) · Pie · Heat map · Gauge · Metric(단일 숫자) |
+| **Visualization type** | Date histogram(시계열) · Pie · Heat map · Gauge · Metric(단일 숫자) · Table(표) |
 | **Metrics** | 기본 지표(Raw metric) 또는 공식(Formula)을 고릅니다. 최대 2개, Gauge·Metric은 1개 |
 | **Buckets** | X-axis(날짜/시간 또는 지표)와 Split series(Platform · Campaign group · Campaign 중 하나)로 시리즈를 나눕니다 |
 | **Minimum interval** | 시계열의 최소 집계 단위 (`auto`, `1h`, `1d`, `1w`, `1M` 등). auto는 기간에 맞춰 자동 선택 |
 | **Filter** | 어떤 캠페인을 집계할지 조건식으로 좁힙니다 (아래 참고) |
+
+Table은 X축 값(날짜 또는 지표)을 행, 시리즈를 열로 펼친 표입니다. 행은
+X축 값 오름차순으로 고정이고 열 구성이나 정렬을 따로 설정하는 항목은 없습니다.
+조직 첫 화면의 Welcome Dashboard에 있는 안내 문구 위젯(Markdown)은 시스템이
+넣는 것이라 직접 만들거나 편집할 수 없습니다.
 
 Metric 유형에서는 [Add comparison]으로 **직전 같은 길이 구간과의 변화율**을
 함께 표시할 수 있습니다. **Metrics & axes 탭**은 단위 표기(`KRW {VALUE}`
@@ -172,3 +177,21 @@ campaign.period.start >= "2026-09-01T00:00:00+09:00"
 :::tip
 시각화는 만든 사람 또는 조직 관리자만 수정할 수 있습니다. 목록의 톱니 아이콘에서 제목과 설정을 변경할 수 있으며, 화면에서 삭제하는 기능은 아직 제공하지 않습니다.
 :::
+
+## 캠페인·캠페인 그룹 대시보드
+
+조직 공용 대시보드와 별개로, **캠페인 상세**와 **캠페인 그룹 상세**의 Dashboard
+탭은 그 캠페인(그룹)만을 위한 대시보드입니다. 처음에는 KPI 카드와 성과 추이
+차트가 기본 구성으로 보이고([성과 확인](/claire/performance#캠페인-대시보드--kpi와-성과-추이)),
+캠페인은 우상단 메뉴(⋮)의 **Customize dashboard**, 그룹은 [Customize]를 누르면
+기본 구성이 실제 위젯으로 저장되면서 편집 모드가 열립니다.
+
+- 편집 모드의 [Add visualization]에서 **Visualization**(이 캠페인·그룹의 지표로
+  새 차트 만들기) 또는 **KPI Metric**(설정된 KPI 목표를 현재·직전 값과 함께
+  카드로 추가)을 고릅니다. 조직 공용 시각화 목록에서 골라 넣는 방식은 아닙니다.
+- 이 대시보드의 시각화는 범위가 해당 캠페인·그룹으로 고정되어 편집기의 Filter
+  칸이 읽기 전용입니다. 그룹 대시보드의 KPI 카드는 그 캠페인이 그룹에서 빠지면
+  빈 값으로 표시됩니다.
+- 캠페인(그룹)당 대시보드는 하나이며, 위젯 편집에는 해당 캠페인(그룹)의 수정
+  권한이 필요합니다. 북마크·기본 대시보드 지정은 조직 공용 대시보드에만 있습니다.
+

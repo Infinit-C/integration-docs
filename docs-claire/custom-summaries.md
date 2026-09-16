@@ -32,7 +32,7 @@ title: 정기 요약 보내기
 
 본문 맨 위에 `@metric` 줄로 쓸 지표를 선언하고, 빈 줄 하나를 띄운 뒤
 마크다운으로 메시지를 씁니다. 편집기의 [Raw metric] [Formula] [KPI target]
-[Budget utilization] 버튼이나 `/metric` 명령으로 선언 줄을 넣을 수 있고,
+[Expression] [Budget utilization] 버튼이나 `/` 명령으로 선언 줄을 넣을 수 있고,
 Preview 탭에서 결과를 미리 봅니다.
 
 ```markdown
@@ -49,8 +49,12 @@ CTR {{ctr}} · 클릭 {{clicks}} · CPC {{cpc}}
 {{metrics}}
 ```
 
-- **기간**은 `all_time` · `last_24_hours` · `last_7_days` · `last_30_days` 중
-  하나입니다. `all_time`은 비교 대상이 없어 변화율이 N/A로 나옵니다.
+- **기간**은 발송 시각 기준 상대 기간 `last_24_hours` · `last_7_days` ·
+  `last_30_days`, 달력 기준 `yesterday` · `today` · `this_week`(월요일 시작) ·
+  `this_month`, 그리고 `all_time` 중 하나입니다. 달력 기간은 Schedule에서 고른
+  시간대를 따르며 `today` · `this_week` · `this_month`는 발송 시각까지를
+  집계합니다. 직전 구간(previous)은 같은 길이의 바로 앞 구간이고, `all_time`은
+  비교 대상이 없어 변화율이 N/A로 나옵니다.
 - 지표 토큰은 `{{별칭}}`(현재값), `{{별칭.previous}}`(직전 같은 길이 구간),
   `{{별칭.change}}`(변화율), `{{별칭.period}}`가 있고, `{{metrics}}`는 선언한
   지표를 모두 목록으로 펼칩니다. 이름 토큰은 `{{summary.name}}`,
