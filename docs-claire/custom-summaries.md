@@ -32,7 +32,7 @@ title: 정기 요약 보내기
 
 본문 맨 위에 `@metric` 줄로 쓸 지표를 선언하고, 빈 줄 하나를 띄운 뒤
 마크다운으로 메시지를 씁니다. 편집기의 [Raw metric] [Formula] [KPI target]
-[Expression] [Budget utilization] 버튼이나 `/` 명령으로 선언 줄을 넣을 수 있고,
+[Expression] [Budget utilization] 버튼이나 줄 맨 앞에 `/metric`을 입력해 선언 줄을 넣을 수 있고,
 Preview 탭에서 결과를 미리 봅니다.
 
 ```markdown
