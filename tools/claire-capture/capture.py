@@ -71,6 +71,27 @@ def _open_chat(page):
         page.wait_for_timeout(2000)
 
 
+def _wide_range(page):
+    """대시보드 기간 기본값(최근 24시간)은 데모 데이터가 오래돼 빈 차트가 된다 → 90일로 넓혀 찍는다."""
+    page.evaluate("""() => {
+      const end = Date.now();
+      const start = end - 90 * 24 * 60 * 60 * 1000;
+      for (const key of Object.keys(window.localStorage)) {
+        if (key.endsWith(':date-time-range:v1') || key.endsWith(':kpi-date-time-range:v1')) {
+          window.localStorage.setItem(key, JSON.stringify({startAt: start, endAt: end}));
+        }
+      }
+    }""")
+    page.reload(wait_until="networkidle")
+    page.wait_for_timeout(3000)
+
+
+def _campaign_dashboard(page):
+    _click_tab(page, "Dashboard")
+    _wide_range(page)
+    _click_tab(page, "Dashboard")
+
+
 def _first_detail(page):
     link = page.get_by_role("link", name="View details").first
     if not link.count():
@@ -90,10 +111,11 @@ SHOTS = [
     ("campaign-group-detail", "/campaign-groups/50103304", None),
     ("campaign-group-campaigns", "/campaign-groups/50103304",
      lambda p: _click_tab(p, "Campaigns")),
-    ("campaign-detail", "/campaigns/24053310", None),
-    ("campaign-trends", "/campaigns/24053310", lambda p: _click_tab(p, "Trends")),
-    ("campaign-kpi", "/campaigns/24053310", lambda p: _click_tab(p, "KPI")),
-    ("chat-panel", "/campaigns/24053310", _open_chat),
+    ("campaign-detail", "/campaigns/83901859", lambda p: _click_tab(p, "Details")),
+    # 2026-09 개편: KPI·Trends 탭 → Dashboard 탭 하나로 합쳐졌고 KPI 설정은 별도 화면
+    ("campaign-trends", "/campaigns/83901859", _campaign_dashboard),
+    ("campaign-kpi", "/campaigns/83901859/kpis/edit", None),
+    ("chat-panel", "/campaigns/83901859", _open_chat),
     ("campaigns-list", "/campaigns", None),
     ("my-chats", "/my-chats", None),
     ("metric-categories", "/metric-categories", None),
@@ -105,7 +127,7 @@ SHOTS = [
     ("custom-summary-detail", "/custom-summaries", _first_detail),
     ("reports", "/reports", None),
     ("organization-settings", "/organization-settings", None),
-    ("platform-integrations", "/platform-integrations", None),
+        ("platform-integrations", "/platform-integrations", None),
     ("platform-accounts", "/platform-integrations/meta/accounts", None),
     ("platform-connect", "/platform-integrations/new", None),
     ("communication-groups", "/communication-groups", None),
