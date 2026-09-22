@@ -34,7 +34,7 @@ title: 대시보드와 시각화
 ## 시각화 만들기
 
 **Overview → Visualizations**에서 [New visualization]을 누르면 왼쪽에 미리보기,
-오른쪽에 설정 패널이 있는 편집기가 열립니다. 설정을 바꾼 뒤 [Update]로
+오른쪽에 설정 패널이 있는 편집기가 열립니다. 설정을 바꾼 뒤 [Update visualization]으로
 미리보기를 갱신하고 [Create visualization]으로 저장합니다.
 
 ![시각화 편집기](/img/claire/visualization-editor.png)
@@ -68,9 +68,13 @@ Metric 유형을 고르면 Metrics & axes 탭 맨 위에 **Display mode**가 나
 
 Comparison card를 고르면 **Compare with**가 따라 나옵니다. **None**(비교 없음),
 **Previous period**(직전 같은 길이 구간), **KPI target**(캠페인 KPI 목표) 중에서
-고르며, KPI target은 [Select KPI target]으로 대상 목표를 지정합니다. 캠페인에
-설정된 KPI 목표가 없으면 KPI target은 선택할 수 없고, Display mode를 Normal로
-되돌리면 설정해 둔 비교는 지워집니다.
+고르며, KPI target은 [Select KPI target]으로 대상 목표를 지정합니다. Display
+mode를 Normal로 되돌리면 설정해 둔 비교는 지워집니다.
+
+**KPI target은 캠페인이 정해진 편집기에서만 고를 수 있습니다.** 캠페인·캠페인
+그룹 대시보드에서 만든 시각화가 여기에 해당하고, Overview → Visualizations에서
+새로 만드는 시각화처럼 대상 캠페인이 없으면 이 선택지가 잠깁니다. 캠페인이
+정해져 있어도 고른 지표와 원천 지표가 같은 KPI 목표만 후보로 나옵니다.
 
 미리보기 상단의 기간 선택은 **Last 24 hours · Last week · Last month ·
 Last 3 months** 네 가지이며 기본은 최근 1개월입니다. 설정을 바꾼 뒤
@@ -208,8 +212,8 @@ campaign.period.start >= "2026-09-01T00:00:00+09:00"
 차트 설정을 고치려면 목록에서 **시각화 이름을 클릭**해 편집기로 들어갑니다.
 행의 [Edit]는 이름만 바꾸는 창입니다. 수정은 만든 사람 또는 조직 수정 권한이
 있는 사람만 할 수 있고, 화면에서 삭제하는 기능은 아직 제공하지 않습니다.
-상단 ⋮ 메뉴의 [Import JSON]과 행의 [Export JSON]으로 시각화를 내보내고
-가져올 수 있습니다.
+행의 [Export JSON]으로 시각화 정의를 내보낼 수 있고, 상단 ⋮ 메뉴의
+[Import JSON]으로 가져옵니다. 가져오기는 시각화 작성 권한이 있어야 보입니다.
 :::
 
 ## 캠페인·캠페인 그룹 대시보드
