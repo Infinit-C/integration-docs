@@ -34,8 +34,9 @@ title: 대시보드와 시각화
 ## 시각화 만들기
 
 **Overview → Visualizations**에서 [New visualization]을 누르면 왼쪽에 미리보기,
-오른쪽에 설정 패널이 있는 편집기가 열립니다. 설정을 바꾼 뒤 [Update visualization]으로
-미리보기를 갱신하고 [Create visualization]으로 저장합니다.
+오른쪽에 설정 패널이 있는 편집기가 열립니다. 오른쪽 설정을 바꾼 뒤
+[Update visualization]으로 미리보기를 갱신하고, 미리보기 위의 **Filter**와
+기간을 바꿨을 때는 [Refresh]로 갱신합니다. 저장은 [Create visualization]입니다.
 
 ![시각화 편집기](/img/claire/visualization-editor.png)
 
@@ -47,7 +48,9 @@ title: 대시보드와 시각화
 | **Metrics** | 기본 지표(Raw metric) 또는 공식(Formula)을 고릅니다. 최대 2개, Gauge·Metric은 1개 |
 | **Buckets** | X-axis(날짜/시간 또는 지표)와 Split series(Platform · Campaign group · Campaign 중 하나)로 시리즈를 나눕니다 |
 | **Minimum interval** | 시계열의 최소 집계 단위 (`auto`, `1h`, `1d`, `1w`, `1M` 등). auto는 기간에 맞춰 자동 선택 |
-| **Filter** | 어떤 캠페인을 집계할지 조건식으로 좁힙니다 (아래 참고) |
+
+미리보기 바로 위에는 **Filter**(어떤 캠페인을 집계할지 좁히는 조건식, 아래 참고)와
+기간 선택, [Refresh] 버튼이 따로 놓여 있습니다.
 
 Table은 X축 값(날짜 또는 지표)을 행, 시리즈를 열로 펼친 표입니다. 행은
 X축 값 오름차순으로 고정이고 열 구성이나 정렬을 따로 설정하는 항목은 없습니다.
