@@ -71,15 +71,18 @@ Comparison card를 고르면 **Compare with**가 따라 나옵니다. **None**(�
 고르며, KPI target은 [Select KPI target]으로 대상 목표를 지정합니다. Display
 mode를 Normal로 되돌리면 설정해 둔 비교는 지워집니다.
 
-**KPI target은 캠페인이 정해진 편집기에서만 고를 수 있습니다.** 캠페인·캠페인
-그룹 대시보드에서 만든 시각화가 여기에 해당하고, Overview → Visualizations에서
-새로 만드는 시각화처럼 대상 캠페인이 없으면 이 선택지가 잠깁니다. 캠페인이
+**KPI target은 대상 캠페인이 하나로 정해진 편집기에서만 고를 수 있습니다.**
+캠페인 상세 대시보드에서 만든 시각화가 여기에 해당합니다. Overview →
+Visualizations에서 새로 만들 때나 캠페인 그룹 대시보드에서 차트를 만들 때는
+대상 캠페인이 하나로 좁혀지지 않아 이 선택지가 잠깁니다. 그룹 대시보드에
+KPI 카드를 올리려면 [Add visualization]의 **KPI Metric**을 쓰세요. 캠페인이
 정해져 있어도 고른 지표와 원천 지표가 같은 KPI 목표만 후보로 나옵니다.
 
 미리보기 상단의 기간 선택은 **Last 24 hours · Last week · Last month ·
-Last 3 months** 네 가지이며 기본은 최근 1개월입니다. 설정을 바꾼 뒤
-[Update visualization]을 누르면 미리보기만 새로 그려지고, 저장은 아래쪽
-[Create visualization] 또는 [Save changes]로 합니다. 편집 중인 설정은
+Last 3 months** 네 가지이며 기본은 최근 1개월입니다. 기간과 Filter를 바꿨을
+때는 옆의 [Refresh]로, 오른쪽 설정 패널을 바꿨을 때는 [Update visualization]으로
+미리보기를 다시 그립니다. 저장은 아래쪽 [Create visualization] 또는
+[Save changes]로 합니다. 편집 중인 설정은
 주소(URL)에 담기므로 링크를 복사해 동료에게 그대로 보여줄 수 있습니다.
 
 ### 필터 조건식
