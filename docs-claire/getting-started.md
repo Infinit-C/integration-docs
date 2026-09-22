@@ -42,13 +42,14 @@ Google 계정으로 로그인합니다. 계정은 조직 단위로 발급되니,
 | **Targets → Metric Categories / Formulas / KPI Rules** | 지표·공식·KPI 규칙 |
 | **Monitor → Alerts / Alert History** | 알림 규칙과 발생 이력 |
 | **Monitor → Custom Summaries / Reports** | 정기 성과 요약 발송, 엑셀·CSV 리포트 |
-| **Settings** | 조직 설정, 매체 연동(Platform Integrations), 알림 채널(Communication Groups) |
+| **Settings** | 조직 설정(결제 수단 포함), 매체 연동(Platform Integrations), 알림 채널(Communication Groups) |
 | **Security** | 사용자·권한 관리 (관리자용) |
 
 사이드바 메뉴는 계정 권한에 따라 구성되므로 사람마다 보이는 항목이 다를 수
 있습니다. 우측 상단에는 다크/라이트 모드 전환과 계정 메뉴(프로필·로그아웃)가
 있고, 첫 접속 시 화면 모드는 OS 설정을 따릅니다. 계정 메뉴 → **Profile**의
 **Preferences**에서 언어(한국어·English), 시간대, 강조색을 바꿀 수 있습니다.
+언어는 상단 지구본 아이콘으로도 바로 바꿀 수 있습니다.
 시간대는 기본 Asia/Seoul이며, 화면의 모든 날짜·시간과 기간 선택이 이 설정을
 따릅니다 (브라우저별로 저장).
 

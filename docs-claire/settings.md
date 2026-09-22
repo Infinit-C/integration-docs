@@ -7,12 +7,39 @@ title: 조직 설정과 알림
 
 ## Organization Settings
 
-**Settings → Organization Settings**에서 조직 정보를 관리합니다.
+**Settings → Organization Settings**에서 조직 정보를 관리합니다. 우측 상단
+계정 메뉴의 **Organization Settings**로도 같은 화면이 열립니다.
 
 ![Organization Settings](/img/claire/organization-settings.png)
 
+탭이 세 개입니다.
+
 - **My Organization** — 조직 이름·설명
 - **Chat Config** — Claire 대화 문맥의 공유 범위 (→ [대화 문맥 공유 범위](/claire/chat#대화-문맥-공유-범위))
+- **Payment methods** — 구독 결제에 쓸 카드 (아래 참고)
+
+### Payment methods — 결제 수단
+
+구독 결제에 사용할 카드를 등록해 두는 곳입니다. **카드를 등록해도 그 자리에서
+결제가 일어나지는 않습니다.**
+
+- [Add]를 누르면 토스페이먼츠 카드 등록 화면으로 이동합니다. **카드 번호와
+  인증 정보는 토스페이먼츠 화면에서 입력**하며 Claire는 카드 번호를 받지
+  않습니다. 등록이 끝나면 자동으로 결제 수단 화면으로 돌아옵니다.
+- 등록된 카드는 **Card**(카드사)와 **Card number**(끝 4자리만 남긴 마스킹
+  번호)로 표시됩니다. 등록된 카드가 없으면 "No payment methods registered."가
+  보입니다.
+- 목록 조회는 조직 읽기 권한이면 되지만, [Add]는 **조직 수정 권한**이 있어야
+  보입니다. 등록 화면을 열어 둔 채 15분이 지나면 세션이 만료되어 처음부터
+  다시 해야 합니다.
+- 카드 삭제나 기본 카드 지정은 아직 화면에서 지원하지 않습니다. 요금제 선택·
+  청구서 조회 화면도 아직 없습니다.
+
+:::note
+카드 등록을 취소하면 "Card registration was canceled.", 중간에 실패하면
+"Card registration could not be completed."가 표시됩니다. 다른 계정으로
+로그인한 뒤 등록을 이어가면 세션이 맞지 않아 처음부터 다시 시작해야 합니다.
+:::
 
 ## Platform Integrations — 매체 연동
 

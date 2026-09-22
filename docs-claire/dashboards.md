@@ -28,6 +28,9 @@ title: 대시보드와 시각화
 
 ![대시보드 목록](/img/claire/dashboards-list.png)
 
+목록 상단 [Import JSON]으로 내보내 둔 대시보드 정의를 붙여 넣으면 새 대시보드와
+그 안의 시각화가 함께 만들어집니다.
+
 ## 시각화 만들기
 
 **Overview → Visualizations**에서 [New visualization]을 누르면 왼쪽에 미리보기,
@@ -49,16 +52,31 @@ title: 대시보드와 시각화
 Table은 X축 값(날짜 또는 지표)을 행, 시리즈를 열로 펼친 표입니다. 행은
 X축 값 오름차순으로 고정이고 열 구성이나 정렬을 따로 설정하는 항목은 없습니다.
 조직 첫 화면의 Welcome Dashboard에 있는 안내 문구 위젯(Markdown)은 시스템이
-넣는 것이라 직접 만들거나 편집할 수 없습니다.
+넣는 것이라 직접 만들거나 편집할 수 없고, 대시보드 [Add widget] 목록에도
+나오지 않습니다.
 
-Metric 유형에서는 [Add comparison]으로 **직전 같은 길이 구간과의 변화율**을
-함께 표시할 수 있습니다. **Metrics & axes 탭**은 단위 표기(`KRW {VALUE}`
-처럼 `{VALUE}` 포함), 합계/평균/최신값 집계, 차트 모양(area·bar·line, 누적,
-백분율)을, **Panel settings 탭**은 범례·툴팁·색상 팔레트·임계선을 정합니다.
+**Metrics & axes 탭**은 단위 표기(`KRW {VALUE}`처럼 `{VALUE}` 포함),
+합계/평균/최신값 집계, 차트 모양(area·bar·line, 누적, 백분율)을,
+**Panel settings 탭**은 범례·툴팁·색상 팔레트·임계선을 정합니다.
 
-미리보기 상단의 기간 선택은 **Last 24 hours · 1 week · 1 month · 3 months**
-네 가지이며 기본은 최근 1개월입니다. 편집 중인 설정은 주소(URL)에 담기므로
-링크를 복사해 동료에게 그대로 보여줄 수 있습니다.
+Metric 유형을 고르면 Metrics & axes 탭 맨 위에 **Display mode**가 나타납니다.
+
+| Display mode | 결과 |
+|---|---|
+| **Normal** | 값 하나를 그대로 보여주는 기본 형태 |
+| **Comparison card** | 현재 값과 비교 대상을 나란히 놓는 KPI 카드 |
+
+Comparison card를 고르면 **Compare with**가 따라 나옵니다. **None**(비교 없음),
+**Previous period**(직전 같은 길이 구간), **KPI target**(캠페인 KPI 목표) 중에서
+고르며, KPI target은 [Select KPI target]으로 대상 목표를 지정합니다. 캠페인에
+설정된 KPI 목표가 없으면 KPI target은 선택할 수 없고, Display mode를 Normal로
+되돌리면 설정해 둔 비교는 지워집니다.
+
+미리보기 상단의 기간 선택은 **Last 24 hours · Last week · Last month ·
+Last 3 months** 네 가지이며 기본은 최근 1개월입니다. 설정을 바꾼 뒤
+[Update visualization]을 누르면 미리보기만 새로 그려지고, 저장은 아래쪽
+[Create visualization] 또는 [Save changes]로 합니다. 편집 중인 설정은
+주소(URL)에 담기므로 링크를 복사해 동료에게 그대로 보여줄 수 있습니다.
 
 ### 필터 조건식
 
@@ -172,10 +190,26 @@ campaign.period.start >= "2026-09-01T00:00:00+09:00"
 - `AND`, `OR`, `NOT`은 소문자로 입력해도 됩니다.
 - 검색창을 비우면 추가 필터 조건이 해제됩니다.
 
-### 시각화 수정 권한
+### 시각화 목록과 수정 권한
+
+**Overview → Visualizations** 목록은 이름 · **Available in** · **Type** ·
+**Last updated** 열로 이뤄지며, 각 열 머리글을 눌러 정렬할 수 있습니다.
+
+**Available in**은 이 시각화를 어디에 올릴 수 있는지를 나타냅니다.
+
+- **All dashboards** — 아무 대시보드에나 [Add widget]으로 올릴 수 있습니다.
+- **Campaign restricted** — KPI 목표에 묶인 시각화입니다. 이름 아래에 묶인
+  캠페인 이름이 함께 표시됩니다.
+
+직접 고르는 항목이 아니라 **Compare with에 KPI target을 지정했는지**에 따라
+자동으로 정해집니다.
 
 :::tip
-시각화는 만든 사람 또는 조직 관리자만 수정할 수 있습니다. 목록의 톱니 아이콘에서 제목과 설정을 변경할 수 있으며, 화면에서 삭제하는 기능은 아직 제공하지 않습니다.
+차트 설정을 고치려면 목록에서 **시각화 이름을 클릭**해 편집기로 들어갑니다.
+행의 [Edit]는 이름만 바꾸는 창입니다. 수정은 만든 사람 또는 조직 수정 권한이
+있는 사람만 할 수 있고, 화면에서 삭제하는 기능은 아직 제공하지 않습니다.
+상단 ⋮ 메뉴의 [Import JSON]과 행의 [Export JSON]으로 시각화를 내보내고
+가져올 수 있습니다.
 :::
 
 ## 캠페인·캠페인 그룹 대시보드
