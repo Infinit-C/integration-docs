@@ -25,7 +25,7 @@ title: 지표와 KPI 규칙
 ## Formulas — 파생 공식
 
 기본 지표로 계산하는 공식입니다. CTR, CVR, CPC, CPM, CPV, VTR, ROAS,
-Margin, Margin rate가 기본으로 제공되고, [New]를 눌러 조직만의 공식을
+Margin, Margin rate가 기본으로 제공되고, [New formula]를 눌러 조직만의 공식을
 추가할 수도 있습니다. 공식에는 사칙연산과 `round` · `round_up` · `round_down`
 (자릿수 지정 반올림·올림·내림) 함수를 쓸 수 있습니다.
 

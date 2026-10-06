@@ -13,7 +13,7 @@ title: 리포트 내려받기
 
 ## 리포트 정의 만들기
 
-[New]를 누르면 6단계 안내 화면이 열립니다.
+[New report]를 누르면 6단계 안내 화면이 열립니다.
 
 1. **Definition** — 이름, 집계 단위(Breakdown: Cumulative · Monthly · Weekly ·
    Daily · Hourly), 열로 쓸 차원(Dimensions: 캠페인 그룹 이름/코드, 캠페인

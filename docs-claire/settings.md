@@ -12,12 +12,16 @@ title: 조직 설정과 알림
 
 ![Organization Settings](/img/claire/organization-settings.png)
 
-탭이 세 개입니다.
+탭이 두 개입니다.
 
 - **My Organization** — 조직 이름·설명
 - **Chat Config** — Claire 대화 문맥의 공유 범위 (→ [대화 문맥 공유 범위](/claire/chat#대화-문맥-공유-범위))
-- **Payment methods** — 구독 결제에 쓸 카드 (아래 참고)
 
+{/* 임시 블라인드 — Payment methods 탭 (운영 미배포)
+- **Payment methods** — 구독 결제에 쓸 카드 (아래 참고)
+*/}
+
+{/* 임시 블라인드 — Payment methods 섹션 (운영 미배포)
 ### Payment methods — 결제 수단
 
 구독 결제에 사용할 카드를 등록해 두는 곳입니다. **카드를 등록해도 그 자리에서
@@ -40,6 +44,7 @@ title: 조직 설정과 알림
 "Card registration could not be completed."가 표시됩니다. 다른 계정으로
 로그인한 뒤 등록을 이어가면 세션이 맞지 않아 처음부터 다시 시작해야 합니다.
 :::
+*/}
 
 ## Platform Integrations — 매체 연동
 

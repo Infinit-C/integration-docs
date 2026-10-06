@@ -14,13 +14,13 @@ title: 정기 요약 보내기
 
 ## 요약 만들기
 
-[New]를 누르면 네 단계로 나뉜 입력 화면이 열립니다.
+[New Custom Summary]를 누르면 네 단계로 나뉜 입력 화면이 열립니다.
 
 ![새 요약 만들기](/img/claire/custom-summary-new.png)
 
-1. **Custom Summary target** — 캠페인 그룹 전체(Entire campaign group) 또는
-   캠페인 하나를 고릅니다. 그룹에 속하지 않은 캠페인은 Campaign group을
-   "No campaign group"으로 두고 캠페인만 고릅니다.
+1. **Custom Summary target** — 캠페인 그룹 전체 또는 캠페인 하나를
+   고릅니다. 그룹에 속하지 않은 캠페인은 Campaign group을 "No campaign group"으로
+   두고 캠페인만 고릅니다.
 2. **Summary document** — 발송할 본문입니다 (아래 참고, 최대 10,000자).
 3. **Schedule** — 요약 이름, 주기(Daily · Weekly · Monthly), 요일 또는 일자,
    발송 시각, 시간대(기본 Asia/Seoul).

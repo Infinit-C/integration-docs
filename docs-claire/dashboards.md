@@ -205,6 +205,8 @@ campaign.period.start >= "2026-09-01T00:00:00+09:00"
 **Overview → Visualizations** 목록은 이름 · **Available in** · **Type** ·
 **Last updated** 열로 이뤄지며, 각 열 머리글을 눌러 정렬할 수 있습니다.
 
+![시각화 목록](/img/claire/visualizations.png)
+
 **Available in**은 이 시각화를 어디에 올릴 수 있는지를 나타냅니다.
 
 - **All dashboards** — 아무 대시보드에나 [Add widget]으로 올릴 수 있습니다.

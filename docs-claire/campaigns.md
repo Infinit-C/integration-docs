@@ -10,7 +10,7 @@ Claire의 모든 기능은 캠페인이 연결돼 있어야 동작합니다. 캠
 
 ## 캠페인 그룹 만들기
 
-**Operations → Campaign Groups**에서 [New]를 눌러 광고주나 브랜드 단위
+**Operations → Campaign Groups**에서 [Create campaign group]을 눌러 광고주나 브랜드 단위
 그룹을 만듭니다.
 
 ![캠페인 그룹 목록](/img/claire/campaign-groups.png)
