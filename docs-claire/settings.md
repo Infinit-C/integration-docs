@@ -84,14 +84,14 @@ title: 조직 설정과 알림
 
 ### 평가 기간과 데이터 없음
 
-규칙의 **3. Set the evaluation window** 단계에서 평가값을 계산할 구간을 정합니다.
+규칙의 **3. Set the period** 단계에서 평가값을 계산할 구간을 정합니다.
 규칙 안의 모든 감시 값이 같은 구간을 씁니다.
 
 | 항목 | 선택지 | 설명 |
 |---|---|---|
-| **Evaluation period** | Rolling window · Today so far · Month to date · All collected data | 평가 시점에서 N시간 거슬러 보기 / 오늘 0시부터 / 이달 1일부터 / 수집된 전체 |
-| **Rolling window (hours)** | 1~2160시간 | Rolling window일 때만 입력 (기본 24시간) |
-| **Aggregation** | Sum · Average · Minimum · Maximum | Sum은 구간의 원지표를 합친 뒤 공식을 계산(CTR은 총 클릭/총 노출), 나머지는 수집 시점별 값의 평균·최소·최대 |
+| **Period** | Last N hours · Today so far · Month to date · All time | 평가 시점에서 N시간 거슬러 보기 / 오늘 0시부터 / 이달 1일부터 / 수집된 전체 |
+| **Hours to look back** | 1~2160시간 | Last N hours일 때만 입력 (기본 24시간) |
+| **Aggregation** | Sum · Average · Minimum · Maximum over the period | Sum은 구간의 원지표를 합친 뒤 공식을 계산(CTR은 총 클릭/총 노출), 나머지는 수집 시점별 값의 평균·최소·최대 |
 | **Evaluate every (minutes)** | 30~1440분 | 최소 평가 간격 (기본 30분). 수집 주기를 바꾸지는 않습니다 |
 | **Evaluation delay (minutes)** | 0~10080분 | 매체 데이터 반영 지연을 감안해 구간 끝을 뒤로 미룸 (기본 60분) |
 | **Timezone** | IANA 이름 | Today so far · Month to date의 날짜 경계 기준 |
@@ -99,9 +99,9 @@ title: 조직 설정과 알림
 
 - **새로 만드는 규칙의 기본값은 "최근 24시간 합계, 60분 지연"**입니다. 예를 들어
   13:00 평가는 어제 12:00부터 오늘 12:00 직전까지의 데이터로 계산합니다.
-- 이 기능이 생기기 **전에 만든 규칙은 All collected data(캠페인 누적 합계)**로
+- 이 기능이 생기기 **전에 만든 규칙은 All time(캠페인 누적 합계)**로
   유지됩니다. 지출·노출처럼 계속 커지는 지표에 상한을 건 규칙은 캠페인이
-  오래될수록 언젠가 걸리게 되니, Rolling window로 바꾸거나 **일예산 대비 지출
+  오래될수록 언젠가 걸리게 되니, Last N hours로 바꾸거나 **일예산 대비 지출
   비율(budget ratio)** 소스를 쓰세요.
 - 구간에 데이터가 없으면 0으로 보지 않고 **No data**로 기록합니다. 상태는 그대로
   유지되고 위반·복구 연속 횟수만 초기화되며, 복구로 치지도 않습니다. 목록의
@@ -119,7 +119,13 @@ title: 조직 설정과 알림
   수집한 데이터는 그 자리에서 평가되지 않고 다음 정기 평가에 반영됩니다.
 - 규칙을 **수정하면 위반·복구 카운트가 초기화**되어 처음부터 다시 셉니다.
 - 규칙 삭제는 비활성화한 뒤에만 가능합니다.
-- 예산 비율 알림은 캠페인에 일예산(Daily budget max)이 설정돼 있어야 만들 수 있습니다.
+- 예산 비율 알림은 캠페인에 일예산(Daily budget max)이 설정돼 있어야 만들 수 있고,
+  기준값은 0~100%만 입력할 수 있습니다. 지출은 Meta · Kakao Moment는 Spend,
+  그 외 매체는 Media cost 지표로 계산합니다.
+- 기준값(Threshold) 칸은 천 단위 쉼표가 붙어 표시되고, 화면의 지표 값은 소수점
+  둘째 자리까지만 보여줍니다.
+- **Alert History**의 이벤트 종류는 Triggered(발생) · Recovered(복구) ·
+  Repeated(반복 알림) · No data(데이터 없음)입니다.
 
 ## Communication Groups — 알림 채널
 
