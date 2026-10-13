@@ -6,6 +6,7 @@
   python record_meta_review.py cleanup  # 실패한 녹화가 남긴 캠페인·그룹 삭제 + Meta 해제
   python record_meta_review.py record   # 헤드 브라우저 녹화. Claire 로그인과 Facebook 로그인·동의만 직접 입력
   python record_meta_review.py restore  # (촬영 후) Meta를 다시 연결해 데모 조직을 복구
+  python record_meta_review.py rename   # restore 뒤 캠페인 이름·그룹을 데모용 익명 이름으로 되돌림
 
 - Claire 로그인은 이메일/비밀번호로 (Google OAuth는 자동화 브라우저를 막을 수 있음).
 - Facebook 화면은 블러하지 않는다 (심사 영상). Claire 화면의 광고주명·ID만 가린다.
@@ -183,6 +184,41 @@ def cleanup():
         ctx.close()
 
 
+# 재연결(복원) 시 캠페인 이름이 Meta 실제 이름으로 덮어써지고 계정명 그룹이 생긴다.
+# History 탭에서 확인한 데모용 익명 이름(2026-08-20 수정분)으로 되돌린다.
+DEMO_NAMES = {
+    "83901859": (None, "브랜드B"), "36450447": (None, "브랜드B"),
+    "24053310": ("브랜드A인지도관광객타겟", "브랜드A"), "84974901": ("브랜드A트래픽지점2", "브랜드A"),
+    "54833101": ("브랜드A트래픽영업시간", "브랜드A"), "54622417": ("브랜드A트래픽지점1", "브랜드A"),
+}
+
+
+def rename():
+    """restore 뒤: 캠페인 이름·그룹을 데모용으로 되돌리고, 복원이 만든 계정명 그룹을 지운다."""
+    with sync_playwright() as p:
+        ctx, page = _ctx(p, headed=False)
+        for code, (title, group) in DEMO_NAMES.items():
+            page.goto(f"{BASE}/campaigns/{code}/edit", wait_until="networkidle"); page.wait_for_timeout(1500)
+            sel = page.locator("select").first
+            if sel.count():
+                sel.select_option(label=group)
+            else:
+                page.get_by_role("combobox").first.click(); page.get_by_role("option", name=group).click()
+            if title:
+                page.get_by_label("Title").fill(title)
+            page.get_by_role("button", name="Save changes").click(); page.wait_for_timeout(2500)
+            print(code, "->", page.url)
+        for name in DEMO_ACCOUNTS:  # 계정명 그룹 (비어 있어야 삭제됨)
+            page.goto(BASE + "/campaign-groups", wait_until="networkidle"); page.wait_for_timeout(2000)
+            row = page.locator("tr", has_text=name)
+            if row.count():
+                row.get_by_role("link").first.click(); page.wait_for_timeout(2500)
+                print(name, "group disable:", _row_menu(page, "Disable"), "delete:", _row_menu(page, "Delete"))
+        page.goto(BASE + "/campaigns", wait_until="networkidle"); page.wait_for_timeout(2000)
+        print([r.inner_text().split("\t")[1:3] for r in page.locator("tbody tr").all()])
+        ctx.close()
+
+
 def restore():
     with sync_playwright() as p:
         ctx, page = _ctx(p, headed=True)
@@ -282,4 +318,4 @@ def record():
 
 
 if __name__ == "__main__":
-    {"prep": prep, "cleanup": cleanup, "record": record, "record_tail": record_tail, "restore": restore}.get(sys.argv[1] if len(sys.argv) > 1 else "", lambda: print(__doc__))()
+    {"prep": prep, "cleanup": cleanup, "record": record, "record_tail": record_tail, "restore": restore, "rename": rename}.get(sys.argv[1] if len(sys.argv) > 1 else "", lambda: print(__doc__))()
