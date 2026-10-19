@@ -18,9 +18,25 @@ OUT = Path.home() / "Downloads" / "claire-deck-shots"
 MANUAL = 10 * 60 * 1000
 
 
+EMAIL_BLUR_JS = """
+(keep) => {
+  const re = /[\\w.+-]+@[\\w-]+\\.[\\w.-]+/;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let n, hits = 0;
+  while ((n = walker.nextNode())) {
+    const t = n.textContent || '';
+    if (re.test(t) && !keep.some((k) => t.includes(k)) && n.parentElement) { n.parentElement.style.filter = 'blur(7px)'; hits++; }
+  }
+  return hits;
+}
+"""
+KEEP_EMAILS = ["jh.yoon@infinit-c.com"]  # 우리 수신 주소는 그대로 둔다
+
+
 def _shot(page, name):
     page.wait_for_timeout(800)
     page.evaluate(BLUR_JS, SENSITIVE)
+    page.evaluate(EMAIL_BLUR_JS, KEEP_EMAILS)
     page.screenshot(path=str(OUT / name))
     print("✓", name)
 

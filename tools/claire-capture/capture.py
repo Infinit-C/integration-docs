@@ -9,6 +9,7 @@
 - 민감 정보(광고주명·계정 ID·URN·사용자명)는 캡처 직전에 블러 CSS를 주입해 가린다.
   광고주/캠페인이 늘면 SENSITIVE 목록에 추가할 것.
 """
+import os
 import re
 import sys
 import time
@@ -18,7 +19,8 @@ from playwright.sync_api import sync_playwright
 
 BASE = "https://claire.infinit-c.com"
 HERE = Path(__file__).parent
-PROFILE = HERE / ".profile"  # gitignore 대상 — 절대 커밋 금지
+# gitignore 대상 — 절대 커밋 금지. 다른 계정은 CLAIRE_PROFILE=.profile-admin 처럼 바꿔 쓴다
+PROFILE = HERE / os.environ.get("CLAIRE_PROFILE", ".profile")
 OUT = HERE.parent.parent / "static" / "img" / "claire"
 
 # 부분 문자열 매치로 블러 처리할 민감 텍스트
@@ -153,9 +155,15 @@ def login():
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         page.goto(BASE)
         print("브라우저에서 로그인해 주세요 (이메일/비밀번호 권장 — Google OAuth는 자동화 브라우저를 차단할 수 있음)")
-        # 사이드바 Overview 링크가 보이면 로그인 완료로 판단
-        page.wait_for_selector("text=Overview", timeout=300_000)
-        page.wait_for_timeout(2000)
+        # 로그인 화면(/login)을 벗어나면 완료로 판단 (사이드바 문구는 언어·권한에 따라 다르다)
+        page.wait_for_url(lambda u: u.startswith(BASE) and "/login" not in u and "/oauth" not in u, timeout=600_000)
+        page.wait_for_load_state("networkidle")
+        # 토큰이 디스크에 내려가기 전에 닫으면 세션이 날아간다 — 한 번 더 열어 저장을 확인한 뒤 닫는다
+        page.wait_for_timeout(4000)
+        page.goto(BASE, wait_until="networkidle")
+        page.wait_for_timeout(3000)
+        if "/login" in page.url:
+            print("!! 로그인 상태가 유지되지 않음 — 다시 시도"); ctx.close(); sys.exit(1)
         print("로그인 감지 — 세션 저장 완료. 창을 닫습니다.")
         ctx.close()
 
