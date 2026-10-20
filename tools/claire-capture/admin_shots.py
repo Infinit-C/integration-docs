@@ -15,7 +15,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 from capture import BASE, PROFILE
-from deck_shots import OUT, _set_language, shot_alerts, shot_users
+from deck_shots import OUT, _set_language, shot_alerts, shot_chat, shot_summary, shot_users
 
 MANUAL = 10 * 60 * 1000
 CHANNEL_GROUP = "운영 알림 (이메일)"
@@ -198,5 +198,27 @@ def shots():
         ctx.close()
 
 
+def shots2():
+    """10/20 배포 후: 5번 맞춤 요약 편집기(저장 안 함) + 3번 채팅. 관리자 계정은 다른 조직 캠페인 채팅이 403이라 채팅은 실패할 수 있다."""
+    from capture import SENSITIVE
+    SENSITIVE.extend(["정림", "현대건설", "Smart City", "Newkiki", "카카오모먼트 캠페인", "GUGUS", "Dorelan", "VVC", "ROAS 500%"])
+    OUT.mkdir(parents=True, exist_ok=True)
+    with sync_playwright() as p:
+        ctx = p.chromium.launch_persistent_context(
+            PROFILE, headless=False, viewport={"width": 1600, "height": 1180},
+            device_scale_factor=2, locale="ko-KR", timezone_id="Asia/Seoul")
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+        page.on("response", lambda r: print(f"  [{r.status}] {r.request.method} {r.url.replace(BASE, '')[:100]} {r.text()[:300]}")
+                if "/api/" in r.url and r.status >= 400 else None)
+        wait_login(page)
+        prev = _set_language(page, "ko")
+        print("summary:", shot_summary(page, GROUP, CAMPAIGN) or "OK")
+        if "chat" in sys.argv:
+            print("chat:", shot_chat(page, "/campaigns/85837881") or "OK")
+        if prev:
+            _set_language(page, prev)
+        ctx.close()
+
+
 if __name__ == "__main__":
-    {"cleanup": cleanup, "shots": shots}.get(sys.argv[1] if len(sys.argv) > 1 else "", main)()
+    {"cleanup": cleanup, "shots": shots, "shots2": shots2}.get(sys.argv[1] if len(sys.argv) > 1 else "", main)()

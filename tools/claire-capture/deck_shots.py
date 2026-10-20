@@ -101,6 +101,67 @@ def shot_users(page):
     return note
 
 
+SUMMARY_NAME = "주간 성과 요약"
+# DV360는 비용 지표가 spend가 아니라 media_cost (alert.service.ts 참고). 기본 템플릿의 spend는 DV360에서 미리보기가 실패한다.
+SUMMARY_DOC = """@metric media_cost = raw("media_cost", period="last_7_days")
+@metric impressions = raw("impressions", period="last_7_days")
+@metric clicks = raw("clicks", period="last_7_days")
+
+# {{summary.name}}
+**{{campaign.name}}** · 최근 7일
+
+- 미디어 비용: {{media_cost.current}} (전주 대비 {{media_cost.change}})
+- 노출: {{impressions.current}} ({{impressions.change}})
+- 클릭: {{clicks.current}} ({{clicks.change}})
+"""
+CHAT_Q = "이 캠페인 최근 7일 성과를 일별로 요약하고 눈에 띄는 점을 알려줘"
+
+
+def shot_summary(page, group, campaign):
+    """새 맞춤 요약 편집기: 대상 선택 → 마크다운 모드에 지표 3개 문서 → 미리보기 탭. 저장하지 않는다."""
+    from admin_shots import _pick  # 순환 import 회피
+    page.goto(BASE + "/custom-summaries/new", wait_until="networkidle")
+    page.wait_for_timeout(2000)
+    _pick(page, "customSummaryCampaignGroup", group); page.wait_for_timeout(800)
+    _pick(page, "customSummaryCampaign", campaign); page.wait_for_timeout(800)
+    page.locator("input#name").fill(SUMMARY_NAME)
+    page.get_by_role("button", name="마크다운").click(); page.wait_for_timeout(1200)
+    ta = page.locator("main textarea").first
+    ta.click(); ta.fill(SUMMARY_DOC); page.wait_for_timeout(500)
+    page.get_by_text("미리보기", exact=True).first.click()
+    page.wait_for_timeout(5000)
+    err = page.locator("[role=status], [role=alert]").all_inner_texts()
+    page.get_by_text("2. 요약 문서").scroll_into_view_if_needed(); page.wait_for_timeout(500)
+    page.evaluate("window.scrollBy(0, -16)")
+    _shot(page, "05-summary.png")
+    note = f"미리보기 오류: {err}" if any("could not" in e or "invalid" in e.lower() for e in err) else None
+    page.goto(BASE + "/custom-summaries", wait_until="networkidle")  # 저장 없이 이탈
+    return note
+
+
+def shot_chat(page, campaign_path, question=CHAT_Q, wait_s=150):
+    """캠페인 화면의 채팅 위젯에서 새 대화를 열고 질문을 보낸 뒤 답변이 멈추면 확장 상태로 캡처한다."""
+    page.goto(BASE + campaign_path, wait_until="networkidle"); page.wait_for_timeout(2500)
+    page.get_by_role("button", name="채팅 열기").click(); page.wait_for_timeout(1500)
+    if page.get_by_role("button", name="새로운 채팅").count():
+        page.get_by_role("button", name="새로운 채팅").click(); page.wait_for_timeout(2500)
+    page.get_by_role("button", name="채팅 패널 확장").click(); page.wait_for_timeout(800)
+    ta = page.get_by_role("textbox", name="채팅 메시지"); ta.click(); ta.fill(question)
+    page.get_by_role("button", name="메시지 보내기").click()
+    import time
+    t0, last = time.time(), -1
+    while time.time() - t0 < wait_s:
+        page.wait_for_timeout(5000)
+        n = len(page.evaluate("()=>document.body.innerText"))
+        if n == last and not page.get_by_role("button", name="메시지 보내기").is_disabled() and time.time() - t0 > 20:
+            break
+        last = n
+    page.evaluate("()=>{const m=document.querySelector('[class*=overflow-y-auto]'); if(m) m.scrollTop=0}")
+    _shot(page, "03-chat.png")
+    body = page.evaluate("()=>document.body.innerText")
+    return "채팅 실패 문구가 보임" if "전송하지 못했습니다" in body else None
+
+
 SHOTS = {"1": shot_alerts, "2": shot_users}
 
 
