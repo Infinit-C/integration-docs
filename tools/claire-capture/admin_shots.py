@@ -61,8 +61,10 @@ def _api(page, method, path, body=None):
     """프론트가 쓰는 Bearer 토큰(localStorage claire.authentication)으로 API를 호출한다."""
     auth = page.evaluate("JSON.parse(localStorage.getItem('claire.authentication')||'{}')")
     token = next((v for k, v in auth.items() if "access" in k.lower() and isinstance(v, str)), None) or auth.get("token")
-    res = page.request.fetch(BASE + "/api" + path, method=method, data=body,
-                             headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    headers = {"Authorization": f"Bearer {token}"}
+    if body is not None:
+        headers["Content-Type"] = "application/json"  # DELETE는 본문 없이 (JSON 헤더만 있으면 400)
+    res = page.request.fetch(BASE + "/api" + path, method=method, data=body, headers=headers)
     try:
         return res.status, res.json()
     except Exception:
@@ -70,7 +72,7 @@ def _api(page, method, path, body=None):
 
 
 def _groups(page, org_code):
-    path = f'/channel-groups?filters=[{{"c":"orgCode","v":"{org_code}"}}]&size=50' if org_code else "/channel-groups?size=50"
+    path = f'/channel-groups?filters=[{{"c":"orgCode","v":"{org_code}"}}]&page=0&size=100' if org_code else "/channel-groups?page=0&size=100"
     st, body = _api(page, "GET", path)
     return [g for g in ((body.get("data") or []) if isinstance(body, dict) else [])
             if g.get("name") == CHANNEL_GROUP and not g.get("deleted")]
@@ -157,24 +159,29 @@ def main():
 
 
 def cleanup():
-    """덱 작업이 끝난 뒤: 만든 알림 3개와 이메일 채널 그룹(서정욱 조직·관리자 조직)을 지운다."""
+    """덱 작업이 끝난 뒤: 만든 알림 3개와 이메일 채널 그룹(서정욱 조직·관리자 조직)을 API로 지운다.
+    (목록 행 메뉴에는 확인 기록·수정만 있어 화면에서는 못 지운다.)"""
+    names = {n for n, *_ in ALERTS}
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(PROFILE, headless=False, viewport={"width": 1600, "height": 1180})
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
-        page.on("dialog", lambda d: d.accept())
         wait_login(page)
-        prev = _set_language(page, "en")
-        page.goto(BASE + "/alerts", wait_until="networkidle"); page.wait_for_timeout(1500)
-        for name, *_ in ALERTS:
-            _row_action(page, name, "^Disable")
-            _row_action(page, name, "^Delete")
-            print("  알림 삭제:", name, "남은 행:", page.locator("tbody tr", has_text=name).count())
+        st, body = _api(page, "GET", "/alerts?page=0&size=100")
+        rows = (body.get("data") or []) if isinstance(body, dict) else []
+        mine = [r for r in rows if r.get("name") in names and (r.get("campaign") or {}).get("name", CAMPAIGN) == CAMPAIGN]
+        print(f"알림 목록 {st}: 전체 {len(rows)}개, 삭제 대상 {len(mine)}개")
+        for r in mine:
+            # 켜진 알림은 삭제가 409라서 먼저 끈다
+            st0, _ = _api(page, "PATCH", f"/alerts/{r['code']}/enabled", {"enabled": False})
+            st, _ = _api(page, "DELETE", f"/alerts/{r['code']}")
+            print("  알림 끄기/삭제:", r["code"], r["name"], "->", st0, st)
         for org in (TARGET_ORG, None):
             for g in _groups(page, org):
                 st, _ = _api(page, "DELETE", f"/channel-groups/{g['code']}")
                 print("  채널 그룹 삭제:", g["code"], (g.get("org") or {}).get("name"), "->", st)
-        if prev:
-            _set_language(page, prev)
+        st, body = _api(page, "GET", "/alerts?page=0&size=100")
+        left = [r["name"] for r in ((body.get("data") or []) if isinstance(body, dict) else []) if r.get("name") in names]
+        print("남은 알림:", left or "없음", "| 남은 그룹:", [g["code"] for o in (TARGET_ORG, None) for g in _groups(page, o)] or "없음")
         ctx.close()
 
 
