@@ -23,6 +23,7 @@ CHANNEL_EMAIL = "jh.yoon@infinit-c.com"
 # 10/19 확인: 관리자 조직의 DV360 캠페인은 전부 테스트용이고 그룹이 없다. 데이터가 있는 DV360 캠페인은 서정욱 조직(453382227500)의
 # GUGUS YT Search On 뿐이라 그 조직에 이메일 채널 그룹을 API로 만들고(화면엔 조직 전환이 없음) 거기에 알림을 건다.
 TARGET_ORG = "453382227500"
+ADMIN_ORG = "150020554724"  # 채널 그룹 목록은 orgCode 필터 없이는 비어 온다
 CAMPAIGN, GROUP = "GUGUS YT Search On", "GUGUS"
 # (이름, 지표, 조건, 기준값, 중요도) — GUGUS에는 CTR 공식이 없어 Impressions로 대체. Maximum CPM은 KPI 목표 소스라 조건이 자동
 ALERTS = [
@@ -175,13 +176,13 @@ def cleanup():
             st0, _ = _api(page, "PATCH", f"/alerts/{r['code']}/enabled", {"enabled": False})
             st, _ = _api(page, "DELETE", f"/alerts/{r['code']}")
             print("  알림 끄기/삭제:", r["code"], r["name"], "->", st0, st)
-        for org in (TARGET_ORG, None):
+        for org in (TARGET_ORG, ADMIN_ORG):
             for g in _groups(page, org):
                 st, _ = _api(page, "DELETE", f"/channel-groups/{g['code']}")
                 print("  채널 그룹 삭제:", g["code"], (g.get("org") or {}).get("name"), "->", st)
         st, body = _api(page, "GET", "/alerts?page=0&size=100")
         left = [r["name"] for r in ((body.get("data") or []) if isinstance(body, dict) else []) if r.get("name") in names]
-        print("남은 알림:", left or "없음", "| 남은 그룹:", [g["code"] for o in (TARGET_ORG, None) for g in _groups(page, o)] or "없음")
+        print("남은 알림:", left or "없음", "| 남은 그룹:", [g["code"] for o in (TARGET_ORG, ADMIN_ORG) for g in _groups(page, o)] or "없음")
         ctx.close()
 
 
