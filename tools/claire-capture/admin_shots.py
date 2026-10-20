@@ -214,7 +214,7 @@ def shots2():
         prev = _set_language(page, "ko")
         print("summary:", shot_summary(page, GROUP, CAMPAIGN) or "OK")
         if "chat" in sys.argv:
-            print("chat:", shot_chat(page, "/campaigns/85837881") or "OK")
+            print("chat:", shot_chat(page) or "OK")
         if prev:
             _set_language(page, prev)
         ctx.close()

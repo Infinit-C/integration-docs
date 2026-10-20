@@ -114,7 +114,7 @@ SUMMARY_DOC = """@metric media_cost = raw("media_cost", period="last_7_days")
 - 노출: {{impressions.current}} ({{impressions.change}})
 - 클릭: {{clicks.current}} ({{clicks.change}})
 """
-CHAT_Q = "이 캠페인 최근 7일 성과를 일별로 요약하고 눈에 띄는 점을 알려줘"
+CHAT_Q = "광고 캠페인의 CPM이 갑자기 올랐을 때 먼저 점검해야 할 항목을 정리해줘"  # 일반 질문: 채팅이 되는 것만 보여주는 용도
 
 
 def shot_summary(page, group, campaign):
@@ -139,16 +139,15 @@ def shot_summary(page, group, campaign):
     return note
 
 
-def shot_chat(page, campaign_path, question=CHAT_Q, wait_s=150):
-    """캠페인 화면의 채팅 위젯에서 새 대화를 열고 질문을 보낸 뒤 답변이 멈추면 확장 상태로 캡처한다."""
-    page.goto(BASE + campaign_path, wait_until="networkidle"); page.wait_for_timeout(2500)
+def shot_chat(page, question=CHAT_Q, wait_s=180):
+    """메인 대시보드에서 채팅 위젯을 열어 일반 질문을 보내고(캠페인 채팅은 다른 조직이면 403), 답변 후 패널을 확장해 맨 위에서 캡처."""
+    import time
+    page.goto(BASE, wait_until="networkidle"); page.wait_for_timeout(2500)
     page.get_by_role("button", name="채팅 열기").click(); page.wait_for_timeout(1500)
     if page.get_by_role("button", name="새로운 채팅").count():
         page.get_by_role("button", name="새로운 채팅").click(); page.wait_for_timeout(2500)
-    page.get_by_role("button", name="채팅 패널 확장").click(); page.wait_for_timeout(800)
     ta = page.get_by_role("textbox", name="채팅 메시지"); ta.click(); ta.fill(question)
     page.get_by_role("button", name="메시지 보내기").click()
-    import time
     t0, last = time.time(), -1
     while time.time() - t0 < wait_s:
         page.wait_for_timeout(5000)
@@ -156,7 +155,8 @@ def shot_chat(page, campaign_path, question=CHAT_Q, wait_s=150):
         if n == last and not page.get_by_role("button", name="메시지 보내기").is_disabled() and time.time() - t0 > 20:
             break
         last = n
-    page.evaluate("()=>{const m=document.querySelector('[class*=overflow-y-auto]'); if(m) m.scrollTop=0}")
+    # 확장하면 패널이 다시 마운트되어 스크롤이 맨 위로 간다
+    page.get_by_role("button", name="채팅 패널 확장").click(); page.wait_for_timeout(1000)
     _shot(page, "03-chat.png")
     body = page.evaluate("()=>document.body.innerText")
     return "채팅 실패 문구가 보임" if "전송하지 못했습니다" in body else None
