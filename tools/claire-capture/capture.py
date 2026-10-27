@@ -17,7 +17,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-BASE = "https://claire.infinit-c.com"
+BASE = os.environ.get("CLAIRE_BASE", "https://claire.infinit-c.com")  # 공개 도메인이 막히면 CLAIRE_BASE=http://100.93.154.57:13020
 HERE = Path(__file__).parent
 # gitignore 대상 — 절대 커밋 금지. 다른 계정은 CLAIRE_PROFILE=.profile-admin 처럼 바꿔 쓴다
 PROFILE = HERE / os.environ.get("CLAIRE_PROFILE", ".profile")
