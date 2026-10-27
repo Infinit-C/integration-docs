@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """클레어 프론트 읽기 전용 점검 크롤러.
 
-사용법: CLAIRE_PROFILE=.profile-admin python audit.py
+사용법: CLAIRE_PROFILE=.profile-admin AUDIT_OUT=audit python audit.py  (AUDIT_OUT: out/ 아래 출력 폴더명)
 - 헤드 브라우저를 띄우고 사용자가 로그인할 때까지(최대 30분) 기다린다. 점검이 끝날 때까지 창을 닫지 않는다.
 - 사이드바의 모든 메뉴 → 목록의 첫 상세 → '새로 만들기' 폼을 GET 이동으로만 순회한다. 버튼은 누르지 않는다.
 - 페이지마다 콘솔 오류, 4xx/5xx 응답, 404, 번역 누락 의심 문자열, 가로 넘침, 중복 표 머리글, 빈 본문을 기록하고 캡처를 남긴다.
@@ -9,6 +9,7 @@
 - 출력: out/audit/report.json, out/audit/*.png, 마지막에 요약 출력.
 """
 import json
+import os
 import re
 import sys
 import time
@@ -20,7 +21,7 @@ from playwright.sync_api import sync_playwright
 from capture import BASE, PROFILE
 from deck_shots import _set_language
 
-OUT = Path(__file__).parent / "out" / "audit"
+OUT = Path(__file__).parent / "out" / os.environ.get("AUDIT_OUT", "audit")
 MANUAL = 30 * 60 * 1000
 SKIP = re.compile(r"logout|sign-?out|oauth|/api/|mailto:|^https?://(?!claire\.infinit-c\.com)", re.I)
 # 번역 누락·렌더 사고 의심 패턴
@@ -135,7 +136,7 @@ def main():
         page.goto(BASE, wait_until="networkidle")
         if "/login" in page.url:
             print(">> 이 창에서 관리자 계정으로 로그인해 주세요. 점검이 끝날 때까지 창은 닫히지 않습니다.", flush=True)
-            page.wait_for_selector("a[href='/campaigns'], a[href^='/dashboards']", timeout=MANUAL)
+            page.wait_for_selector("a[href^='/dashboards'], a[href='/my-chats']", timeout=MANUAL)
             page.wait_for_timeout(3000)
         print("로그인 확인:", page.url, flush=True)
         a = Audit(page)

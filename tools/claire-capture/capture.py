@@ -155,8 +155,8 @@ def login():
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         page.goto(BASE)
         print("브라우저에서 로그인해 주세요 (이메일/비밀번호 권장 — Google OAuth는 자동화 브라우저를 차단할 수 있음)")
-        # 로그인 화면(/login)을 벗어나면 완료로 판단 (사이드바 문구는 언어·권한에 따라 다르다)
-        page.wait_for_url(lambda u: u.startswith(BASE) and "/login" not in u and "/oauth" not in u, timeout=600_000)
+        # 첫 진입 시 "/"가 /login으로 넘어가기 전에 조건을 통과하는 경합이 있어 사이드바 링크로 판단한다
+        page.wait_for_selector("a[href^='/dashboards'], a[href='/my-chats']", timeout=600_000)
         page.wait_for_load_state("networkidle")
         # 토큰이 디스크에 내려가기 전에 닫으면 세션이 날아간다 — 한 번 더 열어 저장을 확인한 뒤 닫는다
         page.wait_for_timeout(4000)

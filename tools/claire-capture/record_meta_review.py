@@ -206,8 +206,10 @@ def rename():
                 page.get_by_role("combobox").first.click(); page.get_by_role("option", name=group).click()
             if title:
                 page.get_by_label("Title").fill(title)
-            page.get_by_role("button", name="Save changes").click(); page.wait_for_timeout(2500)
-            print(code, "->", page.url)
+            save = page.get_by_role("button", name="Save changes")
+            if save.is_enabled():  # 이미 데모 이름이면 저장 버튼이 비활성
+                save.click(); page.wait_for_timeout(2500)
+            print(code, "->", page.url, "(변경 없음)" if "/edit" in page.url else "")
         for name in DEMO_ACCOUNTS:  # 계정명 그룹 (비어 있어야 삭제됨)
             page.goto(BASE + "/campaign-groups", wait_until="networkidle"); page.wait_for_timeout(2000)
             row = page.locator("tr", has_text=name)
