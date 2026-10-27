@@ -109,6 +109,12 @@ class Audit:
 
 
 def nav_links(page):
+    # 접힌 메뉴(캠페인 등)를 펼쳐야 하위 링크가 DOM에 생긴다
+    for b in page.locator("nav button[aria-expanded='false'], aside button[aria-expanded='false']").all():
+        try:
+            b.click(); page.wait_for_timeout(300)
+        except Exception:
+            pass
     hrefs = page.locator("nav a[href], aside a[href]").evaluate_all("els=>els.map(e=>e.getAttribute('href'))")
     seen, out = set(), []
     for h in hrefs:
@@ -152,6 +158,13 @@ def main():
                     for t in [l for l in sub if l.startswith(d + "/") and not SKIP.search(l)][:4]:
                         if t not in detail_seen:
                             detail_seen.add(t); a.visit(BASE + t, "ko")
+                    # 상세 화면의 탭(role=tab)도 한 번씩 열어 캡처
+                    for tab in page.get_by_role("tab").all_inner_texts()[1:6]:
+                        try:
+                            page.get_by_role("tab", name=tab, exact=True).click(); page.wait_for_timeout(2500)
+                            page.screenshot(path=str(OUT / f"ko-{slug(d)}-tab-{tab}.png"), full_page=True)
+                        except Exception as e:
+                            print("  tab fail", d, tab, str(e)[:80])
 
         # 2) 영어: 사이드바만 (번역 누락·레이아웃 깨짐 비교)
         _set_language(page, "en")
