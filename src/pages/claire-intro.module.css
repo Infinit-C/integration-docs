@@ -53,3 +53,19 @@
 .ctaTitle { font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -0.02em; max-width: 36rem; margin: 0 auto 1.8rem; word-break: keep-all; }
 .ctaRow { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 .ctaRow :global(.button--outline) { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; max-width: 62rem; margin: 0 auto; }
+.feature { padding: 1.1rem 1.25rem; border-radius: 12px; border: 1px solid var(--ifm-color-emphasis-200); word-break: keep-all; }
+.feature h3 { margin-top: 0; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--ifm-color-emphasis-800); line-height: 1.65; }
+
+.steps { list-style: none; padding: 0; max-width: 44rem; margin: 0 auto; display: grid; gap: 1.25rem; }
+.steps li { display: flex; gap: 1rem; align-items: flex-start; word-break: keep-all; }
+.steps li > div { flex: 1; }
+.steps p { margin: 0; color: var(--ifm-color-emphasis-800); line-height: 1.65; }
+.time { font-size: 0.8rem; font-weight: 700; color: var(--ifm-color-primary); margin-left: 0.5rem; }
+
+.faq { max-width: 44rem; margin: 0 auto; display: grid; gap: 0.75rem; }
+.faq details { border: 1px solid var(--ifm-color-emphasis-200); border-radius: 12px; padding: 0.9rem 1.2rem; background: var(--ifm-card-background-color); }
+.faq summary { cursor: pointer; font-weight: 700; word-break: keep-all; }
+.faq p { margin: 0.7rem 0 0; line-height: 1.7; color: var(--ifm-color-emphasis-800); word-break: keep-all; }
