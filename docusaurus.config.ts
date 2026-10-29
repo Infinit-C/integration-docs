@@ -89,6 +89,11 @@ const config: Config = {
       },
       items: [
         {
+          to: '/claire-intro',
+          label: 'Claire 소개',
+          position: 'left',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'claireSidebar',
           docsPluginId: 'claire',
@@ -122,6 +127,7 @@ const config: Config = {
           title: 'Claire',
           items: [
             { label: 'Website', href: 'https://claire.infinit-c.com' },
+            { label: '소개', to: '/claire-intro' },
             { label: 'User Guide', to: '/claire/intro' },
           ],
         },
