@@ -56,12 +56,12 @@ const after = ['연결된 캠페인 지표가 한 화면에 자동 수집', '정
 
 export default function ClaireIntro(): React.ReactElement {
   return (
-    <Layout title="Claire 소개" description="캠페인의 플래닝, 운영 최적화, 리포트를 클레어의 AI가 모두 도와드립니다. 단 한 번의 매체 연결과 목표 설정으로 성과 관리와 알림까지 자동 세팅됩니다.">
+    <Layout title="Claire 소개" description="캠페인의 플래닝, 운영 최적화, 리포트까지 클레어의 AI가 모두 도와드립니다. 단 한 번의 매체 연결과 목표 설정으로 성과 관리와 알림까지 자동 세팅됩니다.">
       <header className={styles.hero}>
         <div className="container">
           <p className={styles.eyebrow}>CLAIRE · AI MARKETING ASSISTANT</p>
           <Heading as="h1" className={styles.heroTitle}>
-            캠페인의 플래닝, 운영 최적화, 리포트<br /><span className={styles.gradientText}>클레어의 AI</span>가 모두 도와드립니다
+            캠페인의 플래닝, 운영 최적화, 리포트까지<br /><span className={styles.gradientText}>클레어의 AI</span>가 모두 도와드립니다
           </Heading>
           <p className={styles.heroSub}>
             단 한 번의 매체 연결과 목표 설정으로, 성과 관리 및 알림까지 자동 세팅됩니다.
