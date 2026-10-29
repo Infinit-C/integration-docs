@@ -72,3 +72,7 @@
 
 .nowrap { white-space: nowrap; }
 .ctaTitle { max-width: none; }
+
+.leadOneLine { max-width: none; }
+@media (min-width: 997px) { .leadOneLine { white-space: nowrap; } }
+.heroSub { max-width: 44rem; }

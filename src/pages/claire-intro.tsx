@@ -29,7 +29,7 @@ const chats = [
 
 const personas = [
   {who: '대행사 운영팀', need: '광고주·브랜드별로 캠페인을 묶어 두고, 각 담당자가 자기 그룹만 보며 운영합니다. 보고서는 정해진 시각에 자동으로 나갑니다.'},
-  {who: '인하우스 마케터', need: 'DV360·Google Ads·Meta·SA360·Kakao Moment를 한 화면에서 보고, 매체마다 다른 지표 이름을 신경 쓰지 않아도 됩니다.'},
+  {who: '인하우스 마케터', need: 'DV360·Google Ads·Meta·SA360·Kakao Moment를 한 화면에서 보고, 매체마다 다른 지표 이름을 신경 쓰지 않아도 됩니다.'},
   {who: '마케팅 총괄 및 대행사 대표님', need: '대시보드를 열거나 "이번 달 비용 얼마 썼어?"라고 물으면 끝. 담당자에게 자료를 요청하고 기다릴 필요가 없습니다.'},
 ];
 
@@ -43,7 +43,7 @@ const features = [
 ];
 
 const faqs = [
-  {q: '어떤 매체를 지원하나요?', a: '마케터가 직접 운영·관리하는 매체들부터 제공합니다. 현재 DV360, Google Ads, Meta, SA360, Kakao Moment가 지원됩니다. 이후 원하시는 셀프서빙 매체를 알려주시면 추가 연동할 예정입니다.'},
+  {q: '어떤 매체를 지원하나요?', a: '마케터가 직접 운영·관리하는 매체들부터 제공합니다. 현재 DV360, Google Ads, Meta, SA360, Kakao Moment가 지원됩니다. 이후 원하시는 셀프서빙 매체를 알려주시면 추가 연동할 예정입니다.'},
   {q: '광고주별로 보는 사람을 나눌 수 있나요?', a: '광고주 캠페인 정보 보안이 걱정이시군요. 조직 내 접근 권한을 분류할 수 있습니다. 또한 누가 무엇을 바꿨는지는 이력과 감사 기록에 남습니다.'},
   {q: '알림과 요약은 어디로 오나요?', a: '이메일 그룹과 슬랙 채널을 등록하세요. 알림과 요약 리포트를 받으실 분들을 설정할 수 있습니다.'},
   {q: 'Claire의 답은 믿을 수 있나요?', a: 'Claire는 연결된 캠페인에서 실제로 수집한 지표로만 답합니다. 데이터가 없으면 없다고 말하고, 답에 쓴 기간과 수치를 함께 보여줍니다.'},
@@ -64,7 +64,7 @@ export default function ClaireIntro(): React.ReactElement {
             캠페인의 플래닝, 운영 최적화, 리포트까지<br /><span className={styles.gradientText}>클레어의 AI</span>가 모두 도와드립니다
           </Heading>
           <p className={styles.heroSub}>
-            단 한 번의 매체 연결과 목표 설정으로, 성과 관리 및 알림까지 자동 세팅됩니다.
+            단 한 번의 매체 연결과 목표 설정으로, 성과 관리 및 알림까지 자동 세팅됩니다.<br />
             더욱 똑똑해진 클레어 AI와의 채팅으로 손쉽게 지시할 수 있어요.
           </p>
           <div className={styles.videoWrap}>
@@ -107,7 +107,7 @@ export default function ClaireIntro(): React.ReactElement {
         <section className={styles.section}>
           <div className="container">
             <Heading as="h2" className={styles.h2}>일상 대화처럼 운영합니다</Heading>
-            <p className={styles.lead}>질문도, 알림·요약 설정도 같은 채팅창에서 끝납니다. Claire는 지금 보고 있는 캠페인의 실제 데이터를 알고 답합니다.</p>
+            <p className={`${styles.lead} ${styles.leadOneLine}`}>질문도, 알림·요약 설정도 같은 채팅창에서 끝납니다. Claire는 지금 보고 있는 캠페인의 실제 데이터를 알고 답합니다.</p>
             <div className={styles.chatList}>
               {chats.map((c) => (
                 <div key={c.q} className={styles.chat}>
@@ -183,7 +183,7 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={styles.cta}>
           <div className="container">
-            <p className={styles.platforms}>DV360 · Google Ads · Meta · SA360 · Kakao Moment 지원</p>
+            <p className={styles.platforms}>DV360 · Google Ads · Meta · SA360 · Kakao Moment 지원</p>
             <Heading as="h2" className={styles.ctaTitle}><span className={styles.nowrap}>루틴한 업무는 클레어에 맡기시고,</span><br /><span className={styles.nowrap}>마케터의 역량을 개발하는 데 집중하세요.</span></Heading>
             <div className={styles.ctaRow}>
               <Link className="button button--primary button--lg" href="https://www.infinit-c.com">도입 문의</Link>
