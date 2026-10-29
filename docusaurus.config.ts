@@ -15,6 +15,12 @@ const config: Config = {
 
   trailingSlash: false,
 
+  // Claire 가이드 접근 코드의 SHA-256(hex). 코드 변경: CLAIRE_GUIDE_CODE_HASH=$(printf '%s' 'NEWCODE' | shasum -a 256 | cut -d' ' -f1) npm run build
+  // 빈 문자열이면 잠금 해제. 게이트 구현: src/theme/Root.tsx
+  customFields: {
+    claireGuideCodeHash: process.env.CLAIRE_GUIDE_CODE_HASH ?? 'bb9043dc348f9c375244f4af88cb6ffc9ffe2560ce33950e6a3ca206939eb9ab',
+  },
+
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
