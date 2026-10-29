@@ -106,7 +106,7 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>일상 대화처럼 운영합니다</Heading>
+            <Heading as="h2" className={styles.h2}>일상 대화하듯 운영하세요</Heading>
             <p className={`${styles.lead} ${styles.leadOneLine}`}>질문도, 알림·요약 설정도 같은 채팅창에서 끝납니다. Claire는 지금 보고 있는 캠페인의 실제 데이터를 알고 답합니다.</p>
             <div className={styles.chatList}>
               {chats.map((c) => (
