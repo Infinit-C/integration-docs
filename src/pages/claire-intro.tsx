@@ -28,31 +28,26 @@ const chats = [
 ];
 
 const personas = [
-  {who: '여러 광고주를 맡은 대행사 운영팀', need: '광고주·브랜드별로 캠페인을 묶어 두고, 각 담당자가 자기 그룹만 보며 운영합니다. 보고서는 정해진 시각에 자동으로 나갑니다.'},
-  {who: '매체가 여러 곳인 인하우스 마케터', need: 'DV360·Google Ads·Meta·SA360·Kakao Moment를 한 화면에서 보고, 매체마다 다른 지표 이름을 신경 쓰지 않아도 됩니다.'},
-  {who: '숫자를 빨리 확인해야 하는 팀장·대표', need: '대시보드를 열거나 "이번 달 비용 얼마 썼어?"라고 물으면 끝. 담당자에게 자료를 요청하고 기다릴 필요가 없습니다.'},
+  {who: '대행사 운영팀', need: '광고주·브랜드별로 캠페인을 묶어 두고, 각 담당자가 자기 그룹만 보며 운영합니다. 보고서는 정해진 시각에 자동으로 나갑니다.'},
+  {who: '인하우스 마케터', need: 'DV360·Google Ads·Meta·SA360·Kakao Moment를 한 화면에서 보고, 매체마다 다른 지표 이름을 신경 쓰지 않아도 됩니다.'},
+  {who: '마케팅 총괄 및 대행사 대표님', need: '대시보드를 열거나 "이번 달 비용 얼마 썼어?"라고 물으면 끝. 담당자에게 자료를 요청하고 기다릴 필요가 없습니다.'},
 ];
 
 const features = [
+  {t: 'KPI 목표 추적과 이상 알림', d: 'CTR 하한, CPC 상한처럼 목표를 정해 두면 달성 여부를 계속 확인하고, 기준을 벗어나면 Slack·이메일로 즉시 알립니다.'},
+  {t: '미디어 플래닝', d: '기존 리포트들과 캠페인을 바탕으로 최적의 미디어 플랜을 제공합니다.'},
   {t: '캠페인 통합 관리', d: '5개 매체 캠페인을 광고주 단위 그룹으로 묶어 한 화면에서.'},
-  {t: 'KPI 목표 추적', d: 'CTR 하한, CPC 상한처럼 목표를 정해 두면 달성 여부를 계속 확인.'},
-  {t: '이상 알림', d: '기준을 벗어나면 Slack·이메일로 즉시. 정상 복귀도 알려줍니다.'},
   {t: '정기 요약', d: '매일·매주 원하는 시각에 원하는 지표만 담아 자동 발송.'},
   {t: '대시보드·시각화', d: '필요한 차트를 골라 조직이 함께 보는 홈 화면 구성.'},
   {t: '리포트 내보내기', d: '기간·구분 기준·지표를 골라 CSV·Excel로 바로 다운로드.'},
 ];
 
-const steps = [
-  {t: '매체 연결', d: '매체 계정을 인증하고 가져올 광고 계정·캠페인을 고릅니다.', time: '약 10분'},
-  {t: '목표와 알림 설정', d: '캠페인 그룹별 KPI와 알림 기준, 요약 받을 채널을 정합니다. 채팅으로도 됩니다.', time: '약 20분'},
-  {t: '바로 운영', d: '이후 수집·추적·알림은 자동. 궁금한 건 Claire에게 묻습니다.', time: '다음 날부터'},
-];
-
 const faqs = [
-  {q: '어떤 매체를 지원하나요?', a: 'DV360, Google Ads, Meta, SA360, Kakao Moment를 지원합니다. 매체 계정은 성과 조회를 위해 연결하며, 광고주 계정 단위로 가져올 캠페인을 직접 고릅니다.'},
-  {q: '광고주별로 보는 사람을 나눌 수 있나요?', a: '네. 조직 안에서 사용자 그룹과 접근 정책으로 "이 그룹은 A 광고주 캠페인만" 같은 범위를 정할 수 있습니다. 누가 무엇을 바꿨는지는 이력과 감사 기록에 남습니다.'},
-  {q: '알림과 요약은 어디로 오나요?', a: 'Slack 채널과 이메일 그룹을 등록해 두면 알림·정기 요약·리포트가 그곳으로 갑니다. 받는 사람은 알림마다 다르게 정할 수 있습니다.'},
+  {q: '어떤 매체를 지원하나요?', a: '마케터가 직접 운영·관리하는 매체들부터 제공합니다. 현재 DV360, Google Ads, Meta, SA360, Kakao Moment가 지원됩니다. 이후 원하시는 셀프서빙 매체를 알려주시면 추가 연동할 예정입니다.'},
+  {q: '광고주별로 보는 사람을 나눌 수 있나요?', a: '광고주 캠페인 정보 보안이 걱정이시군요. 조직 내 접근 권한을 분류할 수 있습니다. 또한 누가 무엇을 바꿨는지는 이력과 감사 기록에 남습니다.'},
+  {q: '알림과 요약은 어디로 오나요?', a: '이메일 그룹과 슬랙 채널을 등록하세요. 알림과 요약 리포트를 받으실 분들을 설정할 수 있습니다.'},
   {q: 'Claire의 답은 믿을 수 있나요?', a: 'Claire는 연결된 캠페인에서 실제로 수집한 지표로만 답합니다. 데이터가 없으면 없다고 말하고, 답에 쓴 기간과 수치를 함께 보여줍니다.'},
+  {q: '우리 캠페인 정보가 다른 유저의 최적화를 위해 사용되나요?', a: '그렇지 않습니다. 인피니트씨에서 등록한 데이터 및 계정 소유자가 직접 올린 데이터만 최적화에 활용됩니다.'},
   {q: '기존 보고 체계와 같이 쓸 수 있나요?', a: '네. 리포트를 CSV·Excel로 내려받아 기존 양식에 넣거나, 정기 요약을 지금 쓰는 Slack 채널로 받으면 됩니다. 한국어·영어 화면을 모두 제공합니다.'},
 ];
 
@@ -61,16 +56,16 @@ const after = ['연결된 캠페인 지표가 한 화면에 자동 수집', '정
 
 export default function ClaireIntro(): React.ReactElement {
   return (
-    <Layout title="Claire 소개" description="캠페인 운영, 이제 물어보면 됩니다. 한 번 설정하면 성과 수집·알림·요약을 Claire가 맡고, 궁금한 건 채팅으로 묻습니다.">
+    <Layout title="Claire 소개" description="캠페인의 플래닝, 운영 최적화, 리포트를 클레어의 AI가 모두 도와드립니다. 단 한 번의 매체 연결과 목표 설정으로 성과 관리와 알림까지 자동 세팅됩니다.">
       <header className={styles.hero}>
         <div className="container">
           <p className={styles.eyebrow}>CLAIRE · AI MARKETING ASSISTANT</p>
           <Heading as="h1" className={styles.heroTitle}>
-            캠페인 운영,<br />이제 <span className={styles.gradientText}>물어보면</span> 됩니다
+            캠페인의 플래닝, 운영 최적화, 리포트<br /><span className={styles.gradientText}>클레어의 AI</span>가 모두 도와드립니다
           </Heading>
           <p className={styles.heroSub}>
-            매체 연결 한 번, 목표 설정 한 번. 그다음부터 성과 확인과 알림은 Claire가 맡고,
-            궁금한 것은 채팅으로 묻고 지시하세요.
+            단 한 번의 매체 연결과 목표 설정으로, 성과 관리 및 알림까지 자동 세팅됩니다.
+            더욱 똑똑해진 클레어 AI와의 채팅으로 손쉽게 지시할 수 있어요.
           </p>
           <div className={styles.videoWrap}>
             <video controls muted playsInline preload="metadata" poster="/img/claire/dashboard.png" src="/video/claire/claire-flow.mp4" />
@@ -82,7 +77,7 @@ export default function ClaireIntro(): React.ReactElement {
       <main>
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>한 번 설정하면, 그다음은 Claire가 합니다</Heading>
+            <Heading as="h2" className={styles.h2}>담당자는 단 한 번의 설정만, 그다음은 Claire가 합니다</Heading>
             <div className={styles.grid3}>
               {points.map((p, i) => (
                 <div key={p.title} className={styles.card}>
@@ -97,7 +92,7 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={`${styles.section} ${styles.sectionAlt}`}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>이런 분들께 맞습니다</Heading>
+            <Heading as="h2" className={styles.h2}>이런 분들께 추천합니다</Heading>
             <div className={styles.grid3}>
               {personas.map((p) => (
                 <div key={p.who} className={styles.card}>
@@ -111,7 +106,7 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>이런 대화로 운영합니다</Heading>
+            <Heading as="h2" className={styles.h2}>일상 대화처럼 운영합니다</Heading>
             <p className={styles.lead}>질문도, 알림·요약 설정도 같은 채팅창에서 끝납니다. Claire는 지금 보고 있는 캠페인의 실제 데이터를 알고 답합니다.</p>
             <div className={styles.chatList}>
               {chats.map((c) => (
@@ -127,7 +122,8 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={`${styles.section} ${styles.sectionAlt}`}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>하루 운영이 이렇게 달라집니다</Heading>
+            <Heading as="h2" className={styles.h2}>마케터의 일과가 바뀝니다</Heading>
+            <p className={styles.lead}>지식을 쌓고 의사결정하는 데 시간을 투자하세요.</p>
             <div className={styles.compare}>
               <div className={styles.compareCol}>
                 <p className={styles.compareLabel}>지금까지</p>
@@ -143,7 +139,7 @@ export default function ClaireIntro(): React.ReactElement {
 
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.h2}>기능 한눈에</Heading>
+            <Heading as="h2" className={styles.h2}>대표 기능</Heading>
             <div className={styles.features}>
               {features.map((f) => (
                 <div key={f.t} className={styles.feature}>
@@ -156,24 +152,6 @@ export default function ClaireIntro(): React.ReactElement {
         </section>
 
         <section className={`${styles.section} ${styles.sectionAlt}`}>
-          <div className="container">
-            <Heading as="h2" className={styles.h2}>도입은 이렇게 진행됩니다</Heading>
-            <ol className={styles.steps}>
-              {steps.map((st, i) => (
-                <li key={st.t}>
-                  <span className={styles.num}>{i + 1}</span>
-                  <div>
-                    <Heading as="h3" className={styles.h3}>{st.t} <span className={styles.time}>{st.time}</span></Heading>
-                    <p>{st.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p className={styles.note}>첫 설정은 저희가 함께 진행합니다. 연결부터 첫 요약 수신까지 하루면 됩니다.</p>
-          </div>
-        </section>
-
-        <section className={styles.section}>
           <div className="container">
             <Heading as="h2" className={styles.h2}>화면은 두 가지면 충분합니다</Heading>
             <div className={styles.shots}>
@@ -189,7 +167,7 @@ export default function ClaireIntro(): React.ReactElement {
           </div>
         </section>
 
-        <section className={`${styles.section} ${styles.sectionAlt}`}>
+        <section className={styles.section}>
           <div className="container">
             <Heading as="h2" className={styles.h2}>자주 묻는 질문</Heading>
             <div className={styles.faq}>
@@ -206,7 +184,7 @@ export default function ClaireIntro(): React.ReactElement {
         <section className={styles.cta}>
           <div className="container">
             <p className={styles.platforms}>DV360 · Google Ads · Meta · SA360 · Kakao Moment 지원</p>
-            <Heading as="h2" className={styles.ctaTitle}><span className={styles.nowrap}>데이터를 확인하는 시간을,</span><br /><span className={styles.nowrap}>캠페인을 키우는 시간으로.</span></Heading>
+            <Heading as="h2" className={styles.ctaTitle}><span className={styles.nowrap}>루틴한 업무는 클레어에 맡기시고,</span><br /><span className={styles.nowrap}>마케터의 역량을 개발하는 데 집중하세요.</span></Heading>
             <div className={styles.ctaRow}>
               <Link className="button button--primary button--lg" href="https://www.infinit-c.com">도입 문의</Link>
               <Link className="button button--outline button--lg" href="https://claire.infinit-c.com">Claire 바로가기</Link>
