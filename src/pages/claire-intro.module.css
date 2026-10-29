@@ -69,3 +69,6 @@
 .faq details { border: 1px solid var(--ifm-color-emphasis-200); border-radius: 12px; padding: 0.9rem 1.2rem; background: var(--ifm-card-background-color); }
 .faq summary { cursor: pointer; font-weight: 700; word-break: keep-all; }
 .faq p { margin: 0.7rem 0 0; line-height: 1.7; color: var(--ifm-color-emphasis-800); word-break: keep-all; }
+
+.nowrap { white-space: nowrap; }
+.ctaTitle { max-width: none; }

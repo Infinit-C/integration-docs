@@ -206,7 +206,7 @@ export default function ClaireIntro(): React.ReactElement {
         <section className={styles.cta}>
           <div className="container">
             <p className={styles.platforms}>DV360 · Google Ads · Meta · SA360 · Kakao Moment 지원</p>
-            <Heading as="h2" className={styles.ctaTitle}>데이터를 확인하는 시간을, 캠페인을 키우는 시간으로.</Heading>
+            <Heading as="h2" className={styles.ctaTitle}><span className={styles.nowrap}>데이터를 확인하는 시간을,</span><br /><span className={styles.nowrap}>캠페인을 키우는 시간으로.</span></Heading>
             <div className={styles.ctaRow}>
               <Link className="button button--primary button--lg" href="https://www.infinit-c.com">도입 문의</Link>
               <Link className="button button--outline button--lg" href="https://claire.infinit-c.com">Claire 바로가기</Link>
