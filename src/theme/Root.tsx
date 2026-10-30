@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from '@docusaurus/router';
+import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 // Claire 가이드(/claire, /en/claire)는 접근 코드를 입력해야 보인다.
@@ -46,6 +47,9 @@ function Gate({hash, onUnlock}: {hash: string; onUnlock: () => void}) {
         <button type="submit" className="button button--primary button--block" style={{marginTop: '1rem'}} disabled={!code.trim()}>
           열기
         </button>
+        <Link to="/" className="button button--secondary button--outline button--block" style={{marginTop: '.5rem'}}>
+          돌아가기
+        </Link>
       </form>
     </main>
   );

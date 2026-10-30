@@ -113,11 +113,22 @@
   color: var(--ifm-color-emphasis-700);
 }
 
-.cardCta {
+.cardLinks {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardCta {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.cardCta:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 700px) {

@@ -44,8 +44,7 @@ type ProductItem = {
   title: string;
   tag: string;
   description: string;
-  to: string;
-  cta: string;
+  links: {label: string; to: string}[]; // 첫 항목이 주 동선
   Icon: () => React.ReactElement;
 };
 
@@ -55,8 +54,10 @@ const products: ProductItem[] = [
     tag: 'AI Marketing Assistant',
     description:
       '미디어믹스 설계부터 소재 제작, 성과 분석까지 — 캠페인 운영의 모든 단계를 대화형 대시보드에서 처리합니다.',
-    to: '/claire/intro',
-    cta: '사용 가이드',
+    links: [
+      {label: '소개', to: '/claire-intro'},
+      {label: '사용 가이드', to: '/claire/intro'},
+    ],
     Icon: ClaireIcon,
   },
   {
@@ -64,15 +65,14 @@ const products: ProductItem[] = [
     tag: 'SSP SDK · RTB API',
     description:
       'Flutter · Android · iOS · Web 플랫폼별 광고 SDK 연동 가이드와 OpenRTB 기반 RTB API 레퍼런스를 제공합니다.',
-    to: '/adsynapse/integration/intro',
-    cta: '연동 문서',
+    links: [{label: '연동 문서', to: '/adsynapse/integration/intro'}],
     Icon: AdsynapseIcon,
   },
 ];
 
-function ProductCard({title, tag, description, to, cta, Icon}: ProductItem) {
+function ProductCard({title, tag, description, links, Icon}: ProductItem) {
   return (
-    <Link className={styles.card} to={to}>
+    <div className={styles.card}>
       <span className={styles.cardIcon}>
         <Icon />
       </span>
@@ -81,10 +81,14 @@ function ProductCard({title, tag, description, to, cta, Icon}: ProductItem) {
         {title}
       </Heading>
       <p className={styles.cardDesc}>{description}</p>
-      <span className={styles.cardCta}>
-        {cta} <span aria-hidden="true">→</span>
-      </span>
-    </Link>
+      <div className={styles.cardLinks}>
+        {links.map((l) => (
+          <Link key={l.to} className={styles.cardCta} to={l.to}>
+            {l.label} <span aria-hidden="true">→</span>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
