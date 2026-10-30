@@ -56,7 +56,7 @@ const products: ProductItem[] = [
       '미디어믹스 설계부터 소재 제작, 성과 분석까지 — 캠페인 운영의 모든 단계를 대화형 대시보드에서 처리합니다.',
     links: [
       {label: '소개', to: '/claire-intro'},
-      {label: '사용 가이드', to: '/claire/intro'},
+      {label: '사용 가이드 (접속 코드 필요)', to: '/claire/intro'},
     ],
     Icon: ClaireIcon,
   },

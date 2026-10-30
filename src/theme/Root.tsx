@@ -31,8 +31,8 @@ function Gate({hash, onUnlock}: {hash: string; onUnlock: () => void}) {
     <main style={{minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'}}>
       <form onSubmit={submit} style={{width: '100%', maxWidth: 360, textAlign: 'center'}}>
         <h1 style={{fontSize: '1.4rem', marginBottom: '.5rem'}}>Claire 가이드</h1>
-        <p style={{color: 'var(--ifm-color-emphasis-700)'}}>이 문서는 접근 코드가 있어야 볼 수 있습니다.</p>
-        <label htmlFor="claire-access-code" style={{display: 'block', textAlign: 'left', fontWeight: 600, margin: '1rem 0 .25rem'}}>접근 코드</label>
+        <p style={{color: 'var(--ifm-color-emphasis-700)'}}>이 문서는 접속 코드가 있어야 볼 수 있습니다.<br />코드는 담당자에게 요청하세요.</p>
+        <label htmlFor="claire-access-code" style={{display: 'block', textAlign: 'left', fontWeight: 600, margin: '1rem 0 .25rem'}}>접속 코드</label>
         <input
           id="claire-access-code"
           type="password"
