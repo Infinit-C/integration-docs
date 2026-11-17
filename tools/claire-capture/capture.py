@@ -59,12 +59,12 @@ BLUR_JS = """
 
 
 def _click_tab(page, name):
-    page.get_by_role("tab", name=name).click()
+    page.get_by_role("tab", name=re.compile(name)).click()
     page.wait_for_timeout(1500)
 
 
 def _open_chat(page):
-    page.get_by_role("button", name="Open chat").click()
+    page.get_by_role("button", name=re.compile("Open chat|채팅 열기")).click()
     page.wait_for_timeout(2500)
     # 이전 대화가 있으면 '기존 채팅 이어가기 / 새로운 채팅' 선택 화면이 먼저 뜬다
     new_chat = page.get_by_role("button", name="새로운 채팅")
@@ -74,28 +74,46 @@ def _open_chat(page):
 
 
 def _wide_range(page):
-    """대시보드 기간 기본값(최근 24시간)은 데모 데이터가 오래돼 빈 차트가 된다 → 90일로 넓혀 찍는다."""
-    page.evaluate("""() => {
-      const end = Date.now();
-      const start = end - 90 * 24 * 60 * 60 * 1000;
-      for (const key of Object.keys(window.localStorage)) {
-        if (key.endsWith(':date-time-range:v1') || key.endsWith(':kpi-date-time-range:v1')) {
-          window.localStorage.setItem(key, JSON.stringify({startAt: start, endAt: end}));
-        }
-      }
-    }""")
-    page.reload(wait_until="networkidle")
-    page.wait_for_timeout(3000)
+    """대시보드 기간 기본값(최근 24시간)은 데모 데이터가 오래돼 빈 차트가 된다 → 기간 선택기에서 '최근 1년'을 골라 찍는다.
+    (선택은 localStorage에 저장돼 캠페인·그룹·홈 대시보드에 함께 적용된다.)"""
+    btn = page.locator("main button").filter(has_text=re.compile("최근|지난|Last|이전")).first
+    if not btn.count():
+        return
+    btn.click()
+    page.wait_for_timeout(700)
+    tab = page.get_by_text(re.compile("^(최근 기간|Relative)$")).first
+    if tab.count():
+        tab.click()
+        page.wait_for_timeout(300)
+    opt = page.get_by_text(re.compile("^(최근 1년|Last 1 year|Last year)$")).first
+    if opt.count():
+        opt.click()
+        page.wait_for_timeout(300)
+    apply = page.get_by_role("button", name=re.compile("^(적용|Apply)$"))
+    if apply.count():
+        apply.last.click()
+    else:
+        page.keyboard.press("Escape")
+    page.wait_for_timeout(3500)
+
+
+def _viz_range(page):
+    """시각화 편집기는 프리셋이 최근 3개월까지라 데모 데이터(7~8월)가 안 보인다 → 날짜 입력칸에 직접 넣고 새로고침."""
+    dates = page.locator("main input[type=date]")
+    if dates.count() >= 2:
+        dates.nth(0).fill("2026-07-01")
+        dates.nth(1).fill("2026-08-31")
+        page.get_by_role("button", name=re.compile("^(새로고침|Refresh)$")).first.click()
+        page.wait_for_timeout(3500)
 
 
 def _campaign_dashboard(page):
-    _click_tab(page, "Dashboard")
+    _click_tab(page, "^(Dashboard|대시보드)$")
     _wide_range(page)
-    _click_tab(page, "Dashboard")
 
 
 def _first_detail(page):
-    link = page.get_by_role("link", name="View details").first
+    link = page.get_by_role("link", name=re.compile("View details|상세 보기|자세히")).first
     if not link.count():
         print("  (목록이 비어 있어 상세 캡처 생략)")
         return False
@@ -105,15 +123,15 @@ def _first_detail(page):
 
 # (이름, 경로, 페이지 로드 후 액션)
 SHOTS = [
-    ("dashboard", "/", None),  # 홈은 기본 대시보드로 리다이렉트
+    ("dashboard", "/", _wide_range),  # 홈은 기본 대시보드로 리다이렉트
     ("dashboards-list", "/dashboards", None),
     ("visualizations", "/visualizations", None),
-    ("visualization-editor", "/visualizations/78949445", None),  # 데모 시각화 편집기
+    ("visualization-editor", "/visualizations/78949445", _viz_range),  # 데모 시각화 편집기
     ("campaign-groups", "/campaign-groups", None),
-    ("campaign-group-detail", "/campaign-groups/50103304", None),
-    ("campaign-group-campaigns", "/campaign-groups/50103304",
-     lambda p: _click_tab(p, "Campaigns")),
-    ("campaign-detail", "/campaigns/83901859", lambda p: _click_tab(p, "Details")),
+    ("campaign-group-detail", "/campaign-groups/82936400", _wide_range),
+    ("campaign-group-campaigns", "/campaign-groups/82936400",
+     lambda p: _click_tab(p, "^(Campaigns|캠페인)$")),
+    ("campaign-detail", "/campaigns/83901859", lambda p: _click_tab(p, "^(Details|상세 정보)$")),
     # 2026-09 개편: KPI·Trends 탭 → Dashboard 탭 하나로 합쳐졌고 KPI 설정은 별도 화면
     ("campaign-trends", "/campaigns/83901859", _campaign_dashboard),
     ("campaign-kpi", "/campaigns/83901859/kpis/edit", None),
