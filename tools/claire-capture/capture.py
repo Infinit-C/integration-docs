@@ -112,6 +112,12 @@ def _campaign_dashboard(page):
     _wide_range(page)
 
 
+def _campaign_edit(page):
+    page.get_by_text(re.compile("^4\\. 수집 일정|Collection schedule")).first.scroll_into_view_if_needed()
+    page.mouse.wheel(0, -120)
+    page.wait_for_timeout(500)
+
+
 def _first_detail(page):
     link = page.get_by_role("link", name=re.compile("View details|상세 보기|자세히")).first
     if not link.count():
@@ -135,6 +141,7 @@ SHOTS = [
     # 2026-09 개편: KPI·Trends 탭 → Dashboard 탭 하나로 합쳐졌고 KPI 설정은 별도 화면
     ("campaign-trends", "/campaigns/83901859", _campaign_dashboard),
     ("campaign-kpi", "/campaigns/83901859/kpis/edit", None),
+    ("campaign-edit", "/campaigns/83901859/edit", _campaign_edit),  # 수집 일정 섹션
     ("chat-panel", "/campaigns/83901859", _open_chat),
     ("campaigns-list", "/campaigns", None),
     ("my-chats", "/my-chats", None),
