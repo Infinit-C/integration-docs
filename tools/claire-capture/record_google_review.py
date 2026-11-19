@@ -95,7 +95,7 @@ class ScreenRec:
 
     def stop(self):
         self.proc.send_signal(signal.SIGINT)
-        self.proc.wait(timeout=60)
+        self.proc.wait(timeout=600)  # 긴 녹화는 마무리에 1분 이상 걸린다
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(self.mov), "-c:v", "libx264",
                         "-pix_fmt", "yuv420p", "-crf", "20", "-an", str(self.mp4)], check=True)
         print("saved:", self.mp4)
@@ -123,12 +123,14 @@ def _ensure_org(page, r):
         page.wait_for_load_state("networkidle"); r.prep(1500)
 
 
-def _check_first(page, r):
-    """선택 목록: 전부 블러하고 첫 행만 체크."""
+def _check_first(page, r, name=""):
+    """선택 목록: 전부 블러하고 name이 들어간 행(없으면 첫 행)만 체크."""
     page.get_by_role("checkbox").first.wait_for(timeout=120_000)
     page.wait_for_timeout(800)
     page.evaluate(BLUR_ROWS_JS)
     rows = page.locator("tr").filter(has=page.get_by_role("checkbox"))
+    if name and rows.filter(has_text=re.compile(name, re.I)).count():
+        rows = rows.filter(has_text=re.compile(name, re.I))
     box = rows.first.get_by_role("checkbox")
     if box.get_attribute("aria-checked") != "true":
         r.click(box, settle=300)
@@ -136,7 +138,7 @@ def _check_first(page, r):
     r.hold("목록 (블러)", 2500)
 
 
-def connect(page, r, platform, scope_note, account=""):
+def connect(page, r, platform, scope_note, account="", campaign=""):
     """Platform Integrations → Connect → platform → OAuth(수동) → 첫 계정 → 첫 캠페인 → Finish setup."""
     r.click(page.get_by_role("link", name="Platform Integrations"))
     r.prep()
@@ -162,8 +164,13 @@ def connect(page, r, platform, scope_note, account=""):
     else:
         _manual(page, f"'{account}' 행이 없음 — 캠페인이 있는 계정 하나를 체크하고 [Import accounts]를 누르세요", re.compile(r"step=campaigns"))
     r.prep(2500)
-    _check_first(page, r)
+    _check_first(page, r, campaign)
     r.click(page.get_by_role("button", name=re.compile(r"Finish setup")))
+    rb = page.get_by_role("button", name=re.compile(r"Restore"))
+    try:
+        rb.wait_for(timeout=2500); r.click(rb)
+    except Exception:
+        pass
     page.wait_for_url(lambda u: "/platform-integrations/new" not in u, timeout=120_000)
     r.prep(2000)
     r.hold("연동 완료", 2500)
@@ -176,7 +183,11 @@ def _open_campaign(page, r, platform, name=""):
     r.prep(1500)
     rows = page.locator("tbody tr", has_text=re.compile(platform))
     row = rows.filter(has_text=re.compile(name, re.I)).first if name else rows.first
-    r.click(row.get_by_role("link").first)
+    link = row.get_by_role("link").first
+    link.scroll_into_view_if_needed(); b = link.bounding_box()
+    r.move_to(b["x"] + 20, b["y"] + 10)  # 두 줄로 꺾이는 링크는 중앙 좌표가 빈 곳이라 Playwright 클릭으로
+    link.click()
+    page.wait_for_url(re.compile(r"/campaigns/\d+"), timeout=30_000)
     r.prep(1500)
 
 
@@ -219,43 +230,45 @@ def record(part="dv360"):
         r = ReviewRecorder(page)
         page.goto(BASE + "/login", wait_until="networkidle")
         rec = ScreenRec(f"google-review-{'ads' if part == 'google_ads' else part}", _window_rect(page))
-        page.wait_for_timeout(1500)
+        try:
+            page.wait_for_timeout(1500)
 
-        if part == "dv360":
-            # 1. 로그인 화면 → Privacy Policy → Google APIs 절 (새 탭)
-            with ctx.expect_page() as new:
-                r.click(page.get_by_role("link", name=re.compile("Privacy|개인정보")))
-            pp = new.value
-            pp.wait_for_load_state("networkidle"); pp.wait_for_timeout(1500)
-            pp.get_by_text("Information received from Google APIs").first.scroll_into_view_if_needed()
-            pp.mouse.wheel(0, -80)
-            r.hold("Privacy — Google APIs 절", 6000)
-            pp.close(); page.bring_to_front(); page.wait_for_timeout(1000)
+            if part == "dv360":
+                # 1. 로그인 화면 → Privacy Policy → Google APIs 절 (새 탭)
+                with ctx.expect_page() as new:
+                    r.click(page.get_by_role("link", name=re.compile("Privacy|개인정보")))
+                pp = new.value
+                pp.wait_for_load_state("networkidle"); pp.wait_for_timeout(1500)
+                pp.get_by_text("Information received from Google APIs").first.scroll_into_view_if_needed()
+                pp.mouse.wheel(0, -80)
+                r.hold("Privacy — Google APIs 절", 6000)
+                pp.close(); page.bring_to_front(); page.wait_for_timeout(1000)
 
-        # 2. 로그인 — Google 로그인은 jh.yoon 계정이 다른 팀에 연결돼 있어 Claire가 거부(2026-11-19) → 이메일
-        if "/login" in page.url:
-            _manual(page, "Claire에 이메일/비밀번호로 로그인하세요",
-                    lambda u: u.startswith(BASE) and "/login" not in u and "/oauth" not in u)
-        r.prep(2000)
-        _english_ui(page, r)
-        _ensure_org(page, r)
-        r.hold("로그인 후 대시보드", 2000)
+            # 2. 로그인 — Google 로그인은 jh.yoon 계정이 다른 팀에 연결돼 있어 Claire가 거부(2026-11-19) → 이메일
+            if "/login" in page.url:
+                _manual(page, "Claire에 이메일/비밀번호로 로그인하세요",
+                        lambda u: u.startswith(BASE) and "/login" not in u and "/oauth" not in u)
+            r.prep(2000)
+            _english_ui(page, r)
+            _ensure_org(page, r)
+            r.hold("로그인 후 대시보드", 2000)
 
-        if part == "dv360":
-            connect(page, r, "DV360|Display", "display-video, Bid Manager", account="gugus")   # 6
-            dv360_usage(page, r)                                               # 7
-        else:
-            connect(page, r, "Google Ads", "adwords")                          # 3~4
-            google_ads_usage(page, r)                                          # 5
-            disconnect(page, r, "Google Ads")                                  # 9
-            r.click(page.get_by_role("link", name="Campaigns", exact=True).first)
-            r.prep(); r.hold("캠페인 Disconnected 상태", 3000)
-            page.goto("https://myaccount.google.com/connections")
-            _manual(page, "Google 계정 → 보안 → 타사 앱 목록에서 Claire가 없는 것을 보여 준 뒤, 주소창에 claire.infinit-c.com 을 쳐서 돌아오면 녹화가 끝납니다",
-                    lambda u: u.startswith(BASE))
-            page.wait_for_timeout(2000)
-        rec.stop()
-        ctx.close()
+            if part == "dv360":
+                connect(page, r, "DV360|Display", "display-video, Bid Manager", account="gugus")   # 6
+                dv360_usage(page, r)                                               # 7
+            else:
+                connect(page, r, "Google Ads", "adwords", account="GPN_BSN", campaign="pMax GMC")  # 3~4
+                google_ads_usage(page, r)                                          # 5
+                disconnect(page, r, "Google Ads")                                  # 9
+                r.click(page.get_by_role("link", name="Campaigns", exact=True).first)
+                r.prep(); r.hold("캠페인 Disconnected 상태", 3000)
+                page.goto("https://myaccount.google.com/connections")
+                _manual(page, "Google 계정 → 보안 → 타사 앱 목록에서 Claire가 없는 것을 보여 준 뒤, 주소창에 claire.infinit-c.com 을 쳐서 돌아오면 녹화가 끝납니다",
+                        lambda u: u.startswith(BASE))
+                page.wait_for_timeout(2000)
+        finally:
+            rec.stop()
+            ctx.close()
 
 
 def record_tail(part="dv360"):
@@ -267,9 +280,21 @@ def record_tail(part="dv360"):
             _manual(page, "Claire에 로그인하세요", lambda u: "/login" not in u and "/oauth" not in u)
         _english_ui(page, r); _ensure_org(page, r)
         rec = ScreenRec(f"google-review-{part}-tail", _window_rect(page))
-        (dv360_usage if part == "dv360" else google_ads_usage)(page, r)
-        rec.stop()
-        ctx.close()
+        try:
+            if part == "dv360":
+                dv360_usage(page, r)
+            else:  # 5 → 9
+                google_ads_usage(page, r)
+                disconnect(page, r, "Google Ads")
+                r.click(page.get_by_role("link", name="Campaigns", exact=True).first)
+                r.prep(); r.hold("캠페인 Disconnected 상태", 3000)
+                page.goto("https://myaccount.google.com/connections")
+                _manual(page, "Google 계정 → 보안 → 타사 앱 목록에서 Claire가 없는 것을 보여 준 뒤, 주소창에 claire.infinit-c.com 을 쳐서 돌아오면 녹화가 끝납니다",
+                        lambda u: u.startswith(BASE))
+                page.wait_for_timeout(2000)
+        finally:
+            rec.stop()
+            ctx.close()
 
 
 def cleanup():
