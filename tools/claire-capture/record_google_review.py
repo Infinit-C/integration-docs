@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Google OAuth 심사용 스크린캐스트 (GOOGLE_REVIEW_HANDOFF_20261119.md 장면 1~7·9).
 
+  python record_google_review.py record all         # 장면 1·2·6·7·3·4·5·9 한 번에 (권장). 장면 시각은 -marks.json
   python record_google_review.py record dv360       # 장면 1·2·6·7. 실제 Chrome + 화면 녹화(screencapture) 자동
   python record_google_review.py record google_ads  # 장면 3·4·5·9 (Google Ads 계정 권한이 생긴 뒤)
   python record_google_review.py record_tail   # 수집 뒤 5·7번(대시보드 수치)만 다시 녹화
@@ -11,10 +12,12 @@
 - Google 화면은 블러하지 않는다. Claire 화면은 광고주명·ID 자동 블러 + 계정/캠페인 선택 목록 전체 블러.
 - 출력: out/google-review.mp4 (tail: out/google-review-part2.mp4)
 """
+import json
 import re
 import signal
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -27,6 +30,8 @@ OUT = HERE / "out"
 REVIEW_PROFILE = HERE / ".profile-google-review"  # 로그인 화면부터 담기 위해 기존 세션과 분리
 MANUAL = 10 * 60 * 1000
 ORG = "Product"
+# 심사 영상에 나오면 안 되는 고객사 이름 (SENSITIVE에 더해 DOM 단계에서 흐림)
+EXTRA = ["GUGUS", "Gugus", "gugus", "T MAP", "TMAP", "판매_BSN", "GPN_BSN", "pMax", "JungKwanJang"]
 
 # 선택 목록(광고 계정·광고주·캠페인)은 고객사 이름이 섞여 있으니 체크박스 빼고 전부 흐린다
 BLUR_ROWS_JS = r"""() => {
@@ -40,10 +45,22 @@ BLUR_ROWS_JS = r"""() => {
 
 
 class ReviewRecorder(Recorder):
+    def __init__(self, page):
+        super().__init__(page)
+        self.t0 = None
+        self.marks = []  # (장면 번호, 녹화 시작 기준 초)
+
+    def start_clock(self):
+        self.t0 = time.time()
+
+    def mark(self, scene):
+        self.marks.append((scene, round(time.time() - self.t0, 1)))
+        print(f"  [scene {scene}] {self.marks[-1][1]}s")
+
     def prep(self, wait=1800):
         self.page.wait_for_timeout(wait)
         if self.page.url.startswith(BASE):  # Google 화면은 그대로
-            self.page.evaluate(AUTO_BLUR_JS, SENSITIVE)
+            self.page.evaluate(AUTO_BLUR_JS, SENSITIVE + EXTRA)
             self.page.evaluate(CURSOR_JS)
 
     def hold(self, note, ms=3000):
@@ -63,6 +80,14 @@ def _ctx(p, headed):
     ctx = p.chromium.launch_persistent_context(REVIEW_PROFILE if headed else PROFILE, **kw)
     page = ctx.pages[0] if ctx.pages else ctx.new_page()
     page.on("dialog", lambda d: d.accept())
+    if headed:
+        def _hl_en(route, request):
+            u = request.url
+            if request.is_navigation_request() and "hl=" not in u and request.resource_type == "document":
+                route.fulfill(status=302, headers={"Location": u + ("&" if "?" in u else "?") + "hl=en"})
+            else:
+                route.continue_()
+        page.route(re.compile(r"https://(accounts|myaccount)\.google\.com/.*"), _hl_en)
     return ctx, page
 
 
@@ -138,23 +163,28 @@ def _check_first(page, r, name=""):
     r.hold("목록 (블러)", 2500)
 
 
-def connect(page, r, platform, scope_note, account="", campaign=""):
+def connect(page, r, platform, scope_note, account="", campaign="", mark=None):
     """Platform Integrations → Connect → platform → OAuth(수동) → 첫 계정 → 첫 캠페인 → Finish setup."""
     r.click(page.get_by_role("link", name="Platform Integrations"))
     r.prep()
     r.click(page.get_by_role("link", name="Connect").first)
     r.prep()
+    if "step=" in page.url:  # 직전 연동의 위저드 상태가 남아 3단계로 바로 열리는 경우
+        page.goto(BASE + "/platform-integrations/new", wait_until="networkidle"); r.prep()
     r.click(page.get_by_role("radio", name=re.compile(platform)))
     page.wait_for_timeout(500)
     r.click(page.get_by_role("button", name="Continue"))
     r.prep(1200)
     r.click(page.get_by_role("button", name=re.compile(r"^Authorize")))
-    _manual(page, f"Google 동의 화면: 주소창을 클릭해 client_id 가 3초 보이게 한 뒤 허용 ({scope_note})",
+    _manual(page, f"Google 동의 화면: 주소창을 클릭해 client_id 를 3초 보여 주고, 권한 문구가 읽히도록 3~5초 더 멈춘 뒤 허용 ({scope_note})",
             re.compile(re.escape(BASE) + r"/platform-integrations/new\?.*step=accounts"))
+    page.add_style_tag(content="main tbody td:not(:has([role=checkbox],input[type=checkbox])){filter:blur(7px)}")
     r.prep(2500)
+    if mark: mark()
     # 계정/광고주는 사용자가 고른다 (캠페인이 있는 회사 계정 하나). 고객사 이름은 YouTube 편집기에서 흐림 처리
     page.get_by_role("checkbox").first.wait_for(timeout=120_000)
     page.wait_for_timeout(800)
+    page.evaluate(BLUR_ROWS_JS)
     row = page.locator("tr", has_text=re.compile(account, re.I)).first
     if row.count():
         r.click(row.get_by_role("checkbox"), settle=300)
@@ -164,6 +194,7 @@ def connect(page, r, platform, scope_note, account="", campaign=""):
     else:
         _manual(page, f"'{account}' 행이 없음 — 캠페인이 있는 계정 하나를 체크하고 [Import accounts]를 누르세요", re.compile(r"step=campaigns"))
     r.prep(2500)
+    page.add_style_tag(content="main tbody td:not(:has([role=checkbox],input[type=checkbox])){filter:blur(7px)}")
     _check_first(page, r, campaign)
     r.click(page.get_by_role("button", name=re.compile(r"Finish setup")))
     rb = page.get_by_role("button", name=re.compile(r"Restore"))
@@ -221,6 +252,101 @@ def disconnect(page, r, platform):
     r.click(page.get_by_role("button", name=re.compile("^(Continue|계속)$")))  # 확인 모달
     page.wait_for_timeout(3500); r.prep(500)
     r.hold("연동 해제됨", 2000)
+
+
+def connections_scene(page, r):
+    """9번 끝: Google 계정 '연결된 앱'에서 Claire Insight를 검색해 결과가 없는 것을 보여 준다."""
+    page.goto("https://myaccount.google.com/connections?hl=en")
+    page.wait_for_load_state("networkidle"); page.wait_for_timeout(2500)
+    r.hold("연결된 앱 목록", 3000)
+    box = page.get_by_placeholder(re.compile("Search linked apps", re.I)).first
+    try:
+        box.wait_for(timeout=8000)
+        box.click(); page.wait_for_timeout(400)
+        page.keyboard.type("Claire Insight", delay=90)
+        page.wait_for_timeout(1200); page.keyboard.press("Enter")
+        r.hold("'Claire Insight' 검색 결과 없음", 6000)
+    except Exception:
+        _manual(page, "검색창에 'Claire Insight'를 입력해 결과가 없는 것을 보여 준 뒤, 주소창에 claire.infinit-c.com 을 쳐서 돌아오면 녹화가 끝납니다",
+                lambda u: u.startswith(BASE))
+
+
+def record_connections():
+    """9번 끝 장면만: 연결된 앱에서 'Claire Insight' 검색 → 결과 없음 (out/google-review-conn.mp4)"""
+    with sync_playwright() as p:
+        ctx, page = _ctx(p, headed=True)
+        r = ReviewRecorder(page)
+        page.goto("https://myaccount.google.com/connections?hl=en", wait_until="networkidle"); page.wait_for_timeout(1500)
+        rec = ScreenRec("google-review-conn", _window_rect(page)); r.start_clock()
+        try:
+            connections_scene(page, r)
+            r.mark("end")
+        finally:
+            rec.stop(); ctx.close()
+
+
+def record_all(parts="all"):
+    """장면 1·2·6·7·3·4·5·9를 한 번에 녹화 → out/google-review-all.mp4 + -marks.json. parts="ads"면 3·4·5·9만."""
+    name = "google-review-all" if parts == "all" else "google-review-ads2"
+    with sync_playwright() as p:
+        ctx, page = _ctx(p, headed=True)
+        r = ReviewRecorder(page)
+        page.goto(BASE + ("/login" if parts == "all" else "/platform-integrations"), wait_until="networkidle")
+        if parts != "all" and "/login" in page.url:
+            _manual(page, "Claire에 이메일/비밀번호로 로그인하세요 (녹화 전)", lambda u: "/login" not in u and "/oauth" not in u)
+            page.goto(BASE + "/platform-integrations", wait_until="networkidle")
+        rec = ScreenRec(name, _window_rect(page)); r.start_clock()
+        try:
+            page.wait_for_timeout(1500)
+            if parts != "all":
+                _english_ui(page, r); _ensure_org(page, r); r.prep(1000)
+                r.mark(3)
+                connect(page, r, "Google Ads", "adwords", account="GPN_BSN", campaign="pMax GMC", mark=lambda: r.mark(4))
+                r.mark(5)
+                google_ads_usage(page, r)
+                r.mark(9)
+                disconnect(page, r, "Google Ads")
+                r.click(page.get_by_role("link", name="Campaigns", exact=True).first)
+                r.prep(); r.hold("캠페인 Disconnected 상태", 3000)
+                connections_scene(page, r)
+                r.mark("end")
+                return
+            r.mark(1)
+            with ctx.expect_page() as new:
+                r.click(page.get_by_role("link", name=re.compile("Privacy|개인정보")))
+            pp = new.value
+            pp.wait_for_load_state("networkidle"); pp.wait_for_timeout(1500)
+            pp.get_by_text("Information received from Google APIs").first.scroll_into_view_if_needed()
+            pp.mouse.wheel(0, -80)
+            r.hold("Privacy — Google APIs 절", 6000)
+            pp.close(); page.bring_to_front(); page.wait_for_timeout(1000)
+            r.mark(2)
+            if "/login" in page.url:
+                _manual(page, "Claire에 이메일/비밀번호로 로그인하세요",
+                        lambda u: u.startswith(BASE) and "/login" not in u and "/oauth" not in u)
+            r.prep(2000)
+            _english_ui(page, r)
+            _ensure_org(page, r)
+            r.hold("로그인 후 대시보드", 2000)
+            r.mark(6)
+            connect(page, r, "DV360|Display", "display-video, Bid Manager", account="gugus")
+            r.mark(7)
+            dv360_usage(page, r)
+            r.mark(3)
+            connect(page, r, "Google Ads", "adwords", account="GPN_BSN", campaign="pMax GMC", mark=lambda: r.mark(4))
+            r.mark(5)
+            google_ads_usage(page, r)
+            r.mark(9)
+            disconnect(page, r, "Google Ads")
+            r.click(page.get_by_role("link", name="Campaigns", exact=True).first)
+            r.prep(); r.hold("캠페인 Disconnected 상태", 3000)
+            connections_scene(page, r)
+            r.mark("end")
+        finally:
+            rec.stop()
+            ctx.close()
+            (OUT / f"{name}-marks.json").write_text(json.dumps(r.marks))
+            print("marks:", r.marks)
 
 
 def record(part="dv360"):
@@ -315,7 +441,11 @@ def cleanup():
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
     arg = sys.argv[2] if len(sys.argv) > 2 else "dv360"
-    if mode == "record":
+    if mode == "record" and arg in ("all", "ads"):
+        record_all(arg)
+    elif mode == "record" and arg == "conn":
+        record_connections()
+    elif mode == "record":
         record(arg)
     elif mode == "record_tail":
         record_tail(arg)
