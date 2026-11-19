@@ -85,7 +85,7 @@ def _wide_range(page):
     if tab.count():
         tab.click()
         page.wait_for_timeout(300)
-    opt = page.get_by_text(re.compile("^(최근 1년|Last 1 year|Last year)$")).first
+    opt = page.get_by_text(re.compile("^(최근 1년|Last 1 year|Last year|Past 1 year)$")).first
     if opt.count():
         opt.click()
         page.wait_for_timeout(300)
