@@ -130,11 +130,25 @@ def _share_dialog(page, title="협력광고 7~8월 성과 보고서", per_campai
         pc = d.get_by_label("캠페인별")
         if pc.count() and pc.first.get_attribute("aria-checked") != "true": pc.first.click()
     for m in ("CTR", "클릭"): d.locator("label", has_text=re.compile(f"^{m}$")).last.click()
-    d.get_by_role("combobox").nth(0).click(); page.wait_for_timeout(300); page.get_by_role("option", name="기간 지정").click(); page.wait_for_timeout(500)
+    ads = d.get_by_label("소재 성과 포함")
+    if ads.count() and ads.first.get_attribute("aria-checked") != "true": ads.first.click(); page.wait_for_timeout(300)
+    d.get_by_role("combobox").filter(has_text=re.compile("최근 7일")).first.click(); page.wait_for_timeout(300); page.get_by_role("option", name="기간 지정").click(); page.wait_for_timeout(500)
     dates = d.locator("input[type=date]"); dates.nth(0).fill("2026-07-01"); dates.nth(1).fill("2026-08-31")
     page.wait_for_timeout(300)
     d.evaluate("e => { e.scrollTop = 0 }"); page.wait_for_timeout(400)  # 폼 위쪽이 보이게 (아래의 끊긴 테스트 링크 목록은 가린다)
     return d
+
+
+def _collect_dialog(page):
+    """상세 ⋮ → 지금 수집 대화상자 (캠페인 전체 기간 버튼 포함)."""
+    page.get_by_role("button", name=re.compile("캠페인 대시보드 작업|^작업")).first.click(); page.wait_for_timeout(500)
+    page.get_by_role("menuitem", name=re.compile("지금 수집")).click(); page.wait_for_timeout(1200)
+
+
+def _google_hint(page):
+    """연결 위저드에서 Google Ads 선택 → 인증 단계 (확인되지 않은 앱 안내)."""
+    page.locator("main").get_by_text(re.compile("^Google Ads$")).first.click(); page.wait_for_timeout(500)
+    page.get_by_role("button", name=re.compile("^계속$")).first.click(); page.wait_for_timeout(1500)
 
 
 def _share_page(page):
@@ -204,6 +218,9 @@ SHOTS = [
     ("report-link-dialog", "/campaigns/83901859", _share_dialog),
     ("report-share-page", "/campaigns/83901859", _share_page),  # 공개 페이지 (full/chat 파일을 따로 저장)
     ("campaigns-bulk-edit", "/campaigns", _bulk_edit),
+    ("collect-dialog", "/campaigns/83901859", _collect_dialog),
+    ("platform-connect-google", "/platform-integrations/new", _google_hint),
+    ("company-settings", "/company-settings", None),
     ("team-history", "/org/users", _team_history),
     ("chat-panel", "/campaigns/83901859", _open_chat),
     ("campaigns-list", "/campaigns", None),
